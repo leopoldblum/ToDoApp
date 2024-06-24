@@ -1,101 +1,117 @@
 package main
 
 import (
+	"database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	_ "github.com/lib/pq"
 )
 
-// speichert alle TODOs, vorerst local ohne DB
-var todos = []todo{
-	{ID: "1", Title: "Erster Task", Description: "dies ist der erste Task", Fulfilled: false},
-	{ID: "2", Title: "zweiter Task", Description: "dies ist der zweite Task", Fulfilled: false},
-	{ID: "3", Title: "dritter Task", Description: "dies ist der dritte Task", Fulfilled: false},
-}
-
-// album represents data about a record album.
-type todo struct {
-	ID          string `json:"id"`
+type Body struct {
+	// json tag to de-serialize json body
 	Title       string `json:"title"`
 	Description string `json:"desc"`
 	Fulfilled   bool   `json:"fulfilled"`
 }
 
-// gebe alle TODOs zurück
-func getTodos(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, todos)
-}
+const (
+	host     = "localhost"
+	port     = 5432
+	user     = "username"
+	password = "password"
+	dbname   = "postgres"
+)
 
-// füge TODO hinzu
-func postTodos(t *gin.Context) {
-	var newTodo todo
+func insertTodoInDB(title string, desc string, fulfilled bool, getDB *sql.DB) bool {
+	sqlStatement := "INSERT INTO todos (title, description, fulfilled) VALUES ($1, $2, $3)"
+	//sqlStatement := `INSERT INTO todos (title, description, fulfilled) VALUES ('test_inVSCode23423423', 'test_desc23423432', false)`
 
-	if err := t.BindJSON(&newTodo); err != nil {
-		return
+	_, err := getDB.Exec(sqlStatement, title, desc, fulfilled)
+	if err != nil {
+		//return false
+		panic(err)
+
 	}
-
-	todos = append(todos, newTodo)
-	t.IndentedJSON(http.StatusCreated, newTodo)
-}
-
-// gebe bestimmten TODO zurück
-func getTodoByID(t *gin.Context) {
-	id := t.Param("id")
-
-	for _, a := range todos {
-		if a.ID == id {
-			t.IndentedJSON(http.StatusOK, a)
-			return
-		}
-	}
-	t.IndentedJSON(http.StatusNotFound, gin.H{"message": "TODO not found!"})
-
-	/* t.IndentedJSON(http.StatusOK, getTodoHELPER(t.Param("id"))) */
-}
-
-// sets fullfilled -> true
-func setFulfillTodo(t *gin.Context) {
-	id := t.Param("id")
-
-	for x, a := range todos {
-		if a.ID == id {
-			todos[x].Fulfilled = true
-			t.IndentedJSON(http.StatusAccepted, "set to true \n\r")
-			return
-		}
-	}
-}
-
-func changeTitle(id string, newTitle string) bool {
-
-	for x, a := range todos {
-		if a.ID == id {
-			todos[x].Title = newTitle
-			return true
-		}
-	}
-
-	return false
+	return true
 }
 
 func main() {
-	router := gin.Default()
-	router.GET("/todos", getTodos)
-	router.GET("/todos/:id", getTodoByID)
-	router.GET("/todos/:id/setFulfilled", setFulfillTodo)
+	//setup connection to database
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+"password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 
-	router.GET("/todos/:id/title/:newTitle", func(t *gin.Context) {
-		id := t.Param("id")
-		newTitle := t.Param("newTitle")
-		if changeTitle(id, newTitle) {
-			t.IndentedJSON(http.StatusAccepted, "succesfully changed title")
+	db, err := sql.Open("postgres", psqlInfo)
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Successfully connected!")
+
+	router := gin.Default()
+
+	router.POST("/postCreateDB", func(ctx *gin.Context) {
+		sqlStatement := `CREATE TABLE todos (id SERIAL PRIMARY KEY,title TEXT not NULL,description TEXT not NULL,fulfilled BOOLEAN not NULL)`
+
+		_, err = db.Exec(sqlStatement)
+		if err != nil {
+			panic(err)
+		}
+	})
+
+	router.POST("/postTodoDB", func(ctx *gin.Context) {
+		sqlStatement := `INSERT INTO todos (title, description, fulfilled) VALUES ('test_inVSCode', 'test_desc', false)`
+
+		_, err = db.Exec(sqlStatement)
+		if err != nil {
+			panic(err)
+		}
+	})
+
+	router.GET("getTodoDB", func(ctx *gin.Context) {
+		sqlStatement := `SELECT id, title, description, fulfilled FROM todos WHERE id=$1`
+		var id int
+
+		var title string
+		var description string
+		var fulfilled bool
+
+		row := db.QueryRow(sqlStatement, 5)
+
+		switch err := row.Scan(&id, &title, &description, &fulfilled); err {
+		case sql.ErrNoRows:
+			fmt.Println("No rows were returned!")
+		case nil:
+			fmt.Println(id, title, description, fulfilled)
+			ctx.IndentedJSON(http.StatusFound, "found id")
+		default:
+			panic(err)
+		}
+	})
+
+	// adds entry to DB, details are saved in body of message
+	router.POST("postTodoDBWithBody", func(ctx *gin.Context) {
+		body := Body{}
+
+		if err := ctx.ShouldBindJSON(&body); err != nil {
+			ctx.IndentedJSON(401, "couldnt bind body")
+			return
+		}
+		//fmt.Println(body)
+
+		if insertTodoInDB(body.Title, body.Description, body.Fulfilled, db) {
+			ctx.IndentedJSON(http.StatusCreated, "succesfully added Entry")
 		} else {
-			t.IndentedJSON(http.StatusNotModified, "oops, something went wrong")
+			ctx.IndentedJSON(http.StatusNotModified, "oops, something went wrong")
 		}
 
 	})
-
-	router.POST("/todos", postTodos)
 
 	router.Run("localhost:8080")
 }
