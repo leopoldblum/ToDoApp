@@ -5,6 +5,11 @@ go 1.22.4
 require github.com/gin-gonic/gin v1.10.0
 
 require (
+	github.com/google/go-cmp v0.6.0 // indirect
+	github.com/lib/pq v1.10.9
+)
+
+require (
 	github.com/bytedance/sonic v1.11.8 // indirect
 	github.com/bytedance/sonic/loader v0.1.1 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect
