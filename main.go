@@ -5,12 +5,22 @@ import (
 	"fmt"
 	"net/http"
 
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
 
 type Body struct {
 	// json tag to de-serialize json body
+	Title       string `json:"title"`
+	Description string `json:"desc"`
+	Fulfilled   bool   `json:"fulfilled"`
+}
+
+type Todo struct {
+	// json tag to de-serialize json body+
+	Id          int    `json:"id"`
 	Title       string `json:"title"`
 	Description string `json:"desc"`
 	Fulfilled   bool   `json:"fulfilled"`
@@ -56,47 +66,37 @@ func main() {
 
 	router := gin.Default()
 
-	router.POST("/postCreateDB", func(ctx *gin.Context) {
-		sqlStatement := `CREATE TABLE todos (id SERIAL PRIMARY KEY,title TEXT not NULL,description TEXT not NULL,fulfilled BOOLEAN not NULL)`
-
-		_, err = db.Exec(sqlStatement)
-		if err != nil {
-			panic(err)
-		}
-	})
-
-	router.POST("/postTodoDB", func(ctx *gin.Context) {
-		sqlStatement := `INSERT INTO todos (title, description, fulfilled) VALUES ('test_inVSCode', 'test_desc', false)`
-
-		_, err = db.Exec(sqlStatement)
-		if err != nil {
-			panic(err)
-		}
-	})
-
-	router.GET("getTodoDB", func(ctx *gin.Context) {
+	// get entry with id
+	router.GET("todo/:id", func(ctx *gin.Context) {
 		sqlStatement := `SELECT id, title, description, fulfilled FROM todos WHERE id=$1`
-		var id int
+		var getId = ctx.Param("id")
 
 		var title string
 		var description string
 		var fulfilled bool
 
-		row := db.QueryRow(sqlStatement, 5)
+		row := db.QueryRow(sqlStatement, getId)
 
-		switch err := row.Scan(&id, &title, &description, &fulfilled); err {
+		switch err := row.Scan(&getId, &title, &description, &fulfilled); err {
 		case sql.ErrNoRows:
 			fmt.Println("No rows were returned!")
 		case nil:
-			fmt.Println(id, title, description, fulfilled)
-			ctx.IndentedJSON(http.StatusFound, "found id")
+			fmt.Println(getId, title, description, fulfilled)
+
+			idToInt, err := strconv.Atoi(getId)
+			if err != nil {
+				ctx.IndentedJSON(http.StatusBadRequest, "wrong id")
+			}
+
+			ctx.IndentedJSON(http.StatusFound, Todo{idToInt, title, description, fulfilled})
 		default:
 			panic(err)
 		}
+
 	})
 
-	// adds entry to DB, details are saved in body of message
-	router.POST("postTodoDBWithBody", func(ctx *gin.Context) {
+	// add entry
+	router.POST("todo", func(ctx *gin.Context) {
 		body := Body{}
 
 		if err := ctx.ShouldBindJSON(&body); err != nil {
@@ -113,5 +113,88 @@ func main() {
 
 	})
 
+	// update
+	router.POST("updateTodo/:id", func(ctx *gin.Context) {
+		var id_select = ctx.Param("id")
+
+		body := Body{}
+
+		if err := ctx.ShouldBindJSON(&body); err != nil {
+			ctx.IndentedJSON(401, "couldnt bind body")
+			return
+		}
+
+		var newTitle = body.Title
+		var newDesc = body.Description
+		var newFulfilled = body.Fulfilled
+
+		sqlStatement := `UPDATE todos SET title = $2, description = $3, fulfilled = $4 WHERE id=$1`
+
+		_, err := db.Exec(sqlStatement, id_select, newTitle, newDesc, newFulfilled)
+		if err != nil {
+			panic("null is superior")
+		}
+
+		ctx.IndentedJSON(http.StatusOK, "succesfully updated Entry")
+
+	})
+
+	// get all todos
+	router.GET("todos", func(ctx *gin.Context) {
+		sqlStatement := `SELECT * FROM todos ORDER BY id`
+
+		rows, err := db.Query(sqlStatement)
+
+		if err != nil {
+			panic("error")
+		}
+
+		var results []Todo
+
+		for rows.Next() {
+			var item Todo
+
+			err = rows.Scan(&item.Id, &item.Title, &item.Description, &item.Fulfilled)
+
+			if err != nil {
+				panic("sdaf")
+			}
+
+			results = append(results, item)
+		}
+
+		ctx.IndentedJSON(http.StatusFound, results)
+	})
+
+	// delete
+	router.DELETE("todo/:id", func(ctx *gin.Context) {
+		var idSel = ctx.Param("id")
+
+		sqlStatement := `DELETE FROM todos WHERE id=$1`
+
+		_, err := db.Exec(sqlStatement, idSel)
+
+		if err != nil {
+			panic("error")
+		}
+
+		ctx.IndentedJSON(http.StatusOK, "deleted successfully")
+	})
+
 	router.Run("localhost:8080")
 }
+
+// TODO:
+// panics ersetzen
+
+// Frontend:
+// Frameworks: react, sveltekit, astro (-> astro_island)
+// cors issues fixen!
+
+// page mit allen todos
+// auf todos klicken -> details auf neuer page anzeigen
+// page stylen mit tailwind
+
+// LATER:
+// delete & update
+// swagger
