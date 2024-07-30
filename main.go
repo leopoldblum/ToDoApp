@@ -40,9 +40,8 @@ func insertTodoInDB(title string, desc string, fulfilled bool, getDB *sql.DB) bo
 
 	_, err := getDB.Exec(sqlStatement, title, desc, fulfilled)
 	if err != nil {
-		//return false
-		panic(err)
-
+		return false
+		//panic(err)
 	}
 	return true
 }
@@ -90,7 +89,8 @@ func main() {
 
 			ctx.IndentedJSON(http.StatusFound, Todo{idToInt, title, description, fulfilled})
 		default:
-			panic(err)
+			//panic(err)
+			ctx.IndentedJSON(http.StatusInternalServerError, fmt.Sprintf("Received this Error: %d", err))
 		}
 
 	})
@@ -132,7 +132,7 @@ func main() {
 
 		_, err := db.Exec(sqlStatement, id_select, newTitle, newDesc, newFulfilled)
 		if err != nil {
-			panic("null is superior")
+			ctx.IndentedJSON(http.StatusInternalServerError, fmt.Sprintf("Received this Error: %d", err))
 		}
 
 		ctx.IndentedJSON(http.StatusOK, "succesfully updated Entry")
@@ -146,7 +146,8 @@ func main() {
 		rows, err := db.Query(sqlStatement)
 
 		if err != nil {
-			panic("error")
+			// panic("error")
+			ctx.IndentedJSON(http.StatusInternalServerError, fmt.Sprintf("Received this Error: %d", err))
 		}
 
 		var results []Todo
@@ -157,7 +158,8 @@ func main() {
 			err = rows.Scan(&item.Id, &item.Title, &item.Description, &item.Fulfilled)
 
 			if err != nil {
-				panic("sdaf")
+				// panic("sdaf")
+				ctx.IndentedJSON(http.StatusInternalServerError, fmt.Sprintf("Received this Error: %d", err))
 			}
 
 			results = append(results, item)
@@ -175,7 +177,8 @@ func main() {
 		_, err := db.Exec(sqlStatement, idSel)
 
 		if err != nil {
-			panic("error")
+			// panic("error")
+			ctx.IndentedJSON(http.StatusInternalServerError, fmt.Sprintf("Received this Error: %d", err))
 		}
 
 		ctx.IndentedJSON(http.StatusOK, "deleted successfully")
@@ -185,7 +188,7 @@ func main() {
 }
 
 // TODO:
-// panics ersetzen
+// panics ersetzen, done?
 
 // Frontend:
 // Frameworks: react, sveltekit, astro (-> astro_island)
