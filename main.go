@@ -78,7 +78,7 @@ func main() {
 
 		switch err := row.Scan(&getId, &title, &description, &fulfilled); err {
 		case sql.ErrNoRows:
-			fmt.Println("No rows were returned!")
+			ctx.IndentedJSON(http.StatusNotFound, "No entry with this ID found")
 		case nil:
 			fmt.Println(getId, title, description, fulfilled)
 
