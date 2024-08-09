@@ -1,0 +1,53 @@
+---
+const { title, description } = Astro.props;
+---
+
+<!-- your template here -->
+<table class="todo-table">
+    <tr>
+        <th class="todo-content">
+            <h2 class="todo-title">
+                Title: {title}
+            </h2>
+            <p class="todo-description">
+                description: {description}
+            </p>
+        </th>
+        <th class="checkmark">
+            <h2>check?</h2>
+        </th>
+    </tr>
+</table>
+
+<style>
+    .todo-table {
+        width: 100%;
+        background-color: #23262d;
+        border: #50535a;
+        border-radius: 7px;
+    }
+
+    .todo-table:is(:hover, :focus-within) {
+        background-color: rgb(56, 56, 56);
+    }
+
+    .checkmark {
+        width: 25%;
+        text-align: center;
+        background-color: aqua;
+        padding-right: 0%;
+    }
+
+    .todo-content {
+        /*background-color: antiquewhite;*/
+        padding-left: 5%;
+
+        h2 {
+            text-align: left;
+        }
+    }
+
+    .todo-description {
+        text-align: left;
+    }
+</style>

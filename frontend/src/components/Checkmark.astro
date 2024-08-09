@@ -1,0 +1,47 @@
+---
+
+---
+
+<button id="not_done"> not_done </button>
+<button id="done"> done </button>
+
+<style>
+    #not_done {
+        color: aliceblue;
+        background-color: red;
+        width: 10%;
+        height: 5em;
+        display: block;
+    }
+    #done {
+        color: aliceblue;
+        background-color: green;
+        width: 10%;
+        height: 5em;
+        display: none;
+    }
+</style>
+
+<script>
+    function func() {
+        var done = document.getElementById("done");
+        var notDone = document.getElementById("not_done");
+
+        if (done?.style.display === "none") {
+            done.style.display = "block";
+
+            if (notDone?.style.display === "block") {
+                notDone.style.display = "none";
+            }
+        } else {
+            done!.style.display = "none";
+            notDone!.style.display = "block";
+        }
+    }
+
+    const bDone = document.getElementById("done");
+    const bNotDone = document.getElementById("not_done");
+
+    bDone?.addEventListener("click", func);
+    bNotDone?.addEventListener("click", func);
+</script>
