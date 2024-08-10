@@ -2,46 +2,41 @@
 
 ---
 
-<button id="not_done"> not_done </button>
-<button id="done"> done </button>
+<button id="is_done"> </button>
 
 <style>
-    #not_done {
-        color: aliceblue;
-        background-color: red;
-        width: 10%;
-        height: 5em;
+    #is_done,
+    #is_done:hover,
+    #is_done:active {
+        content: "hello";
+        background-image: url(/box1.svg);
+        background-color: var(--accent);
+        background-size: 100%;
+        width: 100%;
         display: block;
-    }
-    #done {
-        color: aliceblue;
-        background-color: green;
-        width: 10%;
-        height: 5em;
-        display: none;
+        aspect-ratio: 1 / 1;
+        transition: background-image 0.3s linear;
+        border: none;
+        outline: none;
     }
 </style>
 
 <script>
+    var isDoneState = true;
+
     function func() {
-        var done = document.getElementById("done");
-        var notDone = document.getElementById("not_done");
+        var isDone = document.getElementById("is_done");
 
-        if (done?.style.display === "none") {
-            done.style.display = "block";
-
-            if (notDone?.style.display === "block") {
-                notDone.style.display = "none";
-            }
+        if (isDoneState) {
+            isDone!.style.backgroundImage = "url(/box2.svg)";
+            isDoneState = !isDoneState;
         } else {
-            done!.style.display = "none";
-            notDone!.style.display = "block";
+            isDone!.style.backgroundImage = "url(/box1.svg)";
+            isDoneState = !isDoneState;
         }
     }
 
-    const bDone = document.getElementById("done");
-    const bNotDone = document.getElementById("not_done");
+    const button = document.getElementById("is_done");
 
-    bDone?.addEventListener("click", func);
-    bNotDone?.addEventListener("click", func);
+    button?.addEventListener("click", func);
 </script>
