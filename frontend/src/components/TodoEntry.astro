@@ -1,6 +1,6 @@
 ---
 import Checkmark from "../components/Checkmark.astro";
-const { title, description } = Astro.props;
+const { title, description, fulfilled } = Astro.props;
 ---
 
 <!-- your template here -->
@@ -15,7 +15,8 @@ const { title, description } = Astro.props;
             </p>
         </th>
         <th class="checkmark">
-            <Checkmark />
+            <!-- <Checkmark fulfilled="false" title="test_ID" /> -->
+            <Checkmark fulfilled={fulfilled} />
         </th>
     </tr>
 </table>

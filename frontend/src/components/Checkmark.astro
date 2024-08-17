@@ -1,15 +1,14 @@
 ---
-
+const { title, fulfilled } = Astro.props;
 ---
 
-<button id="is_done"> </button>
+<button id="is_done" data-htmlfulfilled={fulfilled}> </button>
 
-<style>
+<style define:vars={{ fulfilled }}>
     #is_done,
     #is_done:hover,
     #is_done:active {
         content: "hello";
-        background-image: url(/box1.svg);
         background-color: var(--accent);
         background-size: 100%;
         width: 100%;
@@ -21,17 +20,24 @@
     }
 </style>
 
-<script>
-    var isDoneState = true;
+<script define:vars={{ fulfilled }}>
+    var isDoneState = fulfilled;
+
+    var isDone = document.getElementById("is_done");
+    console.log("fulfilled status at beginning: " + fulfilled);
+
+    if (isDoneState == true) {
+        isDone.style.backgroundImage = "url(/box1.svg)";
+    } else {
+        isDone.style.backgroundImage = "url(/box2.svg)";
+    }
 
     function func() {
-        var isDone = document.getElementById("is_done");
-
         if (isDoneState) {
-            isDone!.style.backgroundImage = "url(/box2.svg)";
+            isDone.style.backgroundImage = "url(/box2.svg)";
             isDoneState = !isDoneState;
         } else {
-            isDone!.style.backgroundImage = "url(/box1.svg)";
+            isDone.style.backgroundImage = "url(/box1.svg)";
             isDoneState = !isDoneState;
         }
     }
