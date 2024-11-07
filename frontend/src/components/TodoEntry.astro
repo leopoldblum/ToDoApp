@@ -1,5 +1,6 @@
 ---
 import Checkmark from "../components/Checkmark.astro";
+import ReactCheckmark from "../components/ReactCheckmark.jsx";
 const { title, description, fulfilled } = Astro.props;
 ---
 
@@ -16,7 +17,9 @@ const { title, description, fulfilled } = Astro.props;
         </th>
         <th class="checkmark">
             <!-- <Checkmark fulfilled="false" title="test_ID" /> -->
-            <Checkmark fulfilled={fulfilled} />
+            <!-- <Checkmark fulfilled={fulfilled} /> -->
+            <!-- <ReactCheckmark isDone={"false"} /> -->
+            <Checkmark fulfilled={JSON.stringify(fulfilled)} />
         </th>
     </tr>
 </table>
@@ -27,6 +30,8 @@ const { title, description, fulfilled } = Astro.props;
         background-color: #23262d;
         border: #50535a;
         border-radius: 7px;
+
+        margin-top: 3%;
     }
 
     .todo-table:is(:hover, :focus-within) {

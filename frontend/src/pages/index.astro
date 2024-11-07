@@ -3,8 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 import Todo from "../components/TodoEntry.astro";
 
-const response = await fetch("http://localhost:8080/todo/2");
-const getEntry = await response.json();
+const response = await fetch("http://localhost:8080/todos");
+const allEntries = await response.json();
 ---
 
 <Layout title="Welcome to Astro.">
@@ -68,13 +68,23 @@ const getEntry = await response.json();
 		</ul>
 
 		<!-- <Todo title="title_1" description="desc_1" fulfilled="false" /> -->
-		{JSON.stringify(getEntry)}
+		{JSON.stringify(allEntries)}
 
-		<Todo
-			title={getEntry.title}
-			description={getEntry.desc}
-			fulfilled={getEntry.fulfilled}
-		/>
+		<!-- <Todo -->
+		<!-- title={allEntries[0].title} -->
+		<!-- description={allEntries[0].desc} -->
+		<!-- fulfilled={allEntries[0].fulfilled} -->
+		<!-- /> -->
+
+		{
+			allEntries.map((entry) => (
+				<Todo
+					title={entry.title}
+					description={entry.desc}
+					fulfilled={entry.fulfilled}
+				/>
+			))
+		}
 
 		<!-- <Todo title="title_1" description="desc_1" fulfilled="true" /> -->
 

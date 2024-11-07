@@ -2,47 +2,42 @@
 const { title, fulfilled } = Astro.props;
 ---
 
-<button id="is_done" data-htmlfulfilled={fulfilled}> </button>
+<button id="is_done"> {fulfilled} </button>
 
-<style define:vars={{ fulfilled }}>
-    #is_done,
-    #is_done:hover,
-    #is_done:active {
-        content: "hello";
-        background-color: var(--accent);
-        background-size: 100%;
-        width: 100%;
-        display: block;
-        aspect-ratio: 1 / 1;
-        transition: background-image 0.3s linear;
-        border: none;
-        outline: none;
+<style>
+    #is_done {
+        padding: 25% 25%;
+        background-color: grey;
+    }
+
+    #is_done:hover {
+        background-color: pink;
     }
 </style>
 
-<script define:vars={{ fulfilled }}>
-    var isDoneState = fulfilled;
+<script>
+    async function userAction() {
+        console.log("test");
+        const getDataResponse = await fetch("http://localhost:8080/todo/2");
+        const myData = await getDataResponse.json();
 
-    var isDone = document.getElementById("is_done");
-    console.log("fulfilled status at beginning: " + fulfilled);
+        myData.title = "fuck this";
+        myData.fulfilled = !myData.fulfilled;
+        //maybe stringify?
 
-    if (isDoneState == true) {
-        isDone.style.backgroundImage = "url(/box1.svg)";
-    } else {
-        isDone.style.backgroundImage = "url(/box2.svg)";
+        const response = await fetch("http://localhost:8080/updateTodo/2", {
+            method: "POST",
+            body: JSON.stringify(myData), // string or object
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const myJson = await response.json(); //extract JSON from the http response
+        // do something with myJson
+
+        console.log("did it update? \n");
     }
 
-    function func() {
-        if (isDoneState) {
-            isDone.style.backgroundImage = "url(/box2.svg)";
-            isDoneState = !isDoneState;
-        } else {
-            isDone.style.backgroundImage = "url(/box1.svg)";
-            isDoneState = !isDoneState;
-        }
-    }
-
-    const button = document.getElementById("is_done");
-
-    button?.addEventListener("click", func);
+    const h = document.getElementById("is_done");
+    h?.addEventListener("click", userAction);
 </script>
