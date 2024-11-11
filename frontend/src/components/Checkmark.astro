@@ -1,43 +1,67 @@
 ---
-const { title, fulfilled } = Astro.props;
+const { todoEntry } = Astro.props;
+const todoID = todoEntry.id;
 ---
 
-<button id="is_done"> {fulfilled} </button>
+<button id={`todoButton_${todoID}`} class="todoButtons" data-todoID={todoID}>
+    iD: {todoID} is {JSON.stringify(todoEntry.fulfilled)}
+</button>
 
 <style>
-    #is_done {
+    .todoButtons {
         padding: 25% 25%;
         background-color: grey;
     }
 
-    #is_done:hover {
+    .todoButtons:hover {
         background-color: pink;
     }
 </style>
 
 <script>
-    async function userAction() {
-        console.log("test");
-        const getDataResponse = await fetch("http://localhost:8080/todo/2");
+    async function toggleFulfillmentTodo(todoID: string) {
+        console.log("test with ID:" + todoID);
+        const getDataResponse = await fetch(
+            "http://localhost:8080/todo/" + todoID,
+        );
         const myData = await getDataResponse.json();
 
-        myData.title = "fuck this";
+        myData.title = "fuck this " + todoID;
         myData.fulfilled = !myData.fulfilled;
         //maybe stringify?
 
-        const response = await fetch("http://localhost:8080/updateTodo/2", {
-            method: "POST",
-            body: JSON.stringify(myData), // string or object
-            headers: {
-                "Content-Type": "application/json",
+        const response = await fetch(
+            "http://localhost:8080/updateTodo/" + todoID,
+            {
+                method: "POST",
+                body: JSON.stringify(myData), // string or object
+                headers: {
+                    "Content-Type": "application/json",
+                },
             },
-        });
+        );
         const myJson = await response.json(); //extract JSON from the http response
         // do something with myJson
 
-        console.log("did it update? \n");
+        console.log("did it update id=" + todoID + "? \n");
     }
 
-    const h = document.getElementById("is_done");
-    h?.addEventListener("click", userAction);
+    const allButtons = document.getElementsByClassName("todoButtons");
+
+    //console.log("todoButtons size = " + allButtons.length);
+
+    for (let i = 0; i < allButtons.length; i++) {
+        let currButton = allButtons[i];
+        let currButtonID = currButton.getAttribute("data-todoID");
+
+        // check if buttonID is null
+        if (currButtonID === null) {
+            currButtonID = "";
+            console.error("Error: todoID is Null!");
+        }
+
+        currButton.addEventListener("click", () =>
+            toggleFulfillmentTodo(currButtonID),
+        );
+    }
 </script>

@@ -78,11 +78,8 @@ const allEntries = await response.json();
 
 		{
 			allEntries.map((entry) => (
-				<Todo
-					title={entry.title}
-					description={entry.desc}
-					fulfilled={entry.fulfilled}
-				/>
+				// refomat these into just entry
+				<Todo todoEntry={entry} />
 			))
 		}
 

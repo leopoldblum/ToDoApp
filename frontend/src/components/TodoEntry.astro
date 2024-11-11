@@ -1,7 +1,7 @@
 ---
 import Checkmark from "../components/Checkmark.astro";
 import ReactCheckmark from "../components/ReactCheckmark.jsx";
-const { title, description, fulfilled } = Astro.props;
+const { todoEntry } = Astro.props;
 ---
 
 <!-- your template here -->
@@ -9,17 +9,14 @@ const { title, description, fulfilled } = Astro.props;
     <tr>
         <th class="todo-content">
             <h2 class="todo-title">
-                Title: {title}
+                Title: {todoEntry.title}
             </h2>
             <p class="todo-description">
-                description: {description}
+                description: {todoEntry.desc}
             </p>
         </th>
         <th class="checkmark">
-            <!-- <Checkmark fulfilled="false" title="test_ID" /> -->
-            <!-- <Checkmark fulfilled={fulfilled} /> -->
-            <!-- <ReactCheckmark isDone={"false"} /> -->
-            <Checkmark fulfilled={JSON.stringify(fulfilled)} />
+            <Checkmark todoEntry={todoEntry} />
         </th>
     </tr>
 </table>
