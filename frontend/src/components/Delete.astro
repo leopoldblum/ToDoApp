@@ -1,0 +1,45 @@
+---
+const { todoEntry } = Astro.props;
+const todoID = todoEntry.id;
+---
+
+<button
+    id={`deleteButton_${todoID}`}
+    class="todoButtonsDelete"
+    data-deleteTodoID={todoID}
+>
+    delete ID: {todoID}
+</button>
+
+<style>
+    .todoButtonsDelete {
+        margin-top: 2%;
+        margin-bottom: 5%;
+        padding: 5% 10%;
+        background-color: rgba(226, 223, 223, 0.37);
+    }
+
+    .todoButtonsDelete:hover {
+        background-color: rgb(221, 37, 67);
+    }
+</style>
+
+<script>
+    async function deleteTodo(todoID: string | null) {
+        if (todoID === null)
+            throw new Error("todoID is null, cant delete todo!");
+
+        const response = await fetch("http://localhost:8080/todo/" + todoID, {
+            method: "DELETE",
+        });
+    }
+
+    const allDeleteButtons =
+        document.getElementsByClassName("todoButtonsDelete");
+
+    for (let currDeleteButton of allDeleteButtons) {
+        currDeleteButton.addEventListener("click", () =>
+            deleteTodo(currDeleteButton.getAttribute("data-deleteTodoID")),
+        );
+    }
+</script>

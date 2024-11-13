@@ -1,6 +1,6 @@
 ---
 import Checkmark from "../components/Checkmark.astro";
-import ReactCheckmark from "../components/ReactCheckmark.jsx";
+import Delete from "./Delete.astro";
 const { todoEntry } = Astro.props;
 ---
 
@@ -17,6 +17,7 @@ const { todoEntry } = Astro.props;
         </th>
         <th class="checkmark">
             <Checkmark todoEntry={todoEntry} />
+            <Delete todoEntry={todoEntry} />
         </th>
     </tr>
 </table>

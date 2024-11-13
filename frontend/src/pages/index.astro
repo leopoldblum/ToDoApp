@@ -77,7 +77,7 @@ const allEntries = await response.json();
 		<!-- /> -->
 
 		{
-			allEntries.map((entry) => (
+			allEntries.map((entry: any) => (
 				// refomat these into just entry
 				<Todo todoEntry={entry} />
 			))

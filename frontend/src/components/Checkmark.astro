@@ -10,58 +10,49 @@ const todoID = todoEntry.id;
 <style>
     .todoButtons {
         padding: 25% 25%;
+        margin: 5%;
         background-color: grey;
     }
 
     .todoButtons:hover {
-        background-color: pink;
+        background-color: rgb(60, 219, 55);
     }
 </style>
 
 <script>
-    async function toggleFulfillmentTodo(todoID: string) {
-        console.log("test with ID:" + todoID);
+    async function toggleFulfillmentTodo(todoID: string | null) {
+        if (todoID === null)
+            throw new Error("todoID is null, cant update fulfillment!");
+
         const getDataResponse = await fetch(
             "http://localhost:8080/todo/" + todoID,
         );
         const myData = await getDataResponse.json();
 
-        myData.title = "fuck this " + todoID;
         myData.fulfilled = !myData.fulfilled;
-        //maybe stringify?
 
         const response = await fetch(
             "http://localhost:8080/updateTodo/" + todoID,
             {
                 method: "POST",
-                body: JSON.stringify(myData), // string or object
+                body: JSON.stringify(myData),
                 headers: {
                     "Content-Type": "application/json",
                 },
             },
         );
-        const myJson = await response.json(); //extract JSON from the http response
-        // do something with myJson
 
-        console.log("did it update id=" + todoID + "? \n");
+        console.log("Response: \n" + response);
+        console.log("Response.json(): \n" + response.json);
+
+        //console.log("did it update id=" + todoID + "? \n");
     }
 
     const allButtons = document.getElementsByClassName("todoButtons");
 
-    //console.log("todoButtons size = " + allButtons.length);
-
-    for (let i = 0; i < allButtons.length; i++) {
-        let currButton = allButtons[i];
-        let currButtonID = currButton.getAttribute("data-todoID");
-
-        // check if buttonID is null
-        if (currButtonID === null) {
-            currButtonID = "";
-            console.error("Error: todoID is Null!");
-        }
-
+    for (let currButton of allButtons) {
         currButton.addEventListener("click", () =>
-            toggleFulfillmentTodo(currButtonID),
+            toggleFulfillmentTodo(currButton.getAttribute("data-todoID")),
         );
     }
 </script>
