@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 import Todo from "../components/TodoEntry.astro";
+import AddTodoForm from "../components/AddTodoForm.astro";
 
 const response = await fetch("http://localhost:8080/todos");
 const allEntries = await response.json();
@@ -67,23 +68,13 @@ const allEntries = await response.json();
 			/>
 		</ul>
 
-		<!-- <Todo title="title_1" description="desc_1" fulfilled="false" /> -->
-		{JSON.stringify(allEntries)}
+		<!-- {JSON.stringify(allEntries)} -->
+		<div id="addTodoForm">
+			<AddTodoForm />
+		</div>
 
-		<!-- <Todo -->
-		<!-- title={allEntries[0].title} -->
-		<!-- description={allEntries[0].desc} -->
-		<!-- fulfilled={allEntries[0].fulfilled} -->
-		<!-- /> -->
-
-		{
-			allEntries.map((entry: any) => (
-				// refomat these into just entry
-				<Todo todoEntry={entry} />
-			))
-		}
-
-		<!-- <Todo title="title_1" description="desc_1" fulfilled="true" /> -->
+		<!-- lists all todo-entries -->
+		{allEntries.map((entry: any) => <Todo todoEntry={entry} />)}
 
 		<style>
 			main {
@@ -144,6 +135,10 @@ const allEntries = await response.json();
 				grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
 				gap: 2rem;
 				padding: 0;
+			}
+			#addTodoForm {
+				/* background-color: lightblue; */
+				text-align: center;
 			}
 		</style>
 	</main></Layout
