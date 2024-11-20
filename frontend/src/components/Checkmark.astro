@@ -1,22 +1,29 @@
 ---
 const { todoEntry } = Astro.props;
 const todoID = todoEntry.id;
+const todoFulfill = JSON.stringify(todoEntry.fulfilled);
 ---
 
-<button id={`todoButton_${todoID}`} class="todoButtons" data-todoID={todoID}>
+<button
+    id={`todoButton_${todoID}`}
+    class="todoButtons"
+    data-todoID={todoID}
+    data-todoFulfilled={todoFulfill}
+>
     <!-- iD: {todoID} is {JSON.stringify(todoEntry.fulfilled)} -->
-    <img class="btnImg" src="box1.svg" />
+    <img id={`todoImg_${todoID}`} class="btnImg" src="box-checked.svg" />
 </button>
 
 <style>
     .btnImg {
         width: 100%;
+        height: auto;
     }
 
     .todoButtons {
-        padding: 25% 25%;
-        margin: 5%;
         background-color: grey;
+        width: 90%;
+        margin: 2%;
     }
 
     .todoButtons:hover {
@@ -68,8 +75,21 @@ const todoID = todoEntry.id;
     const allButtons = document.getElementsByClassName("todoButtons");
 
     for (let currButton of allButtons) {
+        // assigns button to IDs
+        var currButtonID = currButton.getAttribute("data-todoID");
+
         currButton.addEventListener("click", () =>
-            toggleFulfillmentTodo(currButton.getAttribute("data-todoID")),
+            toggleFulfillmentTodo(currButtonID),
         );
+
+        // assigns images corresponding to status
+        var currImg = document.getElementById(
+            "todoImg_" + currButtonID,
+        ) as HTMLImageElement;
+        if (currButton.getAttribute("data-todoFulfilled") === "false") {
+            currImg.src = "/box-unchecked.svg";
+        } else {
+            currImg.src = "/box-checked.svg";
+        }
     }
 </script>

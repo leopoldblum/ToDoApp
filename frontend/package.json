@@ -23,6 +23,7 @@
     "typescript": "^5.5.4"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.32",
     "@types/pg": "^8.11.6"
   }
 }

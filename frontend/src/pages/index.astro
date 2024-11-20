@@ -11,7 +11,7 @@ const allEntries = await response.json();
 	<main>
 		<h1>total tolle todo tasks</h1>
 
-		<!-- {JSON.stringify(allEntries)} -->
+		{JSON.stringify(allEntries)}
 		<div id="addTodoForm">
 			<AddTodoForm />
 		</div>
@@ -87,3 +87,13 @@ const allEntries = await response.json();
 		</style>
 	</main></Layout
 >
+
+<!-- 
+Wie macht man das ganze responisve ohne force reload on everything?
+	-> wie kann man dann cleane animationen o.ä. einbauen?
+
+sollte vor jedem post, delete usw. zuerst eine get-request kommen um die integrität zu gewährleisten?
+wird ja bestenfalls do errorhandling eh gecaught wenn etwas schief laufen sollte
+
+gibt es eine elegantere Lösung für die Images/Buttons bei Checkmark?
+-->
