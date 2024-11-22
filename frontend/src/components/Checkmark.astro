@@ -76,15 +76,14 @@ const todoFulfill = JSON.stringify(todoEntry.fulfilled);
 
     for (let currButton of allButtons) {
         // assigns button to IDs
-        var currButtonID = currButton.getAttribute("data-todoID");
 
         currButton.addEventListener("click", () =>
-            toggleFulfillmentTodo(currButtonID),
+            toggleFulfillmentTodo(currButton.getAttribute("data-todoID")),
         );
 
         // assigns images corresponding to status
         var currImg = document.getElementById(
-            "todoImg_" + currButtonID,
+            "todoImg_" + currButton.getAttribute("data-todoID"),
         ) as HTMLImageElement;
         if (currButton.getAttribute("data-todoFulfilled") === "false") {
             currImg.src = "/box-unchecked.svg";
