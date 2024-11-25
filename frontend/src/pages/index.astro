@@ -11,13 +11,19 @@ const allEntries = await response.json();
 	<main>
 		<h1>total tolle todo tasks</h1>
 
-		{JSON.stringify(allEntries)}
+		<!-- {JSON.stringify(allEntries)} -->
 		<div id="addTodoForm">
 			<AddTodoForm />
 		</div>
 
-		<!-- lists all todo-entries -->
-		{allEntries.map((entry: any) => <Todo todoEntry={entry} />)}
+		<button class="refreshTodoListButton">
+			refresh! (zum testen von func)</button
+		>
+
+		<div id="todoListContainer">
+			<!-- lists all todo-entries -->
+			{allEntries.map((entry: any) => <Todo todoEntry={entry} />)}
+		</div>
 
 		<style>
 			main {
@@ -85,15 +91,25 @@ const allEntries = await response.json();
 				width: 100%;
 			}
 		</style>
-	</main></Layout
->
+	</main>
+</Layout>
 
-<!-- 
-Wie macht man das ganze responisve ohne force reload on everything?
-	-> wie kann man dann cleane animationen o.ä. einbauen?
+<script>
+	import "../scripts/refresh.js";
+</script>
 
-sollte vor jedem post, delete usw. zuerst eine get-request kommen um die integrität zu gewährleisten?
-wird ja bestenfalls do errorhandling eh gecaught wenn etwas schief laufen sollte
-
-gibt es eine elegantere Lösung für die Images/Buttons bei Checkmark?
+<!-- 					Fragen & Notizen
+					
+	Wie macht man das ganze responisve ohne force reload on everything?
+		-> wie kann man dann cleane animationen o.ä. einbauen?
+	
+	sollte vor jedem post, delete usw. zuerst eine get-request kommen um die integrität zu gewährleisten?
+	wird ja bestenfalls do errorhandling eh gecaught wenn etwas schief laufen sollte
+	
+	gibt es eine elegantere Lösung für die Images/Buttons bei Checkmark?
+	
+	
+	
+	responsiveness: durch änderung der innerHTML von ursprünglichen TodoList bei jedem update/add/delete button click (+ plus delay?)
+			- nicht clean, aber besser als alles neues zu schreiben zu müssen usw., erfüllt den zweck für so basic sachen
 -->
