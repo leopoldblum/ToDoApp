@@ -1,0 +1,46 @@
+#test {
+    background-color: lightcoral;
+}
+
+#todoList {
+    background-color: lightblue;
+    width: 50%;
+    padding: 3%;
+    margin: auto;
+}
+
+.todoEntry {
+    background-color: greenyellow;
+    padding: 5% 5%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.todoTitle {
+    width: 25%;
+    font-weight: 900;
+    padding: 3%;
+    text-align: center;
+
+    position: relative;
+    top: 50%;
+
+    background-color: bisque;
+}
+
+.todoDesc {
+    font-weight: lighter;
+    width: 30%;
+    padding: 3%;
+    text-align: center;
+
+    /* background-color: bisque; */
+}
+
+.todoButton {
+    width: 15%;
+    /* background-color: aqua; */
+}
