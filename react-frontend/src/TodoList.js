@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './TodoList.css'
 import TodoCheckmarkButton from './TodoCheckmarkButton';
+import TodoAddButton from './TodoAddButton';
+
 
 const TodoList = () => {
 
@@ -29,18 +31,13 @@ const TodoList = () => {
 
     return (
         <div id="todoList">
+
+            {/* render add todo button form */}
+            <TodoAddButton funcUpdateList={updateList} />
+
+
+            {/* render todo list */}
             {todos.map((entries) => (
-                // <h2 className="todoEntry" key={entries.id} > {entries.title} <h2/>  <p> {entries.desc} ==--  <button id="test"> {entries.fulfilled.toString()} </button> 
-
-                // <div className="todoEntry" key={entries.id}>
-
-                //     <p className='todoTitle'>  {entries.title} </p>
-
-                //     <TodoCheckmarkButton currentTodo={entries} todo={todos} setTodos={setTodos} funcUpdateList={updateList} />
-
-                //     <p className='todoDesc'>   {entries.desc} </p>
-
-                // </div>
 
                 <div className='todoEntry-container' key={entries.id}>
                     <div className="todoEntry-box todo-title">  {entries.title}  </div>
@@ -59,6 +56,12 @@ const TodoList = () => {
 }
 
 
-
-
 export default TodoList;
+
+
+/*
+    gibt es ne elegantere Lösung für updateList, damit die function nicht als prop weitergegeben werden muss?
+
+
+
+*/

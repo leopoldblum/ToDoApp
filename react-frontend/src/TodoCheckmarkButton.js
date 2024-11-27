@@ -37,10 +37,6 @@ const TodoCheckmarkButton = ({ currentTodo, funcUpdateList }) => {
                 );
             }
 
-            // console.log(
-            //     "fulfillment - updateResponse: " + updateResponse.status,
-            // );
-
             funcUpdateList();
         } catch (error) {
             console.error(error);

@@ -1,7 +1,6 @@
-import React from "react";
 import "./TodoAddButton.css"
 
-const TodoAddButton = (() => {
+const TodoAddButton = (({ funcUpdateList }) => {
 
     function togglePopupForm() {
         const getMyFormPopup = document.getElementById("myTodoForm")
@@ -18,6 +17,50 @@ const TodoAddButton = (() => {
         }
     }
 
+
+
+    const submitTodo = async (e) => {
+        e.preventDefault();
+
+        var title =
+            document.getElementById("myTodoForm-title").value;
+
+        var desc = document.getElementById("myTodoForm-desc").value;
+
+        const todoBody = { title: title, desc: desc, fulfilled: false };
+
+        // alert("adding: " + JSON.stringify(todoBody));
+        try {
+            const postNewTodoResponse = await fetch(
+                "http://localhost:8080/todo",
+                {
+                    method: "POST",
+                    body: JSON.stringify(todoBody),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                },
+            );
+
+            console.log("postNewTodoResponse: " + postNewTodoResponse.status);
+
+            if (!postNewTodoResponse.ok) {
+                throw new Error(
+                    "Error - Response Status:" + postNewTodoResponse.status,
+                );
+            }
+            togglePopupForm();
+
+            funcUpdateList();
+
+            // setTimeout(funcUpdateList, 500);
+
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     // pop up
 
     // title + desc eingeben
@@ -30,14 +73,17 @@ const TodoAddButton = (() => {
         <div>
 
             <button className="openPopup-button" id="openPopup-button" onClick={togglePopupForm}>
-                pop up my todo form
+                - add a new todo -
             </button>
 
             <div>
-                <form className="addTodoForm" id="myTodoForm">
-                    <input className="addTodoForm-input" type="text" placeholder="title" required />
+                <form className="addTodoForm" id="myTodoForm" onSubmit={submitTodo}>
+
+                    <input type="text" className="addTodoForm-input" id="myTodoForm-title" placeholder="title" autoComplete="off" required />
                     <br />
-                    <input className="addTodoForm-input" type="text" placeholder="description" required />
+                    <input type="text" className="addTodoForm-input" id="myTodoForm-desc" placeholder="description" autoComplete="off" />
+                    <br />
+                    <input type="submit" className="addTodoForm-submitButton" value={"add!"} />
                 </form>
             </div>
 

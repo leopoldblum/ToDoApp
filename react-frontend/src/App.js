@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import TodoList from "./TodoList.js"
-import TodoAddButton from './TodoAddButton';
 
 
 class App extends Component {
@@ -16,11 +15,10 @@ class App extends Component {
         </div>
 
 
-        <p className="App-intro">
+        {/* <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        </p> */}
 
-        <TodoAddButton />
 
         <TodoList />
 
