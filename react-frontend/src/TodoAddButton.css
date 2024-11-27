@@ -1,0 +1,35 @@
+.openPopup-button {
+    background-color: rgba(141, 252, 165, 0.644);
+    color: white;
+
+    width: 20%;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+
+    margin-top: 3%;
+    margin-bottom: 1vh;
+
+    border: none;
+    cursor: pointer;
+}
+
+.addTodoForm {
+    display: none;
+    transition: all 2s;
+}
+
+.addTodoForm input[type="text"] {
+    width: 18%;
+    height: 6vh;
+    margin: 0.5vh;
+
+    border-radius: 2vh;
+    text-align: center;
+
+
+}
+
+.addTodoForm input[type=text]:focus {
+    background-color: #fcf6f6ea;
+    outline: none;
+}

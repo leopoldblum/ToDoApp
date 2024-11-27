@@ -5,13 +5,14 @@
     margin-top: 2%;
     margin-bottom: 2%;
     width: 50%;
+    color: white;
     /* Evenly distribute space */
 
     /* border-style: double;
     border-color: black;
     border-width: 1vh; */
 
-    background-color: rgba(60, 61, 60, 0.363);
+    background-color: rgba(50, 63, 83, 0.767);
     border-radius: 2vh;
     box-shadow: 2vh 2vh 1vh rgba(0, 0, 0, 0.308);
 }
