@@ -40,7 +40,7 @@ const TodoList = () => {
             {todos.map((entries) => (
 
                 <div className='todoEntry-container' key={entries.id}>
-                    <div className="todoEntry-box todo-title">  {entries.title}  </div>
+                    <div className="todoEntry-box todo-title" id={`todo-title-${entries.id}`}>     {entries.title}  </div>
                     <div className="todoEntry-box todo-desc">   {entries.desc}  </div>
                     <div className="todoEntry-box">             <TodoCheckmarkButton currentTodo={entries} todo={todos} setTodos={setTodos} funcUpdateList={updateList} /> </div>
                 </div>
@@ -62,6 +62,8 @@ export default TodoList;
 /*
     gibt es ne elegantere Lösung für updateList, damit die function nicht als prop weitergegeben werden muss?
 
-
+        function foo(){} 
+            vs 
+        const foo = () => {}
 
 */

@@ -3,6 +3,7 @@ import Checkbox from '@mui/material/Checkbox';
 import "./TodoCheckmarkButton.css"
 
 
+
 const TodoCheckmarkButton = ({ currentTodo, funcUpdateList }) => {
 
 
@@ -44,10 +45,30 @@ const TodoCheckmarkButton = ({ currentTodo, funcUpdateList }) => {
 
     }
 
+    const toggleStrikethrough = (todo) => {
+        var title = document.getElementById("todo-title-" + todo.id);
+        if (todo.fulfilled) {
+            title.style.textDecoration = "line-through"
+            title.style.color = "rgba(128, 128, 128, 0.514)";
+        }
+        else {
+            title.style.textDecoration = ""
+            title.style.color = "white";
+
+        }
+    }
+
+    const toggleTodo = (todo) => {
+        todoToggleFulfill(todo.id);
+        toggleStrikethrough(todo);
+    }
+
     return (
         <div id="todoButtonContainer">
             {/* <p> this todo is: {currentTodo.fulfilled.toString()}</p> */}
-            <Checkbox classes={{ root: 'custom-checkbox-root' }} checked={currentTodo.fulfilled} onChange={() => todoToggleFulfill(currentTodo.id)} color="primary" />
+            {/* <Checkbox classes={{ root: 'custom-checkbox-root' }} checked={currentTodo.fulfilled} onChange={() => todoToggleFulfill(currentTodo.id)} color="primary" /> */}
+            <Checkbox classes={{ root: 'custom-checkbox-root' }} checked={currentTodo.fulfilled} onChange={() => toggleTodo(currentTodo)} color="primary" />
+
             {/* <button className="todoButton" onClick={() => todoToggleFulfill(currentTodo.id)}> {currentTodo.fulfilled.toString()} </button> */}
         </div>
     );
