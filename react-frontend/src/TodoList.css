@@ -1,0 +1,40 @@
+.todoEntry-container {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 50%;
+    color: white;
+    /* Evenly distribute space */
+
+    /* border-style: double;
+    border-color: black;
+    border-width: 1vh; */
+
+    background-color: rgba(50, 63, 83, 0.767);
+    border-radius: 2vh;
+    box-shadow: 2vh 2vh 1vh rgba(0, 0, 0, 0.308);
+}
+
+.todoEntry-box {
+    flex: 1;
+    /* Take up equal space */
+    /* margin: 0 10px; */
+    /* Optional spacing between boxes */
+    text-align: center;
+    padding: 2%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.todo-title {
+    font-size: 1.5vw;
+    font-weight: bolder;
+}
+
+.todo-desc {
+    font-size: 1vw;
+}

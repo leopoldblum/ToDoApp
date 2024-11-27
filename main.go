@@ -9,6 +9,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
+
+	"github.com/gin-contrib/cors"
 )
 
 type Body struct {
@@ -39,11 +41,12 @@ func insertTodoInDB(title string, desc string, fulfilled bool, getDB *sql.DB) bo
 	//sqlStatement := `INSERT INTO todos (title, description, fulfilled) VALUES ('test_inVSCode23423423', 'test_desc23423432', false)`
 
 	_, err := getDB.Exec(sqlStatement, title, desc, fulfilled)
-	if err != nil {
+	return err == nil
+	/* if err != nil {
 		return false
 		//panic(err)
 	}
-	return true
+	return true */
 }
 
 func main() {
@@ -64,6 +67,8 @@ func main() {
 	fmt.Println("Successfully connected!")
 
 	router := gin.Default()
+
+	router.Use(cors.Default())
 
 	// get entry with id
 	router.GET("todo/:id", func(ctx *gin.Context) {
@@ -188,7 +193,6 @@ func main() {
 }
 
 // TODO:
-// panics ersetzen, done?
 
 // Frontend:
 // Frameworks: react, sveltekit, astro (-> astro_island)

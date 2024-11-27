@@ -1,0 +1,113 @@
+---
+
+---
+
+<form id="newTodoForm" autocomplete="off">
+    <label>
+        <input
+            type="text"
+            id="newTodoTitle"
+            placeholder="title"
+            name="title"
+            required
+        />
+    </label>
+
+    <br />
+
+    <label>
+        <input
+            type="text"
+            id="newTodoDesc"
+            placeholder="description"
+            name="description"
+        />
+    </label>
+
+    <br />
+
+    <input type="submit" id="submitButton" value="add new Todo!" />
+</form>
+
+<script>
+    let form = document.getElementById("newTodoForm");
+    form?.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        var title = (
+            document.getElementById("newTodoTitle") as HTMLInputElement
+        ).value;
+
+        var desc = (document.getElementById("newTodoDesc") as HTMLInputElement)
+            .value;
+
+        const todoBody = { title: title, desc: desc, fulfilled: false };
+
+        // alert("adding: " + JSON.stringify(todoBody));
+        try {
+            const postNewTodoResponse = await fetch(
+                "http://localhost:8080/todo",
+                {
+                    method: "POST",
+                    body: JSON.stringify(todoBody),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                },
+            );
+
+            console.log("postNewTodoResponse: " + postNewTodoResponse.status);
+
+            if (!postNewTodoResponse.ok) {
+                throw new Error(
+                    "Error - Response Status:" + postNewTodoResponse.status,
+                );
+            }
+
+            // LOL, reactivity ig
+            location.reload();
+        } catch (error) {
+            console.error(error);
+        }
+    });
+</script>
+
+<style>
+    #newTodoForm {
+        display: inline-block;
+        width: 100%;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        /* padding: 10px 20px; */
+        margin: 2% 0;
+        box-sizing: border-box;
+        background-color: lightgrey;
+    }
+
+    input::placeholder {
+        color: darkgrey;
+        opacity: 1;
+    }
+
+    #newTodoTitle {
+        padding: 10px 20px;
+        width: 60%;
+    }
+
+    #newTodoDesc {
+        padding: 20px 20px;
+        width: 75%;
+    }
+
+    #submitButton {
+        border: 0;
+        padding: 10px 20px;
+    }
+
+    #submitButton:hover {
+        background-color: lightslategray;
+        transition-duration: 500ms;
+    }
+</style>

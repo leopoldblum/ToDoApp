@@ -1,0 +1,61 @@
+.openPopup-button {
+    background-color: rgba(141, 252, 165, 0.644);
+    color: white;
+
+    width: 20%;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+
+    margin-top: 2vh;
+    margin-bottom: 1vh;
+
+    border: none;
+    cursor: pointer;
+
+    border-radius: 2vh;
+}
+
+.openPopup-button:hover {
+    background-color: rgba(141, 252, 165, 0.795);
+    box-shadow: 15px 10px 20px 5px rgba(75, 75, 75, 0.9);
+
+}
+
+.addTodoForm {
+    display: none;
+    transition: all 2s;
+}
+
+.addTodoForm input[type="text"] {
+    width: 15%;
+    height: 6vh;
+    margin: 0.5vh;
+
+    border-radius: 0.5vh;
+    text-align: center;
+
+    background-color: #fcf6f6ea;
+}
+
+.addTodoForm input[type=text]:focus {
+    background-color: white;
+    outline: none;
+}
+
+.addTodoForm-submitButton {
+    width: 10%;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+
+    border: none;
+    cursor: pointer;
+    border-radius: 2vh;
+}
+
+.addTodoForm-submitButton:hover {
+    background-color: rgba(141, 252, 165, 0.795);
+    box-shadow: 15px 10px 20px 5px rgba(75, 75, 75, 0.9);
+}
