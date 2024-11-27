@@ -1,46 +1,39 @@
-#test {
-    background-color: lightcoral;
-}
-
-#todoList {
-    background-color: lightblue;
-    width: 50%;
-    padding: 3%;
-    margin: auto;
-}
-
-.todoEntry {
-    background-color: greenyellow;
-    padding: 5% 5%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-
+.todoEntry-container {
     display: flex;
     justify-content: space-between;
+    margin: auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 50%;
+    /* Evenly distribute space */
+
+    /* border-style: double;
+    border-color: black;
+    border-width: 1vh; */
+
+    background-color: rgba(60, 61, 60, 0.363);
+    border-radius: 2vh;
+    box-shadow: 2vh 2vh 1vh rgba(0, 0, 0, 0.308);
 }
 
-.todoTitle {
-    width: 25%;
-    font-weight: 900;
-    padding: 3%;
+.todoEntry-box {
+    flex: 1;
+    /* Take up equal space */
+    /* margin: 0 10px; */
+    /* Optional spacing between boxes */
     text-align: center;
+    padding: 2%;
 
-    position: relative;
-    top: 50%;
-
-    background-color: bisque;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.todoDesc {
-    font-weight: lighter;
-    width: 30%;
-    padding: 3%;
-    text-align: center;
-
-    /* background-color: bisque; */
+.todo-title {
+    font-size: 1.5vw;
+    font-weight: bolder;
 }
 
-.todoButton {
-    width: 15%;
-    /* background-color: aqua; */
+.todo-desc {
+    font-size: 1vw;
 }
