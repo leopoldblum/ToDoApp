@@ -81,7 +81,9 @@ const TodoAddButton = (({ funcUpdateList }) => {
 
                     <input type="text" className="addTodoForm-input" id="myTodoForm-title" placeholder="title" autoComplete="off" required />
                     <br />
-                    <input type="text" className="addTodoForm-input" id="myTodoForm-desc" placeholder="description" autoComplete="off" />
+                    {/* <input type="text" className="addTodoForm-input" id="myTodoForm-desc" placeholder="description" autoComplete="off" /> */}
+                    <br />
+                    <textarea type="text" className="addTodoForm-desc" id="myTodoForm-desc" form="addTodoForm" placeholder="description" autoComplete="off" autoCorrect="off" spellCheck="off" />
                     <br />
                     <input type="submit" className="addTodoForm-submitButton" value={"add!"} />
                 </form>

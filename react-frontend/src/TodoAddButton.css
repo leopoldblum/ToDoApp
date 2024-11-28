@@ -7,7 +7,7 @@
     padding-bottom: 3vh;
 
     margin-top: 2vh;
-    margin-bottom: 1vh;
+    margin-bottom: 2vh;
 
     border: none;
     cursor: pointer;
@@ -26,20 +26,28 @@
     transition: all 2s;
 }
 
-.addTodoForm input[type="text"] {
+.addTodoForm input[type="text"],
+.addTodoForm-desc {
     width: 15%;
     height: 6vh;
     margin: 0.5vh;
+    padding-left: 2vh;
+    padding-right: 2vh;
 
     border-radius: 0.5vh;
-    text-align: center;
-
     background-color: #fcf6f6ea;
+    resize: none;
 }
 
-.addTodoForm input[type=text]:focus {
+.addTodoForm input[type=text]:focus,
+.addTodoForm-desc:focus {
     background-color: white;
     outline: none;
+}
+
+.addTodoForm input[type=text]::placeholder,
+.addTodoForm-desc::placeholder {
+    text-align: center;
 }
 
 .addTodoForm-submitButton {
