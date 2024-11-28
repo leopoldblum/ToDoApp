@@ -14,6 +14,8 @@ const TodoAddButton = (({ funcUpdateList }) => {
 
             var inputs = document.getElementById("myTodoForm")
             inputs.reset();
+            var inputDesc = document.getElementById("myTodoForm-desc")
+            inputDesc.value = "";
         }
     }
 
