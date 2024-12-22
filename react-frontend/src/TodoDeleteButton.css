@@ -1,0 +1,30 @@
+.todoEntry-desc-delete {
+    flex: 1;
+
+}
+
+.todoEntry-desc-delete-button {
+
+    padding: 2.5vh;
+    padding-left: 3vw;
+    padding-right: 3vw;
+
+    border-radius: 2vh;
+    border: none;
+
+    content: "delete?";
+}
+
+.todoEntry-desc-delete-button:hover::after {
+    content: "are you sure?";
+}
+
+.todoEntry-desc-delete-button:hover {
+    background-color: rgba(190, 31, 31, 0.699);
+    transition-duration: 0.5s;
+
+}
+
+.todoEntry-desc-delete-button::after {
+    content: "delete";
+}

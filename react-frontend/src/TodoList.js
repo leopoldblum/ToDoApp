@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './TodoList.css'
 import TodoCheckmarkButton from './TodoCheckmarkButton';
 import TodoAddButton from './TodoAddButton';
-
+import TodoDeleteButton from "./TodoDeleteButton";
 
 const TodoList = () => {
 
@@ -58,13 +58,15 @@ const TodoList = () => {
                     }
 
 
-                    <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} todo={todos} setTodos={setTodos} funcUpdateList={updateList} /> </div>
+                    <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> </div>
 
 
                     {activeTodos.includes(entries.id) && (
                         <div className="todoEntry-desc-popup">
                             <div className="todoEntry-desc-text">{entries.desc}</div>
-                            <div className="todoEntry-desc-delete">  delete   </div>
+                            {/* <div className="todoEntry-desc-delete">  delete   </div> */}
+                            <TodoDeleteButton currentTodo={entries} funcUpdateList={updateList} />
+
                         </div>
                     )}
                 </div>

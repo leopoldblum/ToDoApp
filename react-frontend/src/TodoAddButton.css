@@ -13,6 +13,9 @@
     cursor: pointer;
 
     border-radius: 2vh;
+
+    transition-duration: 0.3s;
+
 }
 
 .openPopup-button:hover {
@@ -30,7 +33,7 @@
 .addTodoForm-desc {
     width: 15%;
     height: 6vh;
-    margin: 0.5vh;
+    margin-top: 0.5vh;
     padding-left: 2vh;
     padding-right: 2vh;
 
@@ -55,12 +58,15 @@
     padding-top: 1vh;
     padding-bottom: 1vh;
 
-    margin-top: 1vh;
+    margin-top: 2vh;
     margin-bottom: 1vh;
 
     border: none;
     cursor: pointer;
     border-radius: 2vh;
+
+    transition-duration: 0.3s;
+
 }
 
 .addTodoForm-submitButton:hover {

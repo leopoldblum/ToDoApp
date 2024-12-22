@@ -19,7 +19,6 @@
 
 
     white-space: pre-line;
-
 }
 
 .todoEntry-box {
@@ -35,6 +34,8 @@
     align-items: center;
 
     position: relative;
+
+    transition: all 0.3s ease-in-out;
 }
 
 .todo-title {
@@ -61,7 +62,7 @@
 
     align-items: center;
 
-
+    transition: all 0.3s ease-in-out;
 }
 
 .todoEntry-desc-text {
@@ -71,11 +72,6 @@
     padding: 5vh;
 }
 
-.todoEntry-desc-delete {
-    flex: 1;
-    padding: 5vh;
-
-}
 
 .todo-title-linethrough {
     text-decoration: line-through;
