@@ -34,8 +34,6 @@
     align-items: center;
 
     position: relative;
-
-    transition: all 0.3s ease-in-out;
 }
 
 .todo-title {
@@ -61,8 +59,6 @@
     border-bottom-right-radius: 2vh;
 
     align-items: center;
-
-    transition: all 0.3s ease-in-out;
 }
 
 .todoEntry-desc-text {

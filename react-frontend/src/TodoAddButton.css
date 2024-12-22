@@ -18,6 +18,11 @@
 
 }
 
+.addTodoForm-container {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
 .openPopup-button:hover {
     background-color: rgba(141, 252, 165, 0.795);
     box-shadow: 15px 10px 20px 5px rgba(75, 75, 75, 0.9);
@@ -26,7 +31,6 @@
 
 .addTodoForm {
     display: none;
-    transition: all 2s;
 }
 
 .addTodoForm input[type="text"],

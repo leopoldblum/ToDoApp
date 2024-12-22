@@ -60,7 +60,7 @@ const TodoList = () => {
 
                     <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> </div>
 
-
+                    {/* statt komplett neu zu rendern, lieber visibility togglen, das erlaubt transitions */}
                     {activeTodos.includes(entries.id) && (
                         <div className="todoEntry-desc-popup">
                             <div className="todoEntry-desc-text">{entries.desc}</div>

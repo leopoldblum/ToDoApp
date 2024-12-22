@@ -72,13 +72,13 @@ const TodoAddButton = (({ funcUpdateList }) => {
     // ??? profit
 
     return (
-        <div>
+        <div className="addTodoForm-container" v>
 
             <button className="openPopup-button" id="openPopup-button" onClick={togglePopupForm}>
                 - add a new todo -
             </button>
 
-            <div>
+            <div className="addTodoForm-popup-container">
                 <form className="addTodoForm" id="myTodoForm" onSubmit={submitTodo}>
 
                     <input type="text" className="addTodoForm-input" id="myTodoForm-title" placeholder="title" autoComplete="off" required />
