@@ -1,6 +1,8 @@
 .todoEntry-desc-delete {
     flex: 1;
 
+    margin-top: 2vh;
+    margin-bottom: 2vh;
 }
 
 .todoEntry-desc-delete-button {

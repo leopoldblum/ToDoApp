@@ -89,4 +89,7 @@ export default TodoList;
             vs 
         const foo = () => {}
 
+
+    es gibt keine css animationen bei display: none -> block, wie kann man das dann machen?
+
 */
