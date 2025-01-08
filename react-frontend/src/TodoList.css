@@ -13,7 +13,9 @@
     border-color: black;
     border-width: 1vh; */
 
-    background-color: rgba(50, 63, 83, 0.767);
+    /* background-color: rgba(50, 63, 83, 0.767); */
+    background-color: #4B6D5B;
+
     border-radius: 2vh;
     box-shadow: 2vh 2vh 1vh rgba(0, 0, 0, 0.308);
 
@@ -27,7 +29,7 @@
     /* margin: 0 10px; */
     /* Optional spacing between boxes */
     text-align: center;
-    padding: 2%;
+    padding: 3%;
 
     display: flex;
     justify-content: center;
@@ -39,10 +41,13 @@
 .todo-title {
     flex: 2;
     font-size: 1.5vw;
+    padding-left: 7%;
     font-weight: bolder;
     position: relative;
+    justify-content: left;
 
     user-select: none;
+    color: #e8e6d6;
     /* background-color: lightblue; */
 }
 
@@ -54,7 +59,9 @@
 
     display: flex;
 
-    background-color: rgb(106, 106, 236);
+    /* background-color: rgb(106, 106, 236); */
+    background-color: #8e9982;
+
     border-bottom-left-radius: 2vh;
     border-bottom-right-radius: 2vh;
 
@@ -66,6 +73,8 @@
     text-align: left;
     flex: 2.5;
     padding: 5vh;
+
+    color: black;
 }
 
 

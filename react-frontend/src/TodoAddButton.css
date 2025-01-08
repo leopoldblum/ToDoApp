@@ -1,5 +1,6 @@
 .openPopup-button {
-    background-color: rgba(141, 252, 165, 0.644);
+    /* background-color: rgba(141, 252, 165, 0.644); */
+    background-color: #8e9982;
     color: white;
 
     width: 20%;
@@ -21,6 +22,7 @@
 .addTodoForm-container {
     margin-top: 5vh;
     margin-bottom: 5vh;
+
 }
 
 .openPopup-button:hover {
