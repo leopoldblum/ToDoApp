@@ -11,10 +11,14 @@ const TodoList = () => {
 
     const updateList = async () => {
         try {
+
             const response = await fetch("http://localhost:8080/todos")
             const allEntries = await response.json();
 
+
+            // setTimeout(() => setTodos(allEntries), 200);
             setTodos(allEntries);
+            // setCompletedTodos(allEntries.filter(openTodos);
 
         }
         catch (error) {
@@ -47,15 +51,40 @@ const TodoList = () => {
             {/* render add todo button form */}
             <TodoAddButton funcUpdateList={updateList} />
 
+
+            {/* Active Todos */}
+            <h1> active todos </h1>
+
             {/* render todo list */}
-            {todos.map((entries) => (
+            {todos.filter(entries => entries.fulfilled === false).map((entries) => (
 
                 <div className='todoEntry-container' key={entries.id}>
 
-                    {entries.fulfilled
-                        ? <div className="todoEntry-box todo-title todo-title-linethrough " onClick={() => toggleDesc(entries.id)}  >     {entries.title}  </div>
-                        : <div className="todoEntry-box todo-title" onClick={() => toggleDesc(entries.id)}  >     {entries.title} </div>
-                    }
+                    <div className="todoEntry-box todo-title" onClick={() => toggleDesc(entries.id)}> {entries.title} </div>
+
+                    <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> </div>
+
+                    {/* statt komplett neu zu rendern, lieber visibility togglen, das erlaubt transitions */}
+                    {activeTodos.includes(entries.id) && (
+                        <div className="todoEntry-desc-popup">
+                            <div className="todoEntry-desc-text">{entries.desc}</div>
+                            {/* <div className="todoEntry-desc-delete">  delete   </div> */}
+                            <TodoDeleteButton currentTodo={entries} funcUpdateList={updateList} />
+
+                        </div>
+                    )}
+                </div>
+            ))
+            }
+
+            {/* completed todos */}
+            <h1> completed Todos</h1>
+
+            {todos.filter(entries => entries.fulfilled === true).map((entries) => (
+
+                <div className='todoEntry-container' key={entries.id}>
+
+                    <div className="todoEntry-box todo-title todo-title-linethrough " onClick={() => toggleDesc(entries.id)}  >     {entries.title}  </div>
 
 
                     <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> </div>
@@ -72,7 +101,10 @@ const TodoList = () => {
                 </div>
             ))
             }
+
             <button onClick={() => updateList()}> update? </button>
+
+            {/* delete all completed Todos */}
 
         </div>
     );
