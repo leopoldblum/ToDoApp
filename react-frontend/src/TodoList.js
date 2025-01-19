@@ -53,7 +53,15 @@ const TodoList = () => {
 
 
             {/* Active Todos */}
-            <h1> active todos </h1>
+            <div className='section-todos-header'>
+                <div className='section-todos-header-title'>
+                    <h1> active todos </h1>
+                </div>
+
+                <div className='header-button-container'>
+                    <button onClick={() => updateList()} id='header-button'> collapse all desc  </button>
+                </div>
+            </div>
 
             {/* render todo list */}
             {todos.filter(entries => entries.fulfilled === false).map((entries) => (
@@ -78,13 +86,25 @@ const TodoList = () => {
             }
 
             {/* completed todos */}
-            <h1> completed Todos</h1>
+
+
+            <div className='section-todos-header'>
+                <div className='section-todos-header-title'>
+                    <h1> completed todos </h1>
+                </div>
+
+                <div className='header-button-container'>
+                    <button onClick={() => updateList()} id='header-button'> clear completed todos WIP  </button>
+                </div>
+
+            </div>
+
 
             {todos.filter(entries => entries.fulfilled === true).map((entries) => (
 
-                <div className='todoEntry-container' key={entries.id}>
+                <div className='todoEntry-container todoEntryCompleted-container' key={entries.id}>
 
-                    <div className="todoEntry-box todo-title todo-title-linethrough " onClick={() => toggleDesc(entries.id)}  >     {entries.title}  </div>
+                    <div className="todoEntry-box todo-title todo-title-linethrough " onClick={() => toggleDesc(entries.id)}  >  {entries.title}  </div>
 
 
                     <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> </div>
@@ -104,7 +124,7 @@ const TodoList = () => {
 
             <button onClick={() => updateList()}> update? </button>
 
-            {/* delete all completed Todos */}
+            {/* button to delete all completed Todos */}
 
         </div>
     );
@@ -124,4 +144,7 @@ export default TodoList;
 
     es gibt keine css animationen bei display: none -> block, wie kann man das dann machen?
 
+    wie sollte die pop up description am besten getoggled werden?
+
+    wie mach man gutes responsive design, sodass das nach verschieben nicht ass aussieht?
 */
