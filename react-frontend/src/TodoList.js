@@ -16,10 +16,7 @@ const TodoList = () => {
             const allEntries = await response.json();
 
 
-            // setTimeout(() => setTodos(allEntries), 200);
             setTodos(allEntries);
-            // setCompletedTodos(allEntries.filter(openTodos);
-
         }
         catch (error) {
             console.error("recv error:", error);
@@ -37,17 +34,23 @@ const TodoList = () => {
         });
     }
 
-    const toggleDisplayTodos = () => {
-        const displayTodosID = document.getElementById("all-active-todos-container")
-        if (displayTodosID.classList.contains("visible")) {
-            displayTodosID.classList.remove("visible");
-            displayTodosID.classList.add("hidden")
+    const toggleVisibilityOfTodoLists = (elemClassName, headerClass) => {
+        const toggleVisibilityElem = document.getElementById(elemClassName);
+        const headerTypeID = document.getElementById(headerClass);
+
+        if (toggleVisibilityElem.classList.contains("visible")) {
+            toggleVisibilityElem.classList.remove("visible");
+            toggleVisibilityElem.classList.add("hidden")
+            headerTypeID.scrollIntoView({ behavior: "smooth", block: "center" })
         }
         else {
-            displayTodosID.classList.remove("hidden")
-            displayTodosID.classList.add("visible")
+            toggleVisibilityElem.classList.remove("hidden")
+            toggleVisibilityElem.classList.add("visible")
+            headerTypeID.scrollIntoView({ behavior: "smooth", block: "start" })
+
         }
     }
+
 
     useEffect(() => {
         updateList();
@@ -58,7 +61,7 @@ const TodoList = () => {
     }
 
     return (
-        <div id="todoList" className='visible'>
+        <div id="todoList">
 
             {/* render add todo button form */}
             <TodoAddButton funcUpdateList={updateList} />
@@ -66,7 +69,7 @@ const TodoList = () => {
 
             {/* Active Todos */}
             <div className='section-todos-header'>
-                <div className='section-todos-header-title' onClick={() => toggleDisplayTodos()}>
+                <div className='section-todos-header-title' id="header-actives" onClick={() => toggleVisibilityOfTodoLists("all-active-todos-container", "header-actives")}>
                     <h1> active todos </h1>
                 </div>
 
@@ -76,10 +79,10 @@ const TodoList = () => {
             </div>
 
             {/* render todo list */}
-            <div id="all-active-todos-container">
+            <div id="all-active-todos-container" className='hidden'>
                 {todos.filter(entries => entries.fulfilled === false).map((entries) => (
 
-                    <div className='todoEntry-container' key={entries.id} >
+                    <div className='todoEntry-container' key={entries.id}>
 
                         <div className="todoEntry-box todo-title" onClick={() => toggleDesc(entries.id)}> {entries.title} </div>
 
@@ -102,8 +105,8 @@ const TodoList = () => {
             {/* completed todos */}
 
 
-            <div className='section-todos-header'>
-                <div className='section-todos-header-title'>
+            <div className='section-todos-header' >
+                <div className='section-todos-header-title' id="header-fulfilled" onClick={() => toggleVisibilityOfTodoLists("all-fulfilled-todos-container", "header-fulfilled")}>
                     <h1> completed todos </h1>
                 </div>
 
@@ -113,29 +116,29 @@ const TodoList = () => {
 
             </div>
 
+            <div id="all-fulfilled-todos-container" className='hidden'>
+                {todos.filter(entries => entries.fulfilled === true).map((entries) => (
 
-            {todos.filter(entries => entries.fulfilled === true).map((entries) => (
+                    <div className='todoEntry-container todoEntryCompleted-container' key={entries.id}>
 
-                <div className='todoEntry-container todoEntryCompleted-container' key={entries.id}>
-
-                    <div className="todoEntry-box todo-title todo-title-linethrough " onClick={() => toggleDesc(entries.id)}  >  {entries.title}  </div>
+                        <div className="todoEntry-box todo-title todo-title-linethrough " onClick={() => toggleDesc(entries.id)}  >  {entries.title}  </div>
 
 
-                    <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> </div>
+                        <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> </div>
 
-                    {/* statt komplett neu zu rendern, lieber visibility togglen, das erlaubt transitions */}
-                    {activeTodos.includes(entries.id) && (
-                        <div className="todoEntry-desc-popup">
-                            <div className="todoEntry-desc-text">{entries.desc}</div>
-                            {/* <div className="todoEntry-desc-delete">  delete   </div> */}
-                            <TodoDeleteButton currentTodo={entries} funcUpdateList={updateList} />
+                        {/* statt komplett neu zu rendern, lieber visibility togglen, das erlaubt transitions */}
+                        {activeTodos.includes(entries.id) && (
+                            <div className="todoEntry-desc-popup">
+                                <div className="todoEntry-desc-text">{entries.desc}</div>
+                                {/* <div className="todoEntry-desc-delete">  delete   </div> */}
+                                <TodoDeleteButton currentTodo={entries} funcUpdateList={updateList} />
 
-                        </div>
-                    )}
-                </div>
-            ))
-            }
-
+                            </div>
+                        )}
+                    </div>
+                ))
+                }
+            </div>
             <button onClick={() => updateList()}> update? </button>
 
             {/* button to delete all completed Todos */}
@@ -157,6 +160,7 @@ export default TodoList;
 
 
     es gibt keine css animationen bei display: none -> block, wie kann man das dann machen?
+        -> warum ist das so wonky mit visibility, height usw.
 
     wie sollte die pop up description am besten getoggled werden?
 

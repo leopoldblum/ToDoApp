@@ -2,7 +2,8 @@
   text-align: center;
   /* background-color: #383838; */
   background-color: #161719;
-
+  min-height: 100vh;
+  padding-bottom: 20vh;
 }
 
 .App-logo {
@@ -20,6 +21,10 @@
 
 .App-intro {
   font-size: large;
+}
+
+.Footer {
+  margin: 25vh;
 }
 
 @keyframes App-logo-spin {
