@@ -7,7 +7,6 @@ const TodoAddButton = (({ funcUpdateList }) => {
 
         if (getMyFormPopup.style.display === "") {
             getMyFormPopup.style.display = "block"
-
         }
         else {
             getMyFormPopup.style.display = ""

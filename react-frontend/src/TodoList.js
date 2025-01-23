@@ -37,6 +37,18 @@ const TodoList = () => {
         });
     }
 
+    const toggleDisplayTodos = () => {
+        const displayTodosID = document.getElementById("all-active-todos-container")
+        if (displayTodosID.classList.contains("visible")) {
+            displayTodosID.classList.remove("visible");
+            displayTodosID.classList.add("hidden")
+        }
+        else {
+            displayTodosID.classList.remove("hidden")
+            displayTodosID.classList.add("visible")
+        }
+    }
+
     useEffect(() => {
         updateList();
     }, []);
@@ -46,7 +58,7 @@ const TodoList = () => {
     }
 
     return (
-        <div id="todoList">
+        <div id="todoList" className='visible'>
 
             {/* render add todo button form */}
             <TodoAddButton funcUpdateList={updateList} />
@@ -54,7 +66,7 @@ const TodoList = () => {
 
             {/* Active Todos */}
             <div className='section-todos-header'>
-                <div className='section-todos-header-title'>
+                <div className='section-todos-header-title' onClick={() => toggleDisplayTodos()}>
                     <h1> active todos </h1>
                 </div>
 
@@ -64,26 +76,28 @@ const TodoList = () => {
             </div>
 
             {/* render todo list */}
-            {todos.filter(entries => entries.fulfilled === false).map((entries) => (
+            <div id="all-active-todos-container">
+                {todos.filter(entries => entries.fulfilled === false).map((entries) => (
 
-                <div className='todoEntry-container' key={entries.id}>
+                    <div className='todoEntry-container' key={entries.id} >
 
-                    <div className="todoEntry-box todo-title" onClick={() => toggleDesc(entries.id)}> {entries.title} </div>
+                        <div className="todoEntry-box todo-title" onClick={() => toggleDesc(entries.id)}> {entries.title} </div>
 
-                    <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> </div>
+                        <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> </div>
 
-                    {/* statt komplett neu zu rendern, lieber visibility togglen, das erlaubt transitions */}
-                    {activeTodos.includes(entries.id) && (
-                        <div className="todoEntry-desc-popup">
-                            <div className="todoEntry-desc-text">{entries.desc}</div>
-                            {/* <div className="todoEntry-desc-delete">  delete   </div> */}
-                            <TodoDeleteButton currentTodo={entries} funcUpdateList={updateList} />
+                        {/* statt komplett neu zu rendern, lieber visibility togglen, das erlaubt transitions */}
+                        {activeTodos.includes(entries.id) && (
+                            <div className="todoEntry-desc-popup">
+                                <div className="todoEntry-desc-text">{entries.desc}</div>
+                                {/* <div className="todoEntry-desc-delete">  delete   </div> */}
+                                <TodoDeleteButton currentTodo={entries} funcUpdateList={updateList} />
 
-                        </div>
-                    )}
-                </div>
-            ))
-            }
+                            </div>
+                        )}
+                    </div>
+                ))
+                }
+            </div>
 
             {/* completed todos */}
 
