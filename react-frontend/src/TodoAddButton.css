@@ -22,7 +22,29 @@
 .addTodoForm-container {
     margin-top: 5vh;
     margin-bottom: 5vh;
+}
 
+#that-addTodoForm-popup-container {
+    display: block;
+    opacity: 1;
+    overflow: hidden;
+
+    /* Standardwerte */
+}
+
+#that-addTodoForm-popup-container.visible {
+    opacity: 1;
+    max-height: 50vh;
+    /* Zielhöhe */
+    transition: all 0.5s ease-in;
+    /* Schnellere Animation beim Ausklappen */
+}
+
+#that-addTodoForm-popup-container.hidden {
+    opacity: 0;
+    max-height: 0;
+    transition: all 0.5s linear;
+    /* Langsamere Animation beim Einklappen */
 }
 
 .openPopup-button:hover {
@@ -32,8 +54,9 @@
 }
 
 .addTodoForm {
-    display: none;
+    display: block;
 }
+
 
 .addTodoForm input[type="text"],
 .addTodoForm-desc {
@@ -65,7 +88,7 @@
     padding-bottom: 1vh;
 
     margin-top: 2vh;
-    margin-bottom: 1vh;
+    margin-bottom: 3vh;
 
     border: none;
     cursor: pointer;

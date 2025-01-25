@@ -39,15 +39,20 @@ const TodoList = () => {
         const headerTypeID = document.getElementById(headerClass);
 
         if (toggleVisibilityElem.classList.contains("visible")) {
+            toggleVisibilityElem.style.height = 0;
+
             toggleVisibilityElem.classList.remove("visible");
             toggleVisibilityElem.classList.add("hidden")
             headerTypeID.scrollIntoView({ behavior: "smooth", block: "center" })
         }
         else {
+
             toggleVisibilityElem.classList.remove("hidden")
             toggleVisibilityElem.classList.add("visible")
-            headerTypeID.scrollIntoView({ behavior: "smooth", block: "start" })
+            toggleVisibilityElem.style.height = toggleVisibilityElem.scrollHeight + "px";
 
+            toggleVisibilityElem.addEventListener("transitionend", () => headerTypeID.scrollIntoView({ behavior: "smooth", block: "start" }), { once: true });
+            // headerTypeID.scrollIntoView({ behavior: "smooth", block: "start" })
         }
     }
 

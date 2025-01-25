@@ -2,19 +2,35 @@ import "./TodoAddButton.css"
 
 const TodoAddButton = (({ funcUpdateList }) => {
 
-    function togglePopupForm() {
-        const getMyFormPopup = document.getElementById("myTodoForm")
+    // function togglePopupForm() {
+    //     const getMyFormPopup = document.getElementById("myTodoForm")
 
-        if (getMyFormPopup.style.display === "") {
-            getMyFormPopup.style.display = "block"
+    //     if (getMyFormPopup.style.display === "") {
+    //         getMyFormPopup.style.display = "block"
+    //     }
+    //     else {
+    //         getMyFormPopup.style.display = ""
+
+    //         var inputs = document.getElementById("myTodoForm")
+    //         inputs.reset();
+    //         var inputDesc = document.getElementById("myTodoForm-desc")
+    //         inputDesc.value = "";
+    //     }
+    // }
+
+    function togglePopupForm() {
+        const getFormContainer = document.getElementById("that-addTodoForm-popup-container")
+
+        if (getFormContainer.classList.contains("hidden")) {
+            getFormContainer.classList.remove("hidden");
+            getFormContainer.classList.add("visible");
+
+            getFormContainer.scrollIntoView({ behavior: "smooth", block: "center" })
+
         }
         else {
-            getMyFormPopup.style.display = ""
-
-            var inputs = document.getElementById("myTodoForm")
-            inputs.reset();
-            var inputDesc = document.getElementById("myTodoForm-desc")
-            inputDesc.value = "";
+            getFormContainer.classList.remove("visible");
+            getFormContainer.classList.add("hidden");
         }
     }
 
@@ -77,8 +93,8 @@ const TodoAddButton = (({ funcUpdateList }) => {
                 - add a new todo -
             </button>
 
-            <div className="addTodoForm-popup-container">
-                <form className="addTodoForm" id="myTodoForm" onSubmit={submitTodo}>
+            <div className="hidden" id="that-addTodoForm-popup-container">
+                <form className="addTodoForm " id="myTodoForm" onSubmit={submitTodo}>
 
                     <input type="text" className="addTodoForm-input" id="myTodoForm-title" placeholder="title" autoComplete="off" required />
                     <br />

@@ -142,18 +142,14 @@
 #all-fulfilled-todos-container {
     display: block;
     overflow: hidden;
-
-
-    /* background-color: white; */
 }
 
 #all-active-todos-container.visible,
 #all-fulfilled-todos-container.visible {
 
     opacity: 1;
-    height: 100%;
 
-    transition: all 0.3s ease-in;
+    transition: all 0.4s ease-in;
 }
 
 #all-active-todos-container.hidden,
@@ -161,5 +157,5 @@
     opacity: 0;
     height: 0;
 
-    transition: all 0.3s ease-out;
+    transition: all 0.3s linear;
 }
