@@ -15,7 +15,7 @@
 
     border-radius: 2vh;
 
-    transition-duration: 0.3s;
+    transition-duration: 0.2s;
 
 }
 
@@ -36,20 +36,20 @@
     opacity: 1;
     max-height: 50vh;
     /* Zielhöhe */
-    transition: all 0.5s ease-in;
+    transition: all 0.2s ease-in;
     /* Schnellere Animation beim Ausklappen */
 }
 
 #that-addTodoForm-popup-container.hidden {
     opacity: 0;
     max-height: 0;
-    transition: all 0.5s linear;
+    transition: all 0.2s linear;
     /* Langsamere Animation beim Einklappen */
 }
 
 .openPopup-button:hover {
-    background-color: rgba(141, 252, 165, 0.795);
-    box-shadow: 15px 10px 20px 5px rgba(75, 75, 75, 0.9);
+    /* background-color: rgba(141, 252, 165, 0.795); */
+    box-shadow: 10px 5px 20px 5px rgba(75, 75, 75, 0.9);
 
 }
 

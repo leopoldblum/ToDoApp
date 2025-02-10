@@ -2,22 +2,6 @@ import "./TodoAddButton.css"
 
 const TodoAddButton = (({ funcUpdateList }) => {
 
-    // function togglePopupForm() {
-    //     const getMyFormPopup = document.getElementById("myTodoForm")
-
-    //     if (getMyFormPopup.style.display === "") {
-    //         getMyFormPopup.style.display = "block"
-    //     }
-    //     else {
-    //         getMyFormPopup.style.display = ""
-
-    //         var inputs = document.getElementById("myTodoForm")
-    //         inputs.reset();
-    //         var inputDesc = document.getElementById("myTodoForm-desc")
-    //         inputDesc.value = "";
-    //     }
-    // }
-
     function togglePopupForm() {
         const getFormContainer = document.getElementById("that-addTodoForm-popup-container")
 
@@ -39,12 +23,12 @@ const TodoAddButton = (({ funcUpdateList }) => {
     const submitTodo = async (e) => {
         e.preventDefault();
 
-        var title =
-            document.getElementById("myTodoForm-title").value;
+        var titleElem =
+            document.getElementById("myTodoForm-title");
 
-        var desc = document.getElementById("myTodoForm-desc").value;
+        var descElem = document.getElementById("myTodoForm-desc");
 
-        const todoBody = { title: title, desc: desc, fulfilled: false };
+        const todoBody = { title: titleElem.value, desc: descElem.value, fulfilled: false };
 
         // alert("adding: " + JSON.stringify(todoBody));
         try {
@@ -66,12 +50,13 @@ const TodoAddButton = (({ funcUpdateList }) => {
                     "Error - Response Status:" + postNewTodoResponse.status,
                 );
             }
-            togglePopupForm();
+
+            titleElem.value = "";
+            descElem.value = "";
+
+            //togglePopupForm();
 
             funcUpdateList();
-
-            // setTimeout(funcUpdateList, 500);
-
 
         } catch (error) {
             console.error(error);

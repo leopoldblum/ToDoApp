@@ -7,13 +7,6 @@
     margin-bottom: 2%;
     width: 50%;
     color: white;
-    /* Evenly distribute space */
-
-    /* border-style: double;
-    border-color: black;
-    border-width: 1vh; */
-
-    /* background-color: rgba(50, 63, 83, 0.767); */
 
     border-radius: 2vh;
     border-top-left-radius: 0;
@@ -43,7 +36,6 @@
     align-items: center;
 
     position: relative;
-
 }
 
 .todo-title {
@@ -58,7 +50,6 @@
     color: #e8e6d6;
 
     cursor: pointer;
-    /* background-color: lightblue; */
 }
 
 .todoEntry-desc-popup {
@@ -103,7 +94,7 @@
     align-items: center;
     justify-content: center;
 
-    margin: 7vh auto 1vh auto;
+    margin: 5vh auto 1vh auto;
 
     border-bottom-style: inset;
     border-left-style: inset;
@@ -157,13 +148,15 @@
 
     opacity: 1;
 
+    max-height: 5000vh;
+
     transition: all 0.4s ease-in;
 }
 
 #all-active-todos-container.hidden,
 #all-fulfilled-todos-container.hidden {
     opacity: 0;
-    height: 0;
+    max-height: 0;
 
     transition: all 0.3s linear;
 }

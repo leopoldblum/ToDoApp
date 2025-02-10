@@ -1,0 +1,20 @@
+.collapse-all-button {
+    background-color: #8e9982;
+    color: white;
+    font-weight: normal;
+
+    padding: 1.5vh 3vw 1.5vh 3vw;
+
+    border: none;
+    border-radius: 1vh;
+    border-bottom-left-radius: 0;
+    margin-bottom: 0.2vh;
+}
+
+.collapse-all-button:hover {
+    background-color: lightcoral;
+    font-weight: bolder;
+
+    transition: all 0.3s;
+    cursor: pointer;
+}

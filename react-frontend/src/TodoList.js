@@ -4,6 +4,7 @@ import TodoCheckmarkButton from './TodoCheckmarkButton';
 import TodoAddButton from './TodoAddButton';
 import TodoDeleteButton from "./TodoDeleteButton";
 import TodoDeleteAllFulfilledButton from './TodoDeleteAllFulfilledButton';
+import CollapseButton from './TodoCollapseAllButton';
 
 const TodoList = () => {
 
@@ -35,13 +36,21 @@ const TodoList = () => {
         });
     }
 
+    function toggleActiveDesc() {
+        if (activeTodos.length !== 0) {
+            setActiveTodos([]);
+        }
+        else {
+            setActiveTodos(todos);
+        }
+    }
+
     const toggleVisibilityOfTodoLists = (elemIDtoToggle, headerID) => {
         const toggleVisibilityElem = document.getElementById(elemIDtoToggle);
 
         const headerTypeID = document.getElementById(headerID);
 
         if (toggleVisibilityElem.classList.contains("visible")) {
-            toggleVisibilityElem.style.height = 0;
 
             toggleVisibilityElem.classList.remove("visible");
             toggleVisibilityElem.classList.add("hidden")
@@ -51,20 +60,15 @@ const TodoList = () => {
 
             toggleVisibilityElem.classList.remove("hidden")
             toggleVisibilityElem.classList.add("visible")
-            toggleVisibilityElem.style.height = toggleVisibilityElem.scrollHeight + "px";
 
             toggleVisibilityElem.addEventListener("transitionend", () => headerTypeID.scrollIntoView({ behavior: "smooth", block: "start" }), { once: true });
         }
     }
 
-
     useEffect(() => {
         updateList();
     }, []);
 
-    if (todos.length === 0) {
-        return <p> loading or empty </p>
-    }
 
     return (
         <div id="todoList">
@@ -80,13 +84,14 @@ const TodoList = () => {
                 </div>
 
                 <div className='header-button-container'>
-                    <button onClick={() => updateList()} id='header-button'> collapse all desc  </button>
+                    {/* <button onClick={() => updateList()} id='header-button'> collapse all desc  </button> */}
+                    <CollapseButton funcToggleActiveDesc={toggleActiveDesc} />
                 </div>
             </div>
 
             {/* render todo list */}
             <div id="all-active-todos-container" className='hidden'>
-                {todos.filter(entries => entries.fulfilled === false).map((entries) => (
+                {todos != null && todos.filter(entries => entries.fulfilled === false).map((entries) => (
 
                     <div className='todoEntry-container' key={entries.id}>
 
@@ -100,7 +105,6 @@ const TodoList = () => {
                                 <div className="todoEntry-desc-text">{entries.desc}</div>
                                 {/* <div className="todoEntry-desc-delete">  delete   </div> */}
                                 <TodoDeleteButton currentTodo={entries} funcUpdateList={updateList} />
-
                             </div>
                         )}
                     </div>
@@ -123,12 +127,11 @@ const TodoList = () => {
             </div>
 
             <div id="all-fulfilled-todos-container" className='hidden'>
-                {todos.filter(entries => entries.fulfilled === true).map((entries) => (
+                {todos != null && todos.filter(entries => entries.fulfilled === true).map((entries) => (
 
                     <div className='todoEntry-container todoEntryCompleted-container' key={entries.id}>
 
                         <div className="todoEntry-box todo-title todo-title-linethrough " onClick={() => toggleDesc(entries.id)}  >  {entries.title}  </div>
-
 
                         <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> </div>
 
@@ -138,7 +141,6 @@ const TodoList = () => {
                                 <div className="todoEntry-desc-text">{entries.desc}</div>
                                 {/* <div className="todoEntry-desc-delete">  delete   </div> */}
                                 <TodoDeleteButton currentTodo={entries} funcUpdateList={updateList} />
-
                             </div>
                         )}
                     </div>
@@ -170,4 +172,6 @@ export default TodoList;
 
 
     wie mach man gutes responsive design, sodass das nach verschieben nicht ass aussieht?
+
+    typescript prob goated
 */
