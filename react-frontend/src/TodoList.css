@@ -105,11 +105,16 @@
 
     margin: 7vh auto 1vh auto;
 
-
     border-bottom-style: inset;
     border-left-style: inset;
+    border-top-right-radius: 2vh;
+    border-top-left-radius: 2vh;
+    border-bottom-right-radius: 2vh;
+
 
     cursor: pointer;
+
+    background-color: rgb(34, 34, 34);
 }
 
 .section-todos-header-title {
@@ -118,6 +123,9 @@
     text-align: left;
 
     padding-left: 5vh;
+
+    margin-top: 2vh;
+    margin-bottom: 2vh;
 
     font-size: 1vh;
 
@@ -158,4 +166,12 @@
     height: 0;
 
     transition: all 0.3s linear;
+}
+
+#delete-fulfilled-todos-button.visible {
+    opacity: 1;
+}
+
+#delete-fulfilled-todos-button.hidden {
+    opacity: 0;
 }

@@ -1,14 +1,31 @@
 import "./TodoDeleteAllFulfilledButton.css"
 
-const TodoDeleteAllFulfilledButton = () => {
+const TodoDeleteAllFulfilledButton = ({ funcUpdateList }) => {
 
-    function func() {
-        return alert("gay");
+    async function deleteAllFulfilledTodos() {
+        try {
+            const response = await fetch(
+                "http://localhost:8080/deleteAllFulfilledTodos",
+                {
+                    method: "DELETE",
+                },
+            );
+
+
+            if (!response.ok) {
+                throw new Error("Error - Response Status:" + response.status);
+            }
+
+            funcUpdateList();
+
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return (
-        <div>
-            <button onClick={() => func()}> lösch alle </button>
+        <div className="button-container">
+            <button className="daft-button" onClick={() => deleteAllFulfilledTodos()}> clear all </button>
         </div >
     )
 }

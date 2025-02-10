@@ -35,9 +35,10 @@ const TodoList = () => {
         });
     }
 
-    const toggleVisibilityOfTodoLists = (elemClassName, headerClass) => {
-        const toggleVisibilityElem = document.getElementById(elemClassName);
-        const headerTypeID = document.getElementById(headerClass);
+    const toggleVisibilityOfTodoLists = (elemIDtoToggle, headerID) => {
+        const toggleVisibilityElem = document.getElementById(elemIDtoToggle);
+
+        const headerTypeID = document.getElementById(headerID);
 
         if (toggleVisibilityElem.classList.contains("visible")) {
             toggleVisibilityElem.style.height = 0;
@@ -53,7 +54,6 @@ const TodoList = () => {
             toggleVisibilityElem.style.height = toggleVisibilityElem.scrollHeight + "px";
 
             toggleVisibilityElem.addEventListener("transitionend", () => headerTypeID.scrollIntoView({ behavior: "smooth", block: "start" }), { once: true });
-            // headerTypeID.scrollIntoView({ behavior: "smooth", block: "start" })
         }
     }
 
@@ -116,8 +116,8 @@ const TodoList = () => {
                     <h1> completed todos </h1>
                 </div>
 
-                <div className='header-button-container'>
-                    <TodoDeleteAllFulfilledButton />
+                <div className='header-button-container' id='delete-fulfilled-todos-button'>
+                    <TodoDeleteAllFulfilledButton funcUpdateList={updateList} />
                 </div>
 
             </div>
@@ -168,7 +168,6 @@ export default TodoList;
     es gibt keine css animationen bei display: none -> block, wie kann man das dann machen?
         -> warum ist das so wonky mit visibility, height usw.
 
-    wie sollte die pop up description am besten getoggled werden?
 
     wie mach man gutes responsive design, sodass das nach verschieben nicht ass aussieht?
 */
