@@ -189,6 +189,18 @@ func main() {
 		ctx.IndentedJSON(http.StatusOK, "deleted successfully")
 	})
 
+	router.DELETE("deleteAllFulfilledTodos", func(ctx *gin.Context) {
+		sqlStatement := "DELETE FROM todos WHERE fulfilled=true"
+
+		_, err := db.Query(sqlStatement)
+
+		if err != nil {
+			ctx.IndentedJSON(http.StatusInternalServerError, fmt.Sprintf("Received this error: %d", err))
+		}
+
+		ctx.IndentedJSON(http.StatusOK, "deleted all fulfilled todos sucessfully")
+	})
+
 	router.Run("localhost:8080")
 }
 
