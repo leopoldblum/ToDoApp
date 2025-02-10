@@ -8,7 +8,7 @@ const CollapseButton = (({ funcToggleActiveDesc }) => {
 
     return (
         <div>
-            <button className="collapse-all-button" onClick={() => collapseAllActiveTodos()}> collapse all</button>
+            <button className="collapse-all-button" onClick={() => collapseAllActiveTodos()}> toggle desc</button>
         </div>
     );
 });

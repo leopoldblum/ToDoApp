@@ -41,7 +41,9 @@ const TodoList = () => {
             setActiveTodos([]);
         }
         else {
-            setActiveTodos(todos);
+            // doesnt work
+            const allTodoIDs = todos.map(todo => todo.id)
+            setActiveTodos(allTodoIDs);
         }
     }
 
