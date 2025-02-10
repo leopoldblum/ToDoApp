@@ -3,6 +3,7 @@ import './TodoList.css'
 import TodoCheckmarkButton from './TodoCheckmarkButton';
 import TodoAddButton from './TodoAddButton';
 import TodoDeleteButton from "./TodoDeleteButton";
+import TodoDeleteAllFulfilledButton from './TodoDeleteAllFulfilledButton';
 
 const TodoList = () => {
 
@@ -116,7 +117,7 @@ const TodoList = () => {
                 </div>
 
                 <div className='header-button-container'>
-                    <button onClick={() => updateList()} id='header-button'> clear completed todos WIP  </button>
+                    <TodoDeleteAllFulfilledButton />
                 </div>
 
             </div>
