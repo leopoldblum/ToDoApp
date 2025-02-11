@@ -1,12 +1,11 @@
-import "./TodoListActives.css"
+import "./TodoListDisplay.css"
 import TodoCheckmarkButton from "./TodoCheckmarkButton";
 import TodoDeleteButton from "./TodoDeleteButton";
 
-const TodoListActives = ({ displayFulfilled, todos, activeTodos, toggleDesc, updateList }) => {
+const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, updateList }) => {
 
-    console.log("displayfulfilled = " + displayFulfilled)
     if (displayFulfilled === false) {
-        console.log("reched here")
+
         return (
             <div id="all-active-todos-container" className='hidden'>
                 {todos != null && todos.filter(entries => entries.fulfilled === false).map((entries) => (
@@ -32,8 +31,10 @@ const TodoListActives = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
                 }
             </div>
         )
+
     }
     else {
+
         return (
             <div id="all-fulfilled-todos-container" className='hidden'>
                 {todos != null && todos.filter(entries => entries.fulfilled === true).map((entries) => (
@@ -56,7 +57,8 @@ const TodoListActives = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
                 }
             </div>
         )
+
     }
 }
 
-export default TodoListActives;
+export default TodoListDisplay;

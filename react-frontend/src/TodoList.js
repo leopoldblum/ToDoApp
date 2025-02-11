@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './TodoList.css'
-import TodoCheckmarkButton from './TodoCheckmarkButton';
 import TodoAddButton from './TodoAddButton';
-import TodoDeleteButton from "./TodoDeleteButton";
 import TodoDeleteAllFulfilledButton from './TodoDeleteAllFulfilledButton';
 import CollapseButton from './TodoCollapseAllButton';
-import TodoListActives from './TodoListActives';
+import TodoListDisplay from './TodoListDisplay';
 
 const TodoList = () => {
 
@@ -92,7 +90,7 @@ const TodoList = () => {
                 </div>
             </div>
 
-            <TodoListActives displayFulfilled={false} todos={todos} activeTodos={activeTodos} funcUpdateList={updateList} toggleDesc={toggleDesc} updateList={updateList} />
+            <TodoListDisplay displayFulfilled={false} todos={todos} activeTodos={activeTodos} funcUpdateList={updateList} toggleDesc={toggleDesc} updateList={updateList} />
 
             {/* completed todos */}
             <div className='section-todos-header' >
@@ -107,10 +105,8 @@ const TodoList = () => {
             </div>
 
             {/* render fulfilled todos list */}
-            <TodoListActives displayFulfilled={true} todos={todos} activeTodos={activeTodos} toggleDesc={toggleDesc} updateList={updateList} />
+            <TodoListDisplay displayFulfilled={true} todos={todos} activeTodos={activeTodos} toggleDesc={toggleDesc} updateList={updateList} />
 
-
-            <button onClick={() => updateList()}> update? </button>
         </div>
     );
 }
