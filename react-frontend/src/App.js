@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import "./global-colors.css"
 import TodoList from "./TodoList.js"
@@ -10,16 +9,7 @@ class App extends Component {
     return (
       <div className="App">
 
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Total Toller Todo Tasks Tracker</h2>
-        </div>
-
-
-        {/* <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p> */}
-
+        <div class="title"> todos </div>
 
         <TodoList />
 

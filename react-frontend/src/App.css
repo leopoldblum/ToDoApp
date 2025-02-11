@@ -6,37 +6,14 @@
   /* background: linear-gradient(0deg, rgba(34, 34, 34, 0.9542017490589986) 0%, rgba(19, 19, 19, 0.901) 45%, rgba(34, 34, 34, 0.9570028695071778) 100%); */
   /* --main-bg-color */
 
+  padding-top: 10vh;
   min-height: 80vh;
-  padding-bottom: 20vh;
+  padding-bottom: 10vh;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  /* background-color: #222; */
-  /* background-color: #2B3045; */
-  height: 150px;
-  padding: 20px;
+.title {
   color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-.Footer {
-  margin: 25vh;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+  font-size: 5vh;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  margin-bottom: 10vh;
 }
