@@ -1,0 +1,24 @@
+#all-active-todos-container,
+#all-fulfilled-todos-container {
+    display: block;
+    overflow: hidden;
+}
+
+#all-active-todos-container.visible,
+#all-fulfilled-todos-container.visible {
+
+    opacity: 1;
+
+    /* scuffed lol */
+    max-height: 5000vh;
+
+    transition: all 0.4s ease-in;
+}
+
+#all-active-todos-container.hidden,
+#all-fulfilled-todos-container.hidden {
+    opacity: 0;
+    max-height: 0;
+
+    transition: all 0.3s linear;
+}

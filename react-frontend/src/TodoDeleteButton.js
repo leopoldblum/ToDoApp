@@ -1,6 +1,6 @@
 import "./TodoDeleteButton.css"
 
-const DeleteButton = ({ currentTodo, funcUpdateList }) => {
+const TodoDeleteButton = ({ currentTodo, funcUpdateList }) => {
 
     async function deleteTodo(todoID) {
         if (todoID === null)
@@ -33,4 +33,4 @@ const DeleteButton = ({ currentTodo, funcUpdateList }) => {
         </div >
     );
 }
-export default DeleteButton;
+export default TodoDeleteButton;

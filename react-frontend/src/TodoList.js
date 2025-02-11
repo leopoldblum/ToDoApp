@@ -5,6 +5,7 @@ import TodoAddButton from './TodoAddButton';
 import TodoDeleteButton from "./TodoDeleteButton";
 import TodoDeleteAllFulfilledButton from './TodoDeleteAllFulfilledButton';
 import CollapseButton from './TodoCollapseAllButton';
+import TodoListActives from './TodoListActives';
 
 const TodoList = () => {
 
@@ -87,36 +88,15 @@ const TodoList = () => {
 
                 <div className='header-button-container'>
                     {/* <button onClick={() => updateList()} id='header-button'> collapse all desc  </button> */}
-                    <CollapseButton funcToggleActiveDesc={toggleActiveDesc} />
+                    <CollapseButton funcToggleDesc={toggleActiveDesc} />
                 </div>
             </div>
 
-            {/* render todo list */}
-            <div id="all-active-todos-container" className='hidden'>
-                {todos != null && todos.filter(entries => entries.fulfilled === false).map((entries) => (
+            <TodoListActives todos={todos} activeTodos={activeTodos} funcUpdateList={updateList} toggleDesc={toggleDesc} updateList={updateList} />
 
-                    <div className='todoEntry-container' key={entries.id}>
 
-                        <div className="todoEntry-box todo-title" onClick={() => toggleDesc(entries.id)}> {entries.title} </div>
-
-                        <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> </div>
-
-                        {/* statt komplett neu zu rendern, lieber visibility togglen, das erlaubt transitions */}
-                        {activeTodos.includes(entries.id) && (
-                            <div className="todoEntry-desc-popup">
-                                <div className="todoEntry-desc-text">{entries.desc}</div>
-                                {/* <div className="todoEntry-desc-delete">  delete   </div> */}
-                                <TodoDeleteButton currentTodo={entries} funcUpdateList={updateList} />
-                            </div>
-                        )}
-                    </div>
-                ))
-                }
-            </div>
 
             {/* completed todos */}
-
-
             <div className='section-todos-header' >
                 <div className='section-todos-header-title' id="header-fulfilled" onClick={() => toggleVisibilityOfTodoLists("all-fulfilled-todos-container", "header-fulfilled")}>
                     <h1> completed todos </h1>
@@ -128,6 +108,7 @@ const TodoList = () => {
 
             </div>
 
+            {/* render fulfilled todos list */}
             <div id="all-fulfilled-todos-container" className='hidden'>
                 {todos != null && todos.filter(entries => entries.fulfilled === true).map((entries) => (
 
@@ -149,9 +130,6 @@ const TodoList = () => {
                 }
             </div>
             <button onClick={() => updateList()}> update? </button>
-
-            {/* button to delete all completed Todos */}
-
         </div>
     );
 }

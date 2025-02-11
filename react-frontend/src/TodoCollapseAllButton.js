@@ -1,14 +1,14 @@
 import "./TodoCollapseAllButton.css"
 
-const CollapseButton = (({ funcToggleActiveDesc }) => {
+const CollapseButton = (({ funcToggleDesc }) => {
 
-    function collapseAllActiveTodos() {
-        funcToggleActiveDesc();
+    function toggleDescriptions() {
+        funcToggleDesc();
     }
 
     return (
         <div>
-            <button className="collapse-all-button" onClick={() => collapseAllActiveTodos()}> toggle desc</button>
+            <button className="collapse-all-button" onClick={() => toggleDescriptions()}> toggle desc</button>
         </div>
     );
 });

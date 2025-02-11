@@ -6,19 +6,18 @@
 }
 
 .todoEntry-desc-delete-button {
+    cursor: pointer;
 
-    padding: 2.5vh;
-    padding-left: 3vw;
-    padding-right: 3vw;
+    padding: 2vh;
+    padding-left: 2vw;
+    padding-right: 2vw;
 
     border-radius: 2vh;
     border: none;
-
-    content: "delete?";
 }
 
 .todoEntry-desc-delete-button:hover::after {
-    content: "are you sure?";
+    content: "u sure?";
     font-weight: bolder;
 }
 
@@ -26,9 +25,8 @@
     background-color: var(--button-hover-delete-color);
     transition-duration: 0.5s;
     color: white;
-
 }
 
 .todoEntry-desc-delete-button::after {
-    content: "delete";
+    content: "delete?";
 }
