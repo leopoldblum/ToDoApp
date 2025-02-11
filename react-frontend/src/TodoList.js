@@ -92,9 +92,7 @@ const TodoList = () => {
                 </div>
             </div>
 
-            <TodoListActives todos={todos} activeTodos={activeTodos} funcUpdateList={updateList} toggleDesc={toggleDesc} updateList={updateList} />
-
-
+            <TodoListActives displayFulfilled={false} todos={todos} activeTodos={activeTodos} funcUpdateList={updateList} toggleDesc={toggleDesc} updateList={updateList} />
 
             {/* completed todos */}
             <div className='section-todos-header' >
@@ -109,26 +107,9 @@ const TodoList = () => {
             </div>
 
             {/* render fulfilled todos list */}
-            <div id="all-fulfilled-todos-container" className='hidden'>
-                {todos != null && todos.filter(entries => entries.fulfilled === true).map((entries) => (
+            <TodoListActives displayFulfilled={true} todos={todos} activeTodos={activeTodos} toggleDesc={toggleDesc} updateList={updateList} />
 
-                    <div className='todoEntry-container todoEntryCompleted-container' key={entries.id}>
 
-                        <div className="todoEntry-box todo-title todo-title-linethrough " onClick={() => toggleDesc(entries.id)}  >  {entries.title}  </div>
-
-                        <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> </div>
-
-                        {/* statt komplett neu zu rendern, lieber visibility togglen, das erlaubt transitions */}
-                        {activeTodos.includes(entries.id) && (
-                            <div className="todoEntry-desc-popup">
-                                <div className="todoEntry-desc-text">{entries.desc}</div>
-                                <TodoDeleteButton currentTodo={entries} funcUpdateList={updateList} />
-                            </div>
-                        )}
-                    </div>
-                ))
-                }
-            </div>
             <button onClick={() => updateList()}> update? </button>
         </div>
     );
