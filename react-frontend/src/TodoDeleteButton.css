@@ -19,10 +19,11 @@
 
 .todoEntry-desc-delete-button:hover::after {
     content: "are you sure?";
+    font-weight: bolder;
 }
 
 .todoEntry-desc-delete-button:hover {
-    background-color: rgb(206, 108, 108);
+    background-color: var(--button-hover-delete-color);
     transition-duration: 0.5s;
     color: white;
 

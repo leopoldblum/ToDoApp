@@ -1,0 +1,18 @@
+:root {
+    /* main */
+    --main-bg-color: #161719;
+
+    /* TodoList.css */
+    --todo-entry-bg-color: #4B6D5B;
+    --todo-entry-fulfilled-bg-color: #365042a9;
+    --todo-desc-bg-color: #8e9982;
+    --sections-header-bg-color: rgb(34, 34, 34);
+
+    --todo-fulfilled-strikethrough-color: rgba(197, 196, 196, 0.671);
+
+    /* buttons */
+    --accent-color: #8e9982;
+    --button-shadow-color: rgba(105, 105, 105, 0.514);
+    --button-hover-success-color: rgba(147, 255, 171, 0.815);
+    --button-hover-delete-color: lightcoral;
+}

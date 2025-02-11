@@ -12,7 +12,7 @@
 }
 
 .daft-button:hover {
-    background-color: lightcoral;
+    background-color: var(--button-hover-delete-color);
     font-weight: bolder;
 
     transition: all 0.3s;

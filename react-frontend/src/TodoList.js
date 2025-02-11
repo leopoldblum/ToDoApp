@@ -141,7 +141,6 @@ const TodoList = () => {
                         {activeTodos.includes(entries.id) && (
                             <div className="todoEntry-desc-popup">
                                 <div className="todoEntry-desc-text">{entries.desc}</div>
-                                {/* <div className="todoEntry-desc-delete">  delete   </div> */}
                                 <TodoDeleteButton currentTodo={entries} funcUpdateList={updateList} />
                             </div>
                         )}
@@ -171,6 +170,7 @@ export default TodoList;
 
     es gibt keine css animationen bei display: none -> block, wie kann man das dann machen?
         -> warum ist das so wonky mit visibility, height usw.
+        -> max_height: 0 -> max_height: 5000vh ist scuffed af, bessere möglichkeit dafür? 
 
 
     wie mach man gutes responsive design, sodass das nach verschieben nicht ass aussieht?

@@ -12,7 +12,7 @@
 }
 
 .collapse-all-button:hover {
-    background-color: lightcoral;
+    background-color: var(--button-hover-success-color);
     font-weight: bolder;
 
     transition: all 0.3s;

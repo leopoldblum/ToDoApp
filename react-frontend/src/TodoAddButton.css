@@ -1,6 +1,7 @@
 .openPopup-button {
     /* background-color: rgba(141, 252, 165, 0.644); */
-    background-color: #8e9982;
+    /* background-color: #8e9982; */
+    background-color: var(--accent-color);
     color: white;
 
     width: 20%;
@@ -49,8 +50,7 @@
 
 .openPopup-button:hover {
     /* background-color: rgba(141, 252, 165, 0.795); */
-    box-shadow: 10px 5px 20px 5px rgba(75, 75, 75, 0.9);
-
+    box-shadow: 10px 5px 20px 5px var(--button-shadow-color);
 }
 
 .addTodoForm {
@@ -99,6 +99,8 @@
 }
 
 .addTodoForm-submitButton:hover {
-    background-color: rgba(141, 252, 165, 0.795);
-    box-shadow: 15px 10px 20px 5px rgba(75, 75, 75, 0.9);
+    background-color: rgba(147, 255, 171, 0.815);
+    background-color: var(--button-hover-success-color);
+
+    box-shadow: 15px 10px 20px 5px var(--button-shadow-color);
 }
