@@ -1,6 +1,6 @@
 import "./TodoDeleteButton.css"
 
-const TodoDeleteButton = ({ currentTodo, funcUpdateList }) => {
+const TodoDeleteButton = ({ currentTodo, updateList }) => {
 
     async function deleteTodo(todoID) {
         if (todoID === null)
@@ -20,7 +20,7 @@ const TodoDeleteButton = ({ currentTodo, funcUpdateList }) => {
                 throw new Error("Error - Response Status:" + response.status);
             }
 
-            funcUpdateList();
+            updateList();
 
         } catch (error) {
             console.error(error);

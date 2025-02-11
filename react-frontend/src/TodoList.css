@@ -10,16 +10,25 @@
 
     border-radius: 2vh;
     border-top-left-radius: 0;
+
+    border-bottom-style: inset;
+    border-left-style: inset;
+
+    border-left-color: #ffffffe5;
+    border-bottom-color: rgba(112, 185, 112, 0.897);
+
     box-shadow: 2vh 2vh 1vh rgba(0, 0, 0, 0.308);
 
-    background-color: var(--todo-entry-bg-color);
+    /* background-color: var(--todo-entry-bg-color); */
 
+    background: var(--todo-entry-bg);
     white-space: pre-line;
 }
 
 .todoEntryCompleted-container {
 
-    background-color: var(--todo-entry-fulfilled-bg-color);
+    /* background-color: var(--todo-entry-fulfilled-bg-color); */
+    background: var(--todo-entry-fulfilled-bg);
 }
 
 .todoEntry-box {
@@ -97,7 +106,8 @@
 
     cursor: pointer;
 
-    background-color: var(--sections-header-bg-color);
+    /* background-color: var(--sections-header-bg-color); */
+    background: var(--sections-header-bg);
 }
 
 .section-todos-header-title {

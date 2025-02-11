@@ -4,9 +4,18 @@
 
     /* TodoList.css */
     --todo-entry-bg-color: #4B6D5B;
-    --todo-entry-fulfilled-bg-color: #365042a9;
-    --todo-desc-bg-color: #cbe2d783;
-    --sections-header-bg-color: rgb(34, 34, 34);
+    --todo-entry-bg: linear-gradient(90deg, rgb(67, 122, 93) 25%, rgb(43, 97, 78) 100%);
+
+    --todo-entry-fulfilled-bg-color: #364f41;
+    --todo-entry-fulfilled-bg: linear-gradient(90deg, rgba(36, 70, 52, 0.912) 10%, rgb(38, 78, 56) 55%, rgba(39, 68, 52, 0.534) 100%);
+
+
+    --todo-desc-bg-color: #b4ca9c98;
+
+
+    --sections-header-bg-color: #222222;
+    --sections-header-bg: linear-gradient(90deg, rgba(51, 51, 51, 0.637) 10%, rgba(34, 34, 34, 1) 100%);
+
 
     --todo-fulfilled-strikethrough-color: rgba(197, 196, 196, 0.671);
 

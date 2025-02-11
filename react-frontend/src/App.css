@@ -3,6 +3,7 @@
   /* background-color: #383838; */
   /* background-color: #161719; */
   background-color: var(--main-bg-color);
+  /* background: linear-gradient(0deg, rgba(34, 34, 34, 0.9542017490589986) 0%, rgba(19, 19, 19, 0.901) 45%, rgba(34, 34, 34, 0.9570028695071778) 100%); */
   /* --main-bg-color */
 
   min-height: 80vh;

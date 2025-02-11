@@ -48,7 +48,6 @@ const TodoList = () => {
 
     const toggleVisibilityOfTodoLists = (elemIDtoToggle, headerID) => {
         const toggleVisibilityElem = document.getElementById(elemIDtoToggle);
-
         const headerTypeID = document.getElementById(headerID);
 
         if (toggleVisibilityElem.classList.contains("visible")) {
