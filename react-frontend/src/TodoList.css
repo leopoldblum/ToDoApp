@@ -122,11 +122,13 @@
     padding: 1vh;
 }
 
-
-#delete-fulfilled-todos-button.visible {
-    opacity: 1;
+#delete-fulfilled-todos-button,
+#toggle-collapse-desc-button {
+    opacity: 0;
+    transition: all 0.3s ease-out;
 }
 
-#delete-fulfilled-todos-button.hidden {
-    opacity: 0;
+#delete-fulfilled-todos-button.visible,
+#toggle-collapse-desc-button.visible {
+    opacity: 1;
 }

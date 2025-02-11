@@ -52,12 +52,24 @@ const TodoList = () => {
         const headerTypeID = document.getElementById(headerID);
 
         if (toggleVisibilityElem.classList.contains("visible")) {
+            if (elemIDtoToggle === "all-fulfilled-todos-container") {
+                (document.getElementById("delete-fulfilled-todos-button")).classList.toggle("visible");
+            }
+            else {
+                document.getElementById("toggle-collapse-desc-button").classList.toggle("visible")
+            }
 
             toggleVisibilityElem.classList.remove("visible");
             toggleVisibilityElem.classList.add("hidden")
             headerTypeID.scrollIntoView({ behavior: "smooth", block: "center" })
         }
         else {
+            if (elemIDtoToggle === "all-fulfilled-todos-container") {
+                (document.getElementById("delete-fulfilled-todos-button")).classList.toggle("visible");
+            }
+            else {
+                document.getElementById("toggle-collapse-desc-button").classList.toggle("visible")
+            }
 
             toggleVisibilityElem.classList.remove("hidden")
             toggleVisibilityElem.classList.add("visible")
@@ -84,7 +96,7 @@ const TodoList = () => {
                     <h1> active todos </h1>
                 </div>
 
-                <div className='header-button-container'>
+                <div className='header-button-container' id="toggle-collapse-desc-button">
                     {/* <button onClick={() => updateList()} id='header-button'> collapse all desc  </button> */}
                     <CollapseButton funcToggleDesc={toggleActiveDesc} />
                 </div>
