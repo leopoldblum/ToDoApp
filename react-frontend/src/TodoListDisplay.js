@@ -1,6 +1,6 @@
 import "./TodoListDisplay.css"
-import TodoCheckmarkButton from "./TodoCheckmarkButton";
 import TodoDeleteButton from "./TodoDeleteButton";
+import TodoCustomCheckmark from "./TodoCustomCheckmark";
 
 const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, updateList }) => {
 
@@ -14,7 +14,10 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
 
                         <div className="todoEntry-box todo-title" onClick={() => toggleDesc(entries.id)}> {entries.title} </div>
 
-                        <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> </div>
+                        <div className="todoEntry-box">
+                            {/* <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> */}
+                            <TodoCustomCheckmark currentTodo={entries} updateList={updateList} checked={displayFulfilled} />
+                        </div>
 
                         {/* statt komplett neu zu rendern, lieber visibility togglen, das erlaubt transitions */}
 
@@ -43,9 +46,13 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
 
                         <div className="todoEntry-box todo-title todo-title-linethrough " onClick={() => toggleDesc(entries.id)}  >  {entries.title}  </div>
 
-                        <div className="todoEntry-box"> <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> </div>
+                        <div className="todoEntry-box">
+                            {/* <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> */}
+                            <TodoCustomCheckmark currentTodo={entries} updateList={updateList} checked={displayFulfilled} />
+                        </div>
 
-                        {/* statt komplett neu zu rendern, lieber visibility togglen, das erlaubt transitions */}
+                        {/* statt komplett neu zu rendern, lieber visibility togglen, das erlaubt transitions -> juckt gerade nicht? */}
+
                         {activeTodos.includes(entries.id) && (
                             <div className="todoEntry-desc-popup">
                                 <div className="todoEntry-desc-text">{entries.desc}</div>

@@ -1,0 +1,30 @@
+.custom-checkmark-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    padding: 5vh;
+}
+
+.checkmark-button {
+    position: absolute;
+    opacity: 1;
+    transition: opacity 1s ease;
+    pointer-events: none;
+
+    height: 7vh;
+
+    cursor: pointer;
+    border: none;
+    color: white;
+
+    /* makes black checkbox white */
+    filter: invert(99%) sepia(0%) saturate(0%) hue-rotate(126deg) brightness(110%) contrast(100%);
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: auto;
+}
