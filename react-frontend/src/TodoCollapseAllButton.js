@@ -7,7 +7,7 @@ const CollapseButton = (({ funcToggleDesc }) => {
     }
 
     return (
-        <div>
+        <div className="collapse-container">
             <button className="collapse-all-button" onClick={() => toggleDescriptions()}> toggle desc</button>
         </div>
     );

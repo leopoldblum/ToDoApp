@@ -1,19 +1,18 @@
 .todoEntry-desc-delete {
     flex: 1;
-
-    margin-top: 2vh;
-    margin-bottom: 2vh;
 }
 
 .todoEntry-desc-delete-button {
     cursor: pointer;
 
-    padding: 2vh;
-    padding-left: 2vw;
-    padding-right: 2vw;
+    padding: 5%;
+    padding-left: 15%;
+    padding-right: 15%;
 
-    border-radius: 2vh;
+    border-radius: 5vh;
     border: none;
+
+    font-size: 1.5vh;
 }
 
 .todoEntry-desc-delete-button:hover::after {

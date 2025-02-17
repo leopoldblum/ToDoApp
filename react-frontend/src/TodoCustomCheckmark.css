@@ -14,7 +14,8 @@
     transition: opacity 1s ease;
     pointer-events: none;
 
-    height: 7vh;
+    /* height: 7vh; */
+    height: 70%;
 
     cursor: pointer;
     border: none;

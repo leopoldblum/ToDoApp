@@ -2,8 +2,10 @@
     background-color: #8e9982;
     color: white;
     font-weight: normal;
+    font-size: 1.5vh;
 
-    padding: 1.5vh 3vw 1.5vh 3vw;
+
+    padding: 10% 20% 10% 20%;
 
     border: none;
     border-radius: 1vh;
@@ -17,4 +19,9 @@
 
     transition: all 0.3s;
     cursor: pointer;
+}
+
+.collapse-container {
+    width: 100%;
+
 }
