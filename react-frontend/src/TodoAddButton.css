@@ -1,12 +1,10 @@
 .openPopup-button {
-    /* background-color: rgba(141, 252, 165, 0.644); */
-    /* background-color: #8e9982; */
     background-color: var(--accent-color);
     color: white;
 
     width: 20%;
-    padding-top: 3vh;
-    padding-bottom: 3vh;
+    padding-top: 2%;
+    padding-bottom: 2%;
 
     margin-top: 1vh;
     margin-bottom: 1vh;
@@ -15,6 +13,9 @@
     cursor: pointer;
 
     border-radius: 2vh;
+
+    /* font-size: 1.5vh; */
+    font-size: clamp(10px, 1vw, 50px);
 
     transition-duration: 0.2s;
 

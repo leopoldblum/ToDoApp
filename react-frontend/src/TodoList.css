@@ -40,6 +40,9 @@
     align-items: center;
 
     position: relative;
+
+    padding-top: 2%;
+    padding-bottom: 2%;
 }
 
 .todo-title {
@@ -60,6 +63,7 @@
     font-size: 1vw;
     flex-basis: 100%;
 
+    width: 100%;
     display: flex;
 
     background-color: var(--todo-desc-bg-color);
