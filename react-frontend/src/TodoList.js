@@ -52,10 +52,14 @@ const TodoList = () => {
 
         if (toggleVisibilityElem.classList.contains("visible")) {
             if (elemIDtoToggle === "all-fulfilled-todos-container") {
+                // header for fulfilled todos
                 (document.getElementById("delete-fulfilled-todos-button")).classList.toggle("visible");
+                (document.getElementById("section-todos-header-icon-completed")).classList.toggle("active");
             }
             else {
-                document.getElementById("toggle-collapse-desc-button").classList.toggle("visible")
+                //header for open todos
+                document.getElementById("toggle-collapse-desc-button").classList.toggle("visible");
+                (document.getElementById("section-todos-header-icon-actives")).classList.toggle("active");
             }
 
             toggleVisibilityElem.classList.remove("visible");
@@ -64,10 +68,14 @@ const TodoList = () => {
         }
         else {
             if (elemIDtoToggle === "all-fulfilled-todos-container") {
+                //header for fulfilled todos
                 (document.getElementById("delete-fulfilled-todos-button")).classList.toggle("visible");
+                (document.getElementById("section-todos-header-icon-completed")).classList.toggle("active");
             }
             else {
-                document.getElementById("toggle-collapse-desc-button").classList.toggle("visible")
+                //header for open todos
+                document.getElementById("toggle-collapse-desc-button").classList.toggle("visible");
+                (document.getElementById("section-todos-header-icon-actives")).classList.toggle("active");
             }
 
             toggleVisibilityElem.classList.remove("hidden")
@@ -92,6 +100,10 @@ const TodoList = () => {
 
             {/* Active Todos */}
             <div className='section-todos-header'>
+                <div className='section-todos-header-icon' id="section-todos-header-icon-actives">
+                    &gt;
+                </div>
+
                 <div className='section-todos-header-title' id="header-actives" onClick={() => toggleVisibilityOfTodoLists("all-active-todos-container", "header-actives")}>
                     <h1> active todos </h1>
                 </div>
@@ -106,6 +118,10 @@ const TodoList = () => {
 
             {/* completed todos */}
             <div className='section-todos-header' >
+                <div className='section-todos-header-icon' id="section-todos-header-icon-completed">
+                    &gt;
+                </div>
+
                 <div className='section-todos-header-title' id="header-fulfilled" onClick={() => toggleVisibilityOfTodoLists("all-fulfilled-todos-container", "header-fulfilled")}>
                     <h1> completed todos </h1>
                 </div>
@@ -143,4 +159,6 @@ export default TodoList;
     wie mach man gutes responsive design, sodass das nach verschieben nicht ass aussieht?
 
     typescript prob goated
+
+    welche seite für design, canva?
 */

@@ -1,6 +1,10 @@
 .todoEntry-desc-delete {
     flex: 1;
 
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+
+
     width: 100%;
 }
 

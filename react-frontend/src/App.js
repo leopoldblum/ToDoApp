@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <div className="App">
 
-        <div class="title"> todos </div>
+        <div class="title">todos</div>
 
         <TodoList />
 

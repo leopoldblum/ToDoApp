@@ -4,8 +4,9 @@
     font-weight: normal;
     font-size: 1.5vh;
 
+    /* padding: 10% 20% 10% 20%; */
+    padding: 1.5vh 2vw 1.5vh 2vw;
 
-    padding: 10% 20% 10% 20%;
 
     border: none;
     border-radius: 1vh;
@@ -19,6 +20,11 @@
 
     transition: all 0.3s;
     cursor: pointer;
+
+    /* padding: 10% 22% 10% 22%; */
+    padding: 1.5vh 2.5vw 1.5vh 2.5vw;
+
+
 }
 
 .collapse-container {

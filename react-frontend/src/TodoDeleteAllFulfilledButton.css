@@ -3,12 +3,15 @@
     color: white;
     font-weight: normal;
 
-    padding: 1.5vh 3vw 1.5vh 3vw;
+    /* padding: 1.5vh 3vw 1.5vh 3vw; */
+    padding: 1.5vh 2vw 1.5vh 2vw;
+
 
     border: none;
     border-radius: 1vh;
     border-bottom-left-radius: 0;
     margin-bottom: 0.2vh;
+
 }
 
 .daft-button:hover {
@@ -17,4 +20,9 @@
 
     transition: all 0.3s;
     cursor: pointer;
+
+    /* padding: 1.5vh 3.25vw 1.5vh 3.25vw; */
+    padding: 1.5vh 2.5vw 1.5vh 2.5vw;
+
+
 }

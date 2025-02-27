@@ -16,13 +16,11 @@
     }
 
     25% {
-        transform: scale(200%);
+        transform: scale(150%);
     }
 
-    50% {}
-
     75% {
-        transform: scale(100%);
+        transform: scale(75%);
     }
 
     100% {
