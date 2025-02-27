@@ -4,7 +4,8 @@
 
     /* TodoList.css */
     --todo-entry-bg-color: #4B6D5B;
-    --todo-entry-bg: linear-gradient(90deg, rgb(67, 122, 93) 25%, rgb(43, 97, 78) 100%);
+    /* --todo-entry-bg: linear-gradient(90deg, rgb(67, 122, 93) 25%, rgb(43, 97, 78) 100%); */
+    --todo-entry-bg: linear-gradient(10deg, rgba(142, 153, 130, 1) 0%, rgb(72, 151, 82) 30%, rgba(255, 255, 255, 0.342) 100%);
 
     --todo-entry-fulfilled-bg-color: #364f41;
     --todo-entry-fulfilled-bg: linear-gradient(90deg, rgba(36, 70, 52, 0.912) 10%, rgb(38, 78, 56) 55%, rgba(39, 68, 52, 0.534) 100%);

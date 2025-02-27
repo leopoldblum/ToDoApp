@@ -12,6 +12,9 @@ const TodoCustomCheckmark = ({ currentTodo, updateList, checked }) => {
         b1.classList.toggle("hidden");
         b2.classList.toggle("hidden")
 
+        b1.classList.toggle("shake")
+        b2.classList.toggle("shake")
+
         b1.ontransitionend = () => {
 
             // backend shit here
