@@ -9,6 +9,10 @@ const TodoList = () => {
 
     const [todos, setTodos] = useState([])
     const [activeTodos, setActiveTodos] = useState([])
+    const [activeHeaders, setActiveHeaders] = useState([])
+
+    console.log("active header on render: " + activeHeaders)
+
 
     const updateList = async () => {
         try {
@@ -34,12 +38,26 @@ const TodoList = () => {
         });
     }
 
+    const toggleHeaderState = (headerID) => {
+        setActiveHeaders((currentActiveHeaders) => {
+            if (currentActiveHeaders.includes(headerID)) {
+                // remove active Header from state
+                return activeHeaders.filter((activeHeader) => activeHeader !== headerID);
+            }
+            else {
+                // add active Header to state
+                return [...currentActiveHeaders, headerID];
+            }
+        })
+    }
+
     const toggleCollapseAllActiveDesc = () => {
         if (activeTodos.length !== 0) {
+            // some desc are shown -> show no desc
             setActiveTodos([]);
         }
         else {
-            // doesnt work
+            // no desc are shown -> show all descs
             const allTodoIDs = todos.map(todo => todo.id)
             setActiveTodos(allTodoIDs);
         }
@@ -49,39 +67,29 @@ const TodoList = () => {
         const toggleVisibilityElem = document.getElementById(elemIDtoToggle);
         const headerTypeID = document.getElementById(headerID);
 
-        if (toggleVisibilityElem.classList.contains("visible")) {
-            if (elemIDtoToggle === "all-fulfilled-todos-container") {
-                // header for fulfilled todos
-                (document.getElementById("delete-fulfilled-todos-button")).classList.toggle("visible");
-                (document.getElementById("section-todos-header-icon-completed")).classList.toggle("active");
-            }
-            else {
-                //header for open todos
-                document.getElementById("toggle-collapse-desc-button").classList.toggle("visible");
-                (document.getElementById("section-todos-header-icon-actives")).classList.toggle("active");
-            }
+        if (elemIDtoToggle === "all-fulfilled-todos-container") {
+            // header for fulfilled todos
+            document.getElementById("delete-fulfilled-todos-button").classList.toggle("visible");
+            document.getElementById("section-todos-header-icon-completed").classList.toggle("active");
+        }
+        else {
+            //header for open todos
+            document.getElementById("toggle-collapse-desc-button").classList.toggle("visible");
+            document.getElementById("section-todos-header-icon-actives").classList.toggle("active");
+        }
 
-            toggleVisibilityElem.classList.remove("visible");
-            toggleVisibilityElem.classList.add("hidden")
+        toggleVisibilityElem.classList.toggle("visible");
+
+
+        if (!toggleVisibilityElem.classList.contains("visible")) {
             headerTypeID.scrollIntoView({ behavior: "smooth", block: "center" })
         }
         else {
-            if (elemIDtoToggle === "all-fulfilled-todos-container") {
-                //header for fulfilled todos
-                (document.getElementById("delete-fulfilled-todos-button")).classList.toggle("visible");
-                (document.getElementById("section-todos-header-icon-completed")).classList.toggle("active");
-            }
-            else {
-                //header for open todos
-                document.getElementById("toggle-collapse-desc-button").classList.toggle("visible");
-                (document.getElementById("section-todos-header-icon-actives")).classList.toggle("active");
-            }
-
-            toggleVisibilityElem.classList.remove("hidden")
-            toggleVisibilityElem.classList.add("visible")
-
             toggleVisibilityElem.addEventListener("transitionend", () => headerTypeID.scrollIntoView({ behavior: "smooth", block: "start" }), { once: true });
         }
+
+        toggleHeaderState(headerID);
+
     }
 
     useEffect(() => {

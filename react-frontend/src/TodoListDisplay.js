@@ -38,7 +38,7 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
 
                     <div className='todoEntry-container todoEntryCompleted-container' key={entries.id}>
 
-                        <div className="todoEntry-box todo-title todo-title-linethrough " onClick={() => toggleDesc(entries.id)}  >  {entries.title}  </div>
+                        <div className="todoEntry-box todo-title todo-title-linethrough " onClick={() => toggleDesc(entries.id)}>  {entries.title}  </div>
 
                         <div className="todoEntry-box">
                             {/* <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> */}

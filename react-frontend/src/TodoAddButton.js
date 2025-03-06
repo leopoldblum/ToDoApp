@@ -72,7 +72,7 @@ const TodoAddButton = (({ funcUpdateList }) => {
     // ??? profit
 
     return (
-        <div className="addTodoForm-container" v>
+        <div className="addTodoForm-container">
 
             <button className="openPopup-button" id="openPopup-button" onClick={togglePopupForm}>
                 - add a new todo -
