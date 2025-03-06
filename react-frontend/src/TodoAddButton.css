@@ -32,22 +32,24 @@
     opacity: 1;
     overflow: hidden;
 
+    transform-origin: top;
+
     /* Standardwerte */
 }
 
 #that-addTodoForm-popup-container.visible {
     opacity: 1;
     max-height: 50vh;
-    /* Zielhöhe */
+
+    transform: scaleY(1);
     transition: all 0.2s ease-in;
-    /* Schnellere Animation beim Ausklappen */
 }
 
 #that-addTodoForm-popup-container.hidden {
     opacity: 0;
     max-height: 0;
+    transform: scaleY(0);
     transition: all 0.2s linear;
-    /* Langsamere Animation beim Einklappen */
 }
 
 .openPopup-button:hover {

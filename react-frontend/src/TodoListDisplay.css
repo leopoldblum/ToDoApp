@@ -2,6 +2,8 @@
 #all-fulfilled-todos-container {
     display: block;
     overflow: hidden;
+
+    transform-origin: top;
 }
 
 #all-active-todos-container.visible,
@@ -11,6 +13,7 @@
 
     /* scuffed lol */
     max-height: 5000vh;
+    transform: scaleY(1);
 
     transition: all 0.4s ease-in;
 }
@@ -19,6 +22,98 @@
 #all-fulfilled-todos-container.hidden {
     opacity: 0;
     max-height: 0;
+    transform: scaleY(0);
 
     transition: all 0.3s linear;
+}
+
+.todoEntry-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 50%;
+    color: white;
+
+    border-radius: 2vh;
+    border-top-left-radius: 0;
+
+    border-bottom-style: inset;
+    border-left-style: inset;
+
+    border-left-color: #ffffffe5;
+    border-bottom-color: rgba(112, 185, 112, 0.897);
+
+    box-shadow: 2vh 2vh 1vh rgba(0, 0, 0, 0.308);
+
+    /* background-color: var(--todo-entry-bg-color); */
+
+    background: var(--todo-entry-bg);
+    white-space: pre-line;
+
+    transition: all 0.5s linear;
+
+}
+
+.todoEntry-box {
+    flex: 1;
+    text-align: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    height: auto;
+
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.todoEntry-desc-popup {
+    font-size: 1vw;
+    flex-basis: 100%;
+
+    width: 100%;
+    display: flex;
+
+    background-color: var(--todo-desc-bg-color);
+
+    border-bottom-left-radius: 2vh;
+    border-bottom-right-radius: 2vh;
+
+    align-items: center;
+
+    transition: all 0.1s linear;
+}
+
+.todoEntry-desc-popup.hidden {
+    opacity: 0;
+    max-height: 0;
+
+    transform: scaleY(0);
+    transform-origin: top;
+    /* background-color: red; */
+}
+
+.todoEntry-desc-popup.visible {
+    /* background-color: green; */
+    transform: scaleY(1);
+    transform-origin: top;
+
+    opacity: 1;
+    max-height: 5000vh;
+}
+
+.todoEntry-desc-text {
+    flex: 2;
+    display: inline-block;
+    text-align: left;
+    padding: 3vh;
+
+    color: white;
+    font-weight: bold;
 }

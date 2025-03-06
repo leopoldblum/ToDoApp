@@ -16,7 +16,6 @@ const TodoList = () => {
             const response = await fetch("http://localhost:8080/todos")
             const allEntries = await response.json();
 
-
             setTodos(allEntries);
         }
         catch (error) {
@@ -35,7 +34,7 @@ const TodoList = () => {
         });
     }
 
-    function toggleActiveDesc() {
+    const toggleCollapseAllActiveDesc = () => {
         if (activeTodos.length !== 0) {
             setActiveTodos([]);
         }
@@ -109,8 +108,7 @@ const TodoList = () => {
                 </div>
 
                 <div className='header-button-container' id="toggle-collapse-desc-button">
-                    {/* <button onClick={() => updateList()} id='header-button'> collapse all desc  </button> */}
-                    <CollapseButton funcToggleDesc={toggleActiveDesc} />
+                    <CollapseButton funcToggleDesc={toggleCollapseAllActiveDesc} />
                 </div>
             </div>
 
@@ -161,4 +159,6 @@ export default TodoList;
     typescript prob goated
 
     welche seite für design, canva?
+
+    icon, header-state und collapse/delete-all button sind nicht coupled aneinander, wie würde man das am ehesten machen? useState für header und dann per props an elemente?
 */
