@@ -9,6 +9,8 @@ const TodoList = () => {
 
     const [todos, setTodos] = useState([])
     const [activeTodos, setActiveTodos] = useState([])
+
+    // header die ausgeklappt sind => "header-actives", "header-fulfilled"
     const [activeHeaders, setActiveHeaders] = useState(["header-actives"])
 
     const updateList = async () => {
@@ -143,9 +145,12 @@ export default TodoList;
         -> warum ist das so wonky mit visibility, height usw.
         -> max_height: 0 -> max_height: 5000vh ist scuffed af, bessere möglichkeit dafür? 
 
-    how to: animationen bei dynamisch großen elementen (max-height > 100vh), wie bspw. todolist elemente
+    how to: smooth animationen bei dynamisch großen elementen (max-height > 100vh), wie bspw. todolist elemente
+    => workaround mit scrollbar
 
-    wie mach man gutes responsive design, sodass das nach verschieben nicht ass aussieht?
+    best practice für responsive design?
+
+    wie dynamic font size?
 
     typescript prob goated
 

@@ -5,22 +5,6 @@
 }
 
 
-
-.todo-title {
-    flex: 2;
-    font-size: 1.5vw;
-    padding-left: 7%;
-    font-weight: bolder;
-    position: relative;
-    justify-content: left;
-
-    user-select: none;
-    color: #ffffff;
-
-    cursor: pointer;
-}
-
-
 .todo-title-linethrough {
     text-decoration: line-through;
     text-decoration-thickness: 0.15vw;
@@ -35,7 +19,7 @@
     align-items: center;
     justify-content: center;
 
-    margin: 5vh auto 1vh auto;
+    margin: 3vh auto 0vh auto;
 
     border-bottom-style: inset;
     border-left-style: inset;
@@ -59,7 +43,10 @@
     margin-top: 2vh;
     margin-bottom: 2vh;
 
-    font-size: 0.7vw;
+    font-size: calc(10% + 1vh);
+
+    /* font-size: 1vh; */
+
 
 }
 

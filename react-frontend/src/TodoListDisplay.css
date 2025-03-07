@@ -10,6 +10,9 @@
     transform-origin: top;
 
     transition: all 0.3s linear;
+
+    margin: auto;
+    width: 60%;
 }
 
 #all-active-todos-container.visible,
@@ -18,9 +21,10 @@
     opacity: 1;
 
     /* max-height: 1000vh; */
-    max-height: 500vh;
+    max-height: 60vh;
 
     transform: scaleY(1);
+    overflow-y: scroll;
 }
 
 .todoEntry-container {
@@ -30,7 +34,7 @@
     margin: auto;
     margin-top: 2%;
     margin-bottom: 2%;
-    width: 50%;
+    width: 75%;
     color: white;
 
     border-radius: 2vh;
@@ -55,22 +59,39 @@
 
 .todoEntry-box {
     flex: 1;
-    text-align: center;
 
     display: flex;
-    justify-content: center;
     align-items: center;
 
     position: relative;
 
-    height: auto;
+    height: 6vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
 
-    padding-top: 1%;
-    padding-bottom: 1%;
+    padding-left: 3vw;
 }
 
+.todo-title {
+    flex: 2;
+
+    font-size: calc(60% + 1vh);
+
+    padding-left: 7%;
+    font-weight: bolder;
+    position: relative;
+    justify-content: left;
+
+    user-select: none;
+    color: #ffffff;
+
+    cursor: pointer;
+}
+
+
 .todoEntry-desc-popup {
-    font-size: 1vw;
+    font-size: calc(50% + 1vh);
+
     flex-basis: 100%;
 
     width: 100%;

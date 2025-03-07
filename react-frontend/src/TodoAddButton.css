@@ -3,8 +3,8 @@
     color: white;
 
     width: 20%;
-    padding-top: 1.5%;
-    padding-bottom: 1.5%;
+    height: 7vh;
+
 
     margin-top: 1vh;
     margin-bottom: 1vh;
@@ -14,12 +14,11 @@
 
     border-radius: 2vh;
 
-    /* font-size: 1.5vh; */
-    font-size: clamp(10px, 0.7vw, 50px);
+    font-size: 1.5vh;
+    /* font-size: calc(50% + 1vh); */
     font-weight: bold;
 
     transition-duration: 0.2s;
-
 }
 
 .addTodoForm-container {

@@ -2,6 +2,7 @@ import "./TodoCustomCheckmark.css"
 
 const TodoCustomCheckmark = ({ currentTodo, updateList, checked }) => {
 
+    // durch states ersetzen?
     const checked_button_id = `${currentTodo.id}-checked-button`
     const unchecked_button_id = `${currentTodo.id}-unchecked-button`
 
