@@ -1,14 +1,10 @@
 import "./TodoCollapseAllButton.css"
 
-const CollapseButton = (({ funcToggleDesc }) => {
-
-    function toggleDescriptions() {
-        funcToggleDesc();
-    }
+const CollapseButton = (({ toggleCollapseAllDesc, activeHeaders }) => {
 
     return (
-        <div className="collapse-container">
-            <button className="collapse-all-button" onClick={() => toggleDescriptions()}> toggle desc</button>
+        <div className={`collapse-container ${activeHeaders.includes("header-actives") ? "visible" : ""} `}>
+            <button className="collapse-all-button" onClick={() => toggleCollapseAllDesc()}> toggle desc</button>
         </div>
     );
 });

@@ -23,6 +23,16 @@
 
     /* padding: 1.5vh 3.25vw 1.5vh 3.25vw; */
     padding: 1.5vh 2.5vw 1.5vh 2.5vw;
+}
 
+.daft-button-container {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: all 0.2s ease-in;
+}
 
+.daft-button-container.visible {
+    transform: scaleY(1);
+    opacity: 1;
 }

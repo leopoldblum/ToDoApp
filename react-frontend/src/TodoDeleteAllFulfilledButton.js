@@ -1,6 +1,6 @@
 import "./TodoDeleteAllFulfilledButton.css"
 
-const TodoDeleteAllFulfilledButton = ({ funcUpdateList }) => {
+const TodoDeleteAllFulfilledButton = ({ updateList, activeHeaders }) => {
 
     async function deleteAllFulfilledTodos() {
         try {
@@ -16,7 +16,7 @@ const TodoDeleteAllFulfilledButton = ({ funcUpdateList }) => {
                 throw new Error("Error - Response Status:" + response.status);
             }
 
-            funcUpdateList();
+            updateList();
 
         } catch (error) {
             console.error(error);
@@ -24,7 +24,7 @@ const TodoDeleteAllFulfilledButton = ({ funcUpdateList }) => {
     }
 
     return (
-        <div className="button-container">
+        <div className={`daft-button-container ${activeHeaders.includes("header-fulfilled") ? "visible" : ""} `}>
             <button className="daft-button" onClick={() => deleteAllFulfilledTodos()}> clear all </button>
         </div >
     )

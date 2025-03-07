@@ -71,19 +71,6 @@
     padding: 1vh;
 }
 
-#delete-fulfilled-todos-button,
-#toggle-collapse-desc-button {
-    opacity: 0;
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: all 0.2s ease-in;
-}
-
-#delete-fulfilled-todos-button.visible,
-#toggle-collapse-desc-button.visible {
-    transform: scaleY(1);
-    opacity: 1;
-}
 
 #section-todos-header-icon-actives,
 #section-todos-header-icon-completed {

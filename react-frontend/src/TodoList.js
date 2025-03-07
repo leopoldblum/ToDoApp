@@ -9,7 +9,7 @@ const TodoList = () => {
 
     const [todos, setTodos] = useState([])
     const [activeTodos, setActiveTodos] = useState([])
-    const [activeHeaders, setActiveHeaders] = useState([])
+    const [activeHeaders, setActiveHeaders] = useState(["header-actives"])
 
     const updateList = async () => {
         try {
@@ -48,7 +48,7 @@ const TodoList = () => {
         })
     }
 
-    const toggleCollapseAllActiveDesc = () => {
+    const toggleCollapseAllDesc = () => {
         if (activeTodos.length !== 0) {
             // some desc are shown -> show no desc
             setActiveTodos([]);
@@ -64,46 +64,28 @@ const TodoList = () => {
         const toggleVisibilityElem = document.getElementById(elemIDtoToggle);
         const headerTypeID = document.getElementById(headerID);
 
-        if (elemIDtoToggle === "all-fulfilled-todos-container") {
-            // header for fulfilled todos
-            document.getElementById("delete-fulfilled-todos-button").classList.toggle("visible");
-            // document.getElementById("section-todos-header-icon-completed").classList.toggle("active");
-        }
-        else {
-            //header for open todos
-            document.getElementById("toggle-collapse-desc-button").classList.toggle("visible");
-            // document.getElementById("section-todos-header-icon-actives").classList.toggle("active");
-        }
-
         toggleVisibilityElem.classList.toggle("visible");
 
-
-        if (!toggleVisibilityElem.classList.contains("visible")) {
-            headerTypeID.scrollIntoView({ behavior: "smooth", block: "center" })
+        if (toggleVisibilityElem.classList.contains("visible")) {
+            toggleVisibilityElem.addEventListener("transitionend", () => headerTypeID.scrollIntoView({ behavior: "smooth", block: "start" }), { once: true });
         }
         else {
-            toggleVisibilityElem.addEventListener("transitionend", () => headerTypeID.scrollIntoView({ behavior: "smooth", block: "start" }), { once: true });
+            headerTypeID.scrollIntoView({ behavior: "smooth", block: "center" })
+            toggleVisibilityElem.addEventListener("transitionend", () => headerTypeID.scrollIntoView({ behavior: "smooth", block: "center" }), { once: true });
         }
 
         toggleHeaderState(headerID);
-
     }
 
     useEffect(() => {
         updateList();
     }, []);
 
-    useEffect(() => {
-        console.log("activeHeaders: " + activeHeaders);
-    }, [activeHeaders])
-
-
     return (
         <div>
 
             {/* render add todo button form */}
             <TodoAddButton funcUpdateList={updateList} />
-
 
             {/* Active Todos */}
             <div className='section-todos-header' >
@@ -115,12 +97,12 @@ const TodoList = () => {
                     <h1> active todos </h1>
                 </div>
 
-                <div className='header-button-container' id="toggle-collapse-desc-button">
-                    <CollapseButton funcToggleDesc={toggleCollapseAllActiveDesc} />
+                <div className='header-button-container'>
+                    <CollapseButton toggleCollapseAllDesc={toggleCollapseAllDesc} activeHeaders={activeHeaders} />
                 </div>
             </div>
 
-            <TodoListDisplay displayFulfilled={false} todos={todos} activeTodos={activeTodos} funcUpdateList={updateList} toggleDesc={toggleDesc} updateList={updateList} />
+            <TodoListDisplay displayFulfilled={false} todos={todos} activeTodos={activeTodos} toggleDesc={toggleDesc} updateList={updateList} activeHeaders={activeHeaders} />
 
             {/* completed todos */}
             <div className='section-todos-header' >
@@ -132,14 +114,14 @@ const TodoList = () => {
                     <h1> completed todos </h1>
                 </div>
 
-                <div className='header-button-container' id='delete-fulfilled-todos-button'>
-                    <TodoDeleteAllFulfilledButton funcUpdateList={updateList} />
+                <div className='header-button-container'>
+                    <TodoDeleteAllFulfilledButton updateList={updateList} activeHeaders={activeHeaders} />
                 </div>
 
             </div>
 
             {/* render fulfilled todos list */}
-            <TodoListDisplay displayFulfilled={true} todos={todos} activeTodos={activeTodos} toggleDesc={toggleDesc} updateList={updateList} />
+            <TodoListDisplay displayFulfilled={true} todos={todos} activeTodos={activeTodos} toggleDesc={toggleDesc} updateList={updateList} activeHeaders={activeHeaders} />
 
         </div>
     );
@@ -161,6 +143,7 @@ export default TodoList;
         -> warum ist das so wonky mit visibility, height usw.
         -> max_height: 0 -> max_height: 5000vh ist scuffed af, bessere möglichkeit dafür? 
 
+    how to: animationen bei dynamisch großen elementen (max-height > 100vh), wie bspw. todolist elemente
 
     wie mach man gutes responsive design, sodass das nach verschieben nicht ass aussieht?
 

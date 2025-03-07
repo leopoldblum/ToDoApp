@@ -2,12 +2,12 @@ import "./TodoListDisplay.css"
 import TodoDeleteButton from "./TodoDeleteButton";
 import TodoCustomCheckmark from "./TodoCustomCheckmark";
 
-const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, updateList }) => {
+const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, updateList, activeHeaders }) => {
 
     if (displayFulfilled === false) {
 
         return (
-            <div id="all-active-todos-container" className='hidden'>
+            <div id="all-active-todos-container" className={`${activeHeaders.includes("header-actives") ? "visible" : ""} `}>
                 {todos != null && todos.filter(entries => entries.fulfilled === false).map((entries) => (
 
                     <div className='todoEntry-container' key={entries.id}>
@@ -18,6 +18,7 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
                             <TodoCustomCheckmark currentTodo={entries} updateList={updateList} checked={displayFulfilled} />
                         </div>
 
+                        {/* change desc-popup so that it's outside this div, so that it doesnt have this ass background when transitioning */}
                         <div className={`todoEntry-desc-popup ${activeTodos.includes(entries.id) ? "visible" : "hidden"}`}>
                             <div className="todoEntry-desc-text">{entries.desc}</div>
                             <TodoDeleteButton currentTodo={entries} updateList={updateList} />
@@ -26,6 +27,8 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
                     </div>
                 ))
                 }
+
+                {/* put desc-popup here */}
             </div>
         )
 
@@ -33,7 +36,7 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
     else {
 
         return (
-            <div id="all-fulfilled-todos-container" className='hidden'>
+            <div id="all-fulfilled-todos-container" className={`${activeHeaders.includes("header-fulfilled") ? "visible" : ""} `}>
                 {todos != null && todos.filter(entries => entries.fulfilled === true).map((entries) => (
 
                     <div className='todoEntry-container todoEntryCompleted-container' key={entries.id}>
