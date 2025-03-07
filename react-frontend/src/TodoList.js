@@ -11,9 +11,6 @@ const TodoList = () => {
     const [activeTodos, setActiveTodos] = useState([])
     const [activeHeaders, setActiveHeaders] = useState([])
 
-    console.log("active header on render: " + activeHeaders)
-
-
     const updateList = async () => {
         try {
 
@@ -30,7 +27,7 @@ const TodoList = () => {
     const toggleDesc = (id) => {
         setActiveTodos((currentActiveTodos) => {
             if (currentActiveTodos.includes(id)) {
-                return activeTodos.filter((activeID) => activeID !== id);
+                return currentActiveTodos.filter((activeID) => activeID !== id);
             }
             else {
                 return [...currentActiveTodos, id];
@@ -42,7 +39,7 @@ const TodoList = () => {
         setActiveHeaders((currentActiveHeaders) => {
             if (currentActiveHeaders.includes(headerID)) {
                 // remove active Header from state
-                return activeHeaders.filter((activeHeader) => activeHeader !== headerID);
+                return currentActiveHeaders.filter((activeHeader) => activeHeader !== headerID);
             }
             else {
                 // add active Header to state
@@ -70,12 +67,12 @@ const TodoList = () => {
         if (elemIDtoToggle === "all-fulfilled-todos-container") {
             // header for fulfilled todos
             document.getElementById("delete-fulfilled-todos-button").classList.toggle("visible");
-            document.getElementById("section-todos-header-icon-completed").classList.toggle("active");
+            // document.getElementById("section-todos-header-icon-completed").classList.toggle("active");
         }
         else {
             //header for open todos
             document.getElementById("toggle-collapse-desc-button").classList.toggle("visible");
-            document.getElementById("section-todos-header-icon-actives").classList.toggle("active");
+            // document.getElementById("section-todos-header-icon-actives").classList.toggle("active");
         }
 
         toggleVisibilityElem.classList.toggle("visible");
@@ -96,18 +93,21 @@ const TodoList = () => {
         updateList();
     }, []);
 
+    useEffect(() => {
+        console.log("activeHeaders: " + activeHeaders);
+    }, [activeHeaders])
+
 
     return (
-        <div id="todoList">
-
+        <div>
 
             {/* render add todo button form */}
             <TodoAddButton funcUpdateList={updateList} />
 
 
             {/* Active Todos */}
-            <div className='section-todos-header'>
-                <div className='section-todos-header-icon' id="section-todos-header-icon-actives">
+            <div className='section-todos-header' >
+                <div className={`section-todos-header-icon  ${activeHeaders.includes("header-actives") ? "active" : ""} `} id="section-todos-header-icon-actives">
                     &gt;
                 </div>
 
@@ -124,7 +124,7 @@ const TodoList = () => {
 
             {/* completed todos */}
             <div className='section-todos-header' >
-                <div className='section-todos-header-icon' id="section-todos-header-icon-completed">
+                <div className={`section-todos-header-icon  ${activeHeaders.includes("header-fulfilled") ? "active" : ""} `} id="section-todos-header-icon-completed">
                     &gt;
                 </div>
 

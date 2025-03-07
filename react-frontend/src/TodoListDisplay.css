@@ -24,12 +24,6 @@
     transition: all 0.4s ease-in;
 }
 
-/* 
-#all-active-todos-container.hidden,
-#all-fulfilled-todos-container.hidden {
-
-} */
-
 .todoEntry-container {
     display: flex;
     flex-wrap: wrap;
