@@ -157,4 +157,5 @@ export default TodoList;
     welche seite für design, canva?
 
     icon, header-state und collapse/delete-all button sind nicht coupled aneinander, wie würde man das am ehesten machen? useState für header und dann per props an elemente?
+    -> done
 */
