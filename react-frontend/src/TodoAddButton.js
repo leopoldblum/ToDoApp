@@ -69,7 +69,7 @@ const TodoAddButton = (({ funcUpdateList }) => {
 
 
                     <div className="add-todo-modal-close-button-container">
-                        <XMarkIcon onClick={() => toggleModal("add-todo-modal")} />
+                        <XMarkIcon className="add-todo-modal-close-button" onClick={() => toggleModal("add-todo-modal")} />
                     </div>
 
                 </div>

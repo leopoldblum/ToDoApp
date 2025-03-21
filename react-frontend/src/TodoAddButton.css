@@ -131,6 +131,18 @@
     color: white;
 }
 
+.add-todo-modal-close-button {
+    color: white;
+
+    height: 5vh;
+}
+
+
+.add-todo-modal-close-button:hover {
+    color: lightcoral;
+    transition: all 0.1s ease-in;
+}
+
 
 .todo-modal-content-container {
     height: 80%;
