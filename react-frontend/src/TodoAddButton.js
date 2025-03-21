@@ -3,22 +3,6 @@ import XMarkIcon from "@heroicons/react/16/solid/XMarkIcon.js"
 
 const TodoAddButton = (({ funcUpdateList }) => {
 
-    function togglePopupForm() {
-        const getFormContainer = document.getElementById("that-addTodoForm-popup-container")
-
-        if (getFormContainer.classList.contains("hidden")) {
-            getFormContainer.classList.remove("hidden");
-            getFormContainer.classList.add("visible");
-
-            getFormContainer.scrollIntoView({ behavior: "smooth", block: "center" })
-
-        }
-        else {
-            getFormContainer.classList.remove("visible");
-            getFormContainer.classList.add("hidden");
-        }
-    }
-
     function toggleModal(modalID) {
         let modal = document.getElementById(modalID)
         if (modal.open) {
@@ -29,14 +13,10 @@ const TodoAddButton = (({ funcUpdateList }) => {
         }
     }
 
-
-
     const submitTodo = async (e) => {
         e.preventDefault();
 
-        var titleElem =
-            document.getElementById("myTodoForm-title");
-
+        var titleElem = document.getElementById("myTodoForm-title");
         var descElem = document.getElementById("myTodoForm-desc");
 
         const todoBody = { title: titleElem.value, desc: descElem.value, fulfilled: false };
@@ -64,9 +44,7 @@ const TodoAddButton = (({ funcUpdateList }) => {
 
             titleElem.value = "";
             descElem.value = "";
-
-            //togglePopupForm();
-
+            toggleModal("add-todo-modal")
             funcUpdateList();
 
         } catch (error) {
@@ -103,7 +81,7 @@ const TodoAddButton = (({ funcUpdateList }) => {
                         <br />
                         <textarea type="text" className="addTodoForm-desc" id="myTodoForm-desc" form="addTodoForm" placeholder="description" autoComplete="off" autoCorrect="off" spellCheck="off" />
                         <br />
-                        <input type="submit" className="addTodoForm-submitButton" onClick={() => toggleModal("add-todo-modal")} value={"add!"} />
+                        <input type="submit" className="addTodoForm-submitButton" value={"add!"} />
                     </form>
 
                 </div>
