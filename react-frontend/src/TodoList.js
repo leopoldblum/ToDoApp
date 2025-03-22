@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import './TodoList.css'
+import React, { useState, useEffect } from 'react';
 import TodoAddButton from './TodoAddButton';
 import TodoDeleteAllFulfilledButton from './TodoDeleteAllFulfilledButton';
 import CollapseButton from './TodoCollapseAllButton';
@@ -158,4 +158,6 @@ export default TodoList;
 
     icon, header-state und collapse/delete-all button sind nicht coupled aneinander, wie würde man das am ehesten machen? useState für header und dann per props an elemente?
     -> done
+
+    onClick={() => funtion()} vs {function}
 */
