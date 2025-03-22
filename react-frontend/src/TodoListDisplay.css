@@ -20,8 +20,9 @@
 
     opacity: 1;
 
-    max-height: 1000vh;
+    /* falls es scrollable sein soll */
     /* max-height: 60vh; */
+    max-height: 1000vh;
 
     transform: scaleY(1);
     overflow-y: scroll;
@@ -66,10 +67,9 @@
     justify-content: center;
 
 
-    height: 6vh;
+    min-height: 8vh;
     padding-top: 1vh;
     padding-bottom: 1vh;
-
 }
 
 .todoEntry-box-placeholder-container {
@@ -78,13 +78,12 @@
     align-items: center;
     justify-content: center;
 
-    margin: 4%;
     height: 100%;
-    background-color: darkgrey;
 }
 
 .todoEntry-box-placeholder-container.checkbox {
-    margin: 12%;
+    margin-left: 10%;
+    margin-right: 20%;
 }
 
 .todo-title {
@@ -100,6 +99,9 @@
     user-select: none;
     color: #ffffff;
 
+    word-wrap: break-word;
+    overflow-y: auto;
+
     cursor: pointer;
 }
 
@@ -110,14 +112,14 @@
     flex-basis: 100%;
 
     width: 100%;
-    display: flex;
+    /* display: flex; */
 
     background-color: var(--todo-desc-bg-color);
 
     border-bottom-left-radius: 2vh;
     border-bottom-right-radius: 2vh;
 
-    align-items: center;
+    /* align-items: center; */
 
     transition: all 0.1s linear;
 }
@@ -133,16 +135,18 @@
 .todoEntry-desc-popup.visible {
     transform: scaleY(1);
     transform-origin: top;
-
     opacity: 1;
     max-height: 500vh;
 }
 
 .todoEntry-desc-text {
-    flex: 2;
     display: inline-block;
     text-align: left;
     padding: 3vh;
+
+    width: 100%;
+    word-wrap: break-word;
+    overflow-y: auto;
 
     color: white;
     font-weight: bold;

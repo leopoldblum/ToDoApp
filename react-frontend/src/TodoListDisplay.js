@@ -32,7 +32,9 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
 
                         {/* change desc-popup so that it's outside this div, so that it doesnt have this ass background when transitioning */}
                         <div className={`todoEntry-desc-popup ${activeTodos.includes(entries.id) ? "visible" : "hidden"}`}>
-                            <div className="todoEntry-desc-text">{entries.desc}</div>
+                            <div className="todoEntry-desc-text">
+                                <p>{entries.desc}</p>
+                            </div>
                         </div>
 
                     </div>
@@ -57,7 +59,8 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
 
                         <div className="todoEntry-box">
                             <div className="todoEntry-box-placeholder-container">
-                                edit
+                                <TodoEditButton key={entries.id} currentTodo={entries} updateList={updateList} />
+
                             </div>
 
                             <div className="todoEntry-box-placeholder-container">
