@@ -1,4 +1,5 @@
 import "./TodoDeleteButton.css"
+import TrashIcon from "@heroicons/react/16/solid/TrashIcon.js"
 
 const TodoDeleteButton = ({ currentTodo, updateList }) => {
 
@@ -29,7 +30,8 @@ const TodoDeleteButton = ({ currentTodo, updateList }) => {
 
     return (
         <div className="todoEntry-desc-delete">
-            <button className="todoEntry-desc-delete-button" onClick={() => deleteTodo(currentTodo.id)}>  </button>
+            {/* <button className="todoEntry-desc-delete-button" onClick={() => deleteTodo(currentTodo.id)}>  </button> */}
+            <TrashIcon className="todoEntry-desc-delete-button" onClick={() => deleteTodo(currentTodo.id)} />
         </div >
     );
 }

@@ -1,36 +1,17 @@
 .todoEntry-desc-delete {
-    flex: 1;
-
-    padding-top: 3vh;
-    padding-bottom: 3vh;
-
-
     width: 100%;
 }
 
 .todoEntry-desc-delete-button {
     cursor: pointer;
+
     width: 50%;
 
-    padding: 5%;
-    padding-left: 15%;
-    padding-right: 15%;
-
-    border-radius: 5vh;
-    border: none;
-}
-
-.todoEntry-desc-delete-button:hover::after {
-    content: "u sure?";
-    font-weight: bolder;
+    /* background-color: aliceblue; */
+    padding: 12%;
 }
 
 .todoEntry-desc-delete-button:hover {
-    background-color: var(--button-hover-delete-color);
-    transition-duration: 0.5s;
-    color: white;
-}
-
-.todoEntry-desc-delete-button::after {
-    content: "delete?";
+    color: lightcoral;
+    transition: all 0.2s ease-in-out;
 }

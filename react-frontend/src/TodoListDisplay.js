@@ -1,6 +1,7 @@
 import "./TodoListDisplay.css"
 import TodoDeleteButton from "./TodoDeleteButton";
 import TodoCustomCheckmark from "./TodoCustomCheckmark";
+import TodoEditButton from "./TodoEditButton";
 
 const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, updateList, activeHeaders }) => {
 
@@ -15,13 +16,23 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
                         <div className="todoEntry-box todo-title" onClick={() => toggleDesc(entries.id)}> {entries.title} </div>
 
                         <div className="todoEntry-box">
-                            <TodoCustomCheckmark currentTodo={entries} updateList={updateList} checked={displayFulfilled} />
+                            <div className="todoEntry-box-placeholder-container">
+                                <TodoEditButton currentTodo={entries} updateList={updateList} />
+                            </div>
+
+                            <div className="todoEntry-box-placeholder-container">
+                                <TodoDeleteButton currentTodo={entries} updateList={updateList} />
+                            </div>
+
+                            <div className="todoEntry-box-placeholder-container checkbox">
+                                <TodoCustomCheckmark currentTodo={entries} updateList={updateList} checked={displayFulfilled} />
+                            </div>
+
                         </div>
 
                         {/* change desc-popup so that it's outside this div, so that it doesnt have this ass background when transitioning */}
                         <div className={`todoEntry-desc-popup ${activeTodos.includes(entries.id) ? "visible" : "hidden"}`}>
                             <div className="todoEntry-desc-text">{entries.desc}</div>
-                            <TodoDeleteButton currentTodo={entries} updateList={updateList} />
                         </div>
 
                     </div>
@@ -43,16 +54,24 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
 
                         <div className="todoEntry-box todo-title todo-title-linethrough " onClick={() => toggleDesc(entries.id)}>  {entries.title}  </div>
 
-                        <div className="todoEntry-box">
-                            {/* <TodoCheckmarkButton currentTodo={entries} funcUpdateList={updateList} /> */}
-                            <TodoCustomCheckmark currentTodo={entries} updateList={updateList} checked={displayFulfilled} />
-                        </div>
 
-                        {/* statt komplett neu zu rendern, lieber visibility togglen, das erlaubt transitions -> juckt gerade nicht? */}
+                        <div className="todoEntry-box">
+                            <div className="todoEntry-box-placeholder-container">
+                                edit
+                            </div>
+
+                            <div className="todoEntry-box-placeholder-container">
+                                <TodoDeleteButton currentTodo={entries} updateList={updateList} />
+                            </div>
+
+                            <div className="todoEntry-box-placeholder-container checkbox">
+                                <TodoCustomCheckmark currentTodo={entries} updateList={updateList} checked={displayFulfilled} />
+                            </div>
+
+                        </div>
 
                         <div className={`todoEntry-desc-popup ${activeTodos.includes(entries.id) ? "visible" : "hidden"}`}>
                             <div className="todoEntry-desc-text">{entries.desc}</div>
-                            <TodoDeleteButton currentTodo={entries} updateList={updateList} />
                         </div>
 
                     </div>
