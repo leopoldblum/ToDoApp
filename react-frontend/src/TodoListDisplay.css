@@ -116,7 +116,6 @@
 .todoEntry-desc-popup.visible {
     opacity: 1;
     transform: translateY(0);
-
     max-height: 500px;
 }
 
@@ -131,6 +130,10 @@
     color: white;
     font-weight: normal;
 
-    margin-top: 2%;
-    margin-bottom: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+
+    min-height: 5vh;
+    /* background-color: white; */
+
 }

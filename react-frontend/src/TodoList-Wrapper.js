@@ -1,4 +1,3 @@
-import './TodoList-Wrapper.css'
 import React, { useState, useEffect } from 'react';
 import TodoList from './TodoListAndHeader';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
@@ -42,6 +41,7 @@ const TodoListWrapper = () => {
      * 
      * toggles given header_type in activeHeaders
      */
+
     const toggleHeaderState = (header_type) => {
         setActiveHeaders((currentActiveHeaders) => {
             if (currentActiveHeaders.includes(header_type)) {

@@ -1,26 +1,28 @@
+import { useEffect, useRef, useState } from "react"
 import "./TodoCustomCheckmark.css"
 
 const TodoCustomCheckmark = ({ currentTodo, updateList, checked }) => {
 
-    // durch states ersetzen?
-    const checked_button_id = `${currentTodo.id}-checked-button`
-    const unchecked_button_id = `${currentTodo.id}-unchecked-button`
+    const [isChecked, setIsChecked] = useState(checked);
 
-    function toggleButtonSwitcharoo() {
-        var b1 = document.getElementById(unchecked_button_id)
-        var b2 = document.getElementById(checked_button_id)
+    const checkedBoxRef = useRef();
+    const uncheckedBoxRef = useRef();
 
-        b1.classList.toggle("hidden");
-        b2.classList.toggle("hidden")
+    useEffect(() => {
+        // setIsChecked
+    }, [checked])
 
-        b1.classList.toggle("shake")
-        b2.classList.toggle("shake")
 
-        b1.ontransitionend = () => {
 
-            // backend shit here
-            todoToggleFulfill(currentTodo.id)
-        }
+    function toggleButtonWithStates() {
+        setIsChecked(prev => !prev);
+        uncheckedBoxRef.current.classList.add("shake");
+        checkedBoxRef.current.classList.add("shake");
+
+
+        uncheckedBoxRef.current.addEventListener('transitionend', () => {
+            todoToggleFulfill(currentTodo.id);
+        }, { once: true })
     }
 
 
@@ -60,26 +62,28 @@ const TodoCustomCheckmark = ({ currentTodo, updateList, checked }) => {
 
     }
 
-    if (checked) {
-        // Todo is fulfilled -> checked checkbox
-        return (
-            <div className="custom-checkmark-container">
-                <img id={checked_button_id} className="checkmark-button" onClick={toggleButtonSwitcharoo} src="/box-checked.svg" alt="ticked checkbox" />
-                <img id={unchecked_button_id} className="checkmark-button hidden" onClick={toggleButtonSwitcharoo} src="/box-unchecked.svg" alt="unticked checkbox" />
-            </div>
-        )
-    }
-    else {
-        // Todo is unfulfilled -> unchecked checkbox
 
-        return (
-            <div className="custom-checkmark-container">
-                <img id={checked_button_id} className="checkmark-button hidden" onClick={toggleButtonSwitcharoo} src="/box-checked.svg" alt="ticked checkbox" />
-                <img id={unchecked_button_id} className="checkmark-button" onClick={toggleButtonSwitcharoo} src="/box-unchecked.svg" alt="unticked checkbox" />
-            </div>
-        )
-    }
+    return (
+        <div className="custom-checkmark-container">
 
+            <img
+                className={`checkmark-button ${isChecked ? "" : "hidden"}`}
+                ref={checkedBoxRef}
+                onClick={toggleButtonWithStates}
+                src="/box-checked.svg"
+                alt="checked checkbox"
+            />
+
+            <img
+                className={`checkmark-button ${!isChecked ? "" : "hidden"}`}
+                ref={uncheckedBoxRef}
+                onClick={toggleButtonWithStates}
+                src="/box-unchecked.svg"
+                alt="unchecked checkbox"
+            />
+
+        </div>
+    )
 }
 
 export default TodoCustomCheckmark;

@@ -5,42 +5,42 @@
     justify-content: center;
     align-items: center;
 
-
     width: 100%;
 }
 
 
 @keyframes shake {
     0% {
-        transform: scale(50%), perspective(50%);
+        transform:
+            scale(0.8) rotate(10deg) translateY(-10px);
+        opacity: 0;
     }
 
-    50% {
-        transform: scale(150%);
-
+    60% {
+        transform:
+            scale(1.1) rotate(-5deg);
+        opacity: 1;
     }
 
-    75% {
-        transform: scale(75%);
+    80% {
+        transform:
+            scale(0.95) rotate(2deg);
     }
 
     100% {
-        transform: scale(0%);
+        transform:
+            scale(1) rotate(0deg);
+        opacity: 1;
     }
-}
-
-.shake {
-    animation: shake 0.5s ease-in-out;
-    pointer-events: none;
 }
 
 .checkmark-button {
     position: absolute;
     opacity: 1;
     transition: opacity 0.5s ease;
+
     pointer-events: none;
 
-    /* height: 5vh; */
     height: calc(5% + 5vh);
 
     cursor: pointer;
@@ -50,6 +50,13 @@
 
     /* makes black checkbox white */
     filter: invert(99%) sepia(0%) saturate(0%) hue-rotate(126deg) brightness(110%) contrast(100%);
+
+}
+
+.checkmark-button:not(.hidden) {
+    opacity: 1;
+    pointer-events: auto;
+    animation: shake 0.5s ease-out;
 }
 
 .hidden {
