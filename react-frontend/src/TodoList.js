@@ -90,7 +90,6 @@ const TodoList = () => {
         <div>
 
             {/* render add todo button form */}
-            {/* <TodoAddButton updateList={updateList} /> */}
             <TodoEditOrAddButton isEdit={false} currentTodo={null} updateList={updateList} />
 
             {/* Active Todos */}
@@ -153,8 +152,7 @@ export default TodoList;
     => workaround mit scrollbar
 
     best practice für responsive design?
-
-    wie dynamic font size?
+    => wie dynamic font size?
 
     typescript prob goated
 
@@ -164,4 +162,6 @@ export default TodoList;
     -> done
 
     onClick={() => funtion()} vs {function}
+
+    bounded vs unbounded functions
 */
