@@ -1,9 +1,12 @@
 import './TodoList.css'
 import React, { useState, useEffect } from 'react';
-import TodoAddButton from './TodoAddButton';
+// import TodoAddButton from './TodoAddButton';
 import TodoDeleteAllFulfilledButton from './TodoDeleteAllFulfilledButton';
 import CollapseButton from './TodoCollapseAllButton';
 import TodoListDisplay from './TodoListDisplay';
+
+import TodoEditOrAddButton from "./TodoEditOrAddButton";
+
 
 const TodoList = () => {
 
@@ -87,7 +90,8 @@ const TodoList = () => {
         <div>
 
             {/* render add todo button form */}
-            <TodoAddButton funcUpdateList={updateList} />
+            {/* <TodoAddButton updateList={updateList} /> */}
+            <TodoEditOrAddButton isEdit={false} currentTodo={null} updateList={updateList} />
 
             {/* Active Todos */}
             <div className='section-todos-header' >

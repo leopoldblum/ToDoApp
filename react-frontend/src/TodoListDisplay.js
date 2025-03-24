@@ -1,7 +1,7 @@
 import "./TodoListDisplay.css"
 import TodoDeleteButton from "./TodoDeleteButton";
 import TodoCustomCheckmark from "./TodoCustomCheckmark";
-import TodoEditButton from "./TodoEditButton";
+import TodoEditOrAddButton from "./TodoEditOrAddButton";
 
 const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, updateList, activeHeaders }) => {
 
@@ -17,7 +17,7 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
 
                         <div className="todoEntry-box">
                             <div className="todoEntry-box-placeholder-container">
-                                <TodoEditButton key={entries.id} currentTodo={entries} updateList={updateList} />
+                                <TodoEditOrAddButton isEdit={true} currentTodo={entries} updateList={updateList} />
                             </div>
 
                             <div className="todoEntry-box-placeholder-container">
@@ -59,8 +59,7 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
 
                         <div className="todoEntry-box">
                             <div className="todoEntry-box-placeholder-container">
-                                <TodoEditButton key={entries.id} currentTodo={entries} updateList={updateList} />
-
+                                <TodoEditOrAddButton isEdit={true} currentTodo={entries} updateList={updateList} />
                             </div>
 
                             <div className="todoEntry-box-placeholder-container">

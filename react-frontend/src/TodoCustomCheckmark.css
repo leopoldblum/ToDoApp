@@ -46,6 +46,7 @@
     cursor: pointer;
     border: none;
     color: white;
+    user-select: none;
 
     /* makes black checkbox white */
     filter: invert(99%) sepia(0%) saturate(0%) hue-rotate(126deg) brightness(110%) contrast(100%);
