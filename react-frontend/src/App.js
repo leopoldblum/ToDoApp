@@ -11,6 +11,8 @@ class App extends Component {
 
         <div className="title">todos</div>
 
+        {/* insert add button here, hella refactoring tho */}
+
         <TodoList isFulfilled={false} />
         <TodoList isFulfilled={true} />
 

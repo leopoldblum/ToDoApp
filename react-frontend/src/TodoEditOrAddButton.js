@@ -1,14 +1,15 @@
 import "./TodoEditOrAddButton.css"
-
 import PencilSquareIcon from "@heroicons/react/16/solid/PencilSquareIcon.js"
 import XMarkIcon from "@heroicons/react/16/solid/XMarkIcon.js"
 import { useState, useEffect, useRef } from "react"
 
-const TodoEditOrAddButton = ({ isEdit, currentTodo, updateList }) => {
+/** 
+    @param currentTodo === null -> add button
+    @param currentTodo !== null -> edit button
+**/
+const TodoEditOrAddButton = ({ currentTodo, updateList }) => {
 
-    // could ditch isEdit and simply use currentTodo
-    // null => add
-    // else => edit
+    const isEdit = currentTodo === null ? false : true;
 
     const [formContent, setFormContent] = useState({
         formTitle: "",
