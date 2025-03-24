@@ -105,7 +105,6 @@
     cursor: pointer;
 }
 
-
 .todoEntry-desc-popup {
     font-size: calc(50% + 1vh);
 
@@ -144,9 +143,10 @@
     text-align: left;
     padding: 3vh;
 
-    width: 100%;
     word-wrap: break-word;
     overflow-y: auto;
+
+    width: 100%;
 
     color: white;
     font-weight: bold;

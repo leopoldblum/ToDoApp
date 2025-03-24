@@ -1,5 +1,3 @@
-import "./TodoEditButton.css"
-import "./TodoAddButton.css"
 import "./TodoEditOrAddButton.css"
 
 import PencilSquareIcon from "@heroicons/react/16/solid/PencilSquareIcon.js"
