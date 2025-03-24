@@ -15,7 +15,6 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
                         {entries.title}
                     </div>
 
-
                     <div className="todoEntry-box">
                         <div className="todoEntry-box-placeholder-container">
                             <TodoEditOrAddButton currentTodo={entries} updateList={updateList} />

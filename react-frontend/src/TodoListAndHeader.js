@@ -1,4 +1,4 @@
-import "./TodoList.css"
+import "./TodoListAndHeader.css"
 import TodoDeleteAllFulfilledButton from './TodoDeleteAllFulfilledButton';
 import CollapseButton from './TodoCollapseAllButton';
 import TodoListDisplay from './TodoListDisplay';
@@ -16,21 +16,25 @@ const TodoList = ({ isFulfilled, activeTodos, todos, activeHeaders, toggleHeader
                 </div>
 
                 <div className='section-todos-header-title' onClick={() => toggleHeaderState(headerType)} >
-                    {!isFulfilled && <h1> active todos </h1>}
-                    {isFulfilled && <h1> fulfilled todos </h1>}
-
+                    {isFulfilled ?
+                        <h1> fulfilled todos </h1>
+                        :
+                        <h1> active todos </h1>
+                    }
                 </div>
 
                 <div className={`header-button-container toggle-visibility-container ${activeHeaders.includes(headerType) ? "visible" : ""}`}>
-                    {!isFulfilled && <CollapseButton toggleCollapseAllDesc={toggleCollapseAllDesc} />}
-                    {isFulfilled && <TodoDeleteAllFulfilledButton updateList={updateList} activeHeaders={activeHeaders} />}
+                    {isFulfilled ?
+                        <TodoDeleteAllFulfilledButton updateList={updateList} activeHeaders={activeHeaders} />
+                        :
+                        <CollapseButton toggleCollapseAllDesc={toggleCollapseAllDesc} />
+                    }
                 </div>
 
             </div>
 
             <div className={`toggle-visibility-container ${activeHeaders.includes(headerType) ? "visible" : ""}`}>
-                {!isFulfilled && <TodoListDisplay displayFulfilled={false} todos={todos} activeTodos={activeTodos} toggleDesc={toggleDesc} updateList={updateList} />}
-                {isFulfilled && <TodoListDisplay displayFulfilled={true} todos={todos} activeTodos={activeTodos} toggleDesc={toggleDesc} updateList={updateList} />}
+                <TodoListDisplay displayFulfilled={isFulfilled ? true : false} todos={todos} activeTodos={activeTodos} toggleDesc={toggleDesc} updateList={updateList} />
             </div>
         </div>
     )

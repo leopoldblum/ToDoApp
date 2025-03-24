@@ -1,6 +1,6 @@
 import './TodoList-Wrapper.css'
 import React, { useState, useEffect } from 'react';
-import TodoList from './TodoList';
+import TodoList from './TodoListAndHeader';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
 
 
