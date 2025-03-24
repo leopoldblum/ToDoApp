@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import "./global-colors.css"
-import TodoList from "./TodoList.js"
+import TodoListWrapper from './TodoList-Wrapper.js';
 
 
 class App extends Component {
@@ -13,8 +13,7 @@ class App extends Component {
 
         {/* insert add button here, hella refactoring tho */}
 
-        <TodoList isFulfilled={false} />
-        <TodoList isFulfilled={true} />
+        <TodoListWrapper />
 
       </div>
     );
