@@ -1,17 +1,6 @@
-#all-active-todos-container,
-#all-fulfilled-todos-container,
 .all-todos-container {
     display: block;
     overflow: hidden;
-
-    /* opacity: 0;
-    max-height: 0;
-
-    transform: scaleY(0);
-    transform-origin: top;
-
-    transition: all 0.3s linear; */
-
     margin: auto;
     width: 60%;
 }
@@ -25,7 +14,6 @@
     margin-bottom: 2%;
     width: 90%;
     color: white;
-
 
     border-radius: 2vh;
     border-top-left-radius: 0;
@@ -44,6 +32,14 @@
     overflow: hidden;
     transition: all 0.3s ease;
 }
+
+.todoEntryCompleted-container {
+
+    /* background-color: var(--todo-entry-fulfilled-bg-color); */
+    background: var(--todo-entry-fulfilled-bg);
+}
+
+
 
 .todoEntry-box {
     flex: 1;
@@ -87,6 +83,13 @@
     overflow-y: auto;
 
     cursor: pointer;
+}
+
+.todo-title-linethrough {
+    text-decoration: line-through;
+    text-decoration-thickness: 0.15vw;
+
+    color: var(--todo-fulfilled-strikethrough-color);
 }
 
 .todoEntry-desc-popup {
