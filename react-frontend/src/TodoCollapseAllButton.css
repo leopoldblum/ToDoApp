@@ -29,14 +29,4 @@
 
 .collapse-container {
     width: 100%;
-
-    opacity: 0;
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: all 0.2s ease-in;
-}
-
-.collapse-container.visible {
-    transform: scaleY(1);
-    opacity: 1;
 }

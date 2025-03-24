@@ -24,7 +24,7 @@ const TodoDeleteAllFulfilledButton = ({ updateList, activeHeaders }) => {
     }
 
     return (
-        <div className={`daft-button-container ${activeHeaders.includes("header-fulfilled") ? "visible" : ""} `}>
+        <div className="daft-button-container">
             <button className="daft-button" onClick={() => deleteAllFulfilledTodos()}> clear all </button>
         </div >
     )

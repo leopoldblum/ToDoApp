@@ -11,7 +11,8 @@ class App extends Component {
 
         <div className="title">todos</div>
 
-        <TodoList />
+        <TodoList isFulfilled={false} />
+        <TodoList isFulfilled={true} />
 
       </div>
     );

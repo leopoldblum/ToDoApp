@@ -59,8 +59,7 @@
 }
 
 
-#section-todos-header-icon-actives,
-#section-todos-header-icon-completed {
+.section-todos-header-icon {
     margin-left: 4vh;
 
     color: rgba(255, 255, 255, 0.411);
@@ -71,7 +70,23 @@
     transition: all 0.2s ease-in;
 }
 
-#section-todos-header-icon-actives.active,
-#section-todos-header-icon-completed.active {
+.section-todos-header-icon.active {
     transform: rotate(90deg);
+}
+
+.toggle-visibility-container {
+    max-height: 0;
+    visibility: hidden;
+    overflow: hidden;
+
+    transform: scaleY(0);
+    transform-origin: top;
+
+    transition: all 0.3s ease;
+}
+
+.toggle-visibility-container.visible {
+    max-height: 500vh;
+    visibility: visible;
+    transform: scaleY(1);
 }

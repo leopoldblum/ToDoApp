@@ -26,13 +26,8 @@
 }
 
 .daft-button-container {
-    opacity: 0;
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: all 0.2s ease-in;
-}
-
-.daft-button-container.visible {
     transform: scaleY(1);
     opacity: 1;
+    transform-origin: top;
+    transition: all 0.2s ease-in;
 }

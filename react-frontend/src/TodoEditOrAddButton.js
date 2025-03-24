@@ -157,7 +157,7 @@ const TodoEditOrAddButton = ({ isEdit, currentTodo, updateList }) => {
 
             {/* Add Button */}
             {!isEdit &&
-                <button className="openPopup-button" id="openPopup-button" onClick={() => setIsModalOpen(true)}>
+                <button className="openPopup-button" onClick={() => setIsModalOpen(true)}>
                     add a new todo
                 </button>
             }

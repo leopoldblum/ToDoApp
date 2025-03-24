@@ -1,6 +1,5 @@
 import './TodoList.css'
 import React, { useState, useEffect } from 'react';
-// import TodoAddButton from './TodoAddButton';
 import TodoDeleteAllFulfilledButton from './TodoDeleteAllFulfilledButton';
 import CollapseButton from './TodoCollapseAllButton';
 import TodoListDisplay from './TodoListDisplay';
@@ -8,13 +7,15 @@ import TodoListDisplay from './TodoListDisplay';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
 
 
-const TodoList = () => {
+const TodoList = ({ isFulfilled }) => {
 
     const [todos, setTodos] = useState([])
     const [activeTodos, setActiveTodos] = useState([])
 
     // header die ausgeklappt sind => "header-actives", "header-fulfilled"
     const [activeHeaders, setActiveHeaders] = useState(["header-actives"])
+
+    const headerType = isFulfilled ? "header-fulfilled" : "header-actives"
 
     const updateList = async () => {
         try {
@@ -40,15 +41,13 @@ const TodoList = () => {
         });
     }
 
-    const toggleHeaderState = (headerID) => {
+    const toggleHeaderState = (header_type) => {
         setActiveHeaders((currentActiveHeaders) => {
-            if (currentActiveHeaders.includes(headerID)) {
-                // remove active Header from state
-                return currentActiveHeaders.filter((activeHeader) => activeHeader !== headerID);
+            if (currentActiveHeaders.includes(header_type)) {
+                return currentActiveHeaders.filter((activeHeader) => activeHeader !== header_type);
             }
             else {
-                // add active Header to state
-                return [...currentActiveHeaders, headerID];
+                return [...currentActiveHeaders, header_type];
             }
         })
     }
@@ -65,22 +64,6 @@ const TodoList = () => {
         }
     }
 
-    const toggleVisibilityOfTodoLists = (elemIDtoToggle, headerID) => {
-        const toggleVisibilityElem = document.getElementById(elemIDtoToggle);
-        const headerTypeID = document.getElementById(headerID);
-
-        toggleVisibilityElem.classList.toggle("visible");
-
-        if (toggleVisibilityElem.classList.contains("visible")) {
-            toggleVisibilityElem.addEventListener("transitionend", () => headerTypeID.scrollIntoView({ behavior: "smooth", block: "start" }), { once: true });
-        }
-        else {
-            headerTypeID.scrollIntoView({ behavior: "smooth", block: "center" })
-            toggleVisibilityElem.addEventListener("transitionend", () => headerTypeID.scrollIntoView({ behavior: "smooth", block: "center" }), { once: true });
-        }
-
-        toggleHeaderState(headerID);
-    }
 
     useEffect(() => {
         updateList();
@@ -89,44 +72,31 @@ const TodoList = () => {
     return (
         <div>
 
-            {/* render add todo button form */}
-            <TodoEditOrAddButton isEdit={false} currentTodo={null} updateList={updateList} />
+            {!isFulfilled && <TodoEditOrAddButton isEdit={false} currentTodo={null} updateList={updateList} />}
 
-            {/* Active Todos */}
             <div className='section-todos-header' >
-                <div className={`section-todos-header-icon  ${activeHeaders.includes("header-actives") ? "active" : ""} `} id="section-todos-header-icon-actives">
+
+                <div className={`section-todos-header-icon  ${activeHeaders.includes(headerType) ? "active" : ""} `}>
                     &gt;
                 </div>
 
-                <div className='section-todos-header-title' id="header-actives" onClick={() => toggleVisibilityOfTodoLists("all-active-todos-container", "header-actives")}>
-                    <h1> active todos </h1>
+                <div className='section-todos-header-title' onClick={() => toggleHeaderState(headerType)} >
+                    {!isFulfilled && <h1> active todos </h1>}
+                    {isFulfilled && <h1> fulfilled todos </h1>}
+
                 </div>
 
-                <div className='header-button-container'>
-                    <CollapseButton toggleCollapseAllDesc={toggleCollapseAllDesc} activeHeaders={activeHeaders} />
-                </div>
-            </div>
-
-            <TodoListDisplay displayFulfilled={false} todos={todos} activeTodos={activeTodos} toggleDesc={toggleDesc} updateList={updateList} activeHeaders={activeHeaders} />
-
-            {/* completed todos */}
-            <div className='section-todos-header' >
-                <div className={`section-todos-header-icon  ${activeHeaders.includes("header-fulfilled") ? "active" : ""} `} id="section-todos-header-icon-completed">
-                    &gt;
-                </div>
-
-                <div className='section-todos-header-title' id="header-fulfilled" onClick={() => toggleVisibilityOfTodoLists("all-fulfilled-todos-container", "header-fulfilled")}>
-                    <h1> completed todos </h1>
-                </div>
-
-                <div className='header-button-container'>
-                    <TodoDeleteAllFulfilledButton updateList={updateList} activeHeaders={activeHeaders} />
+                <div className={`header-button-container toggle-visibility-container ${activeHeaders.includes(headerType) ? "visible" : ""}`}>
+                    {!isFulfilled && <CollapseButton toggleCollapseAllDesc={toggleCollapseAllDesc} />}
+                    {isFulfilled && <TodoDeleteAllFulfilledButton updateList={updateList} activeHeaders={activeHeaders} />}
                 </div>
 
             </div>
 
-            {/* render fulfilled todos list */}
-            <TodoListDisplay displayFulfilled={true} todos={todos} activeTodos={activeTodos} toggleDesc={toggleDesc} updateList={updateList} activeHeaders={activeHeaders} />
+            <div className={`toggle-visibility-container ${activeHeaders.includes(headerType) ? "visible" : ""}`}>
+                {!isFulfilled && <TodoListDisplay displayFulfilled={false} todos={todos} activeTodos={activeTodos} toggleDesc={toggleDesc} updateList={updateList} />}
+                {isFulfilled && <TodoListDisplay displayFulfilled={true} todos={todos} activeTodos={activeTodos} toggleDesc={toggleDesc} updateList={updateList} />}
+            </div>
 
         </div>
     );

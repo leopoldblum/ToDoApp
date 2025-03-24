@@ -3,12 +3,13 @@ import TodoDeleteButton from "./TodoDeleteButton";
 import TodoCustomCheckmark from "./TodoCustomCheckmark";
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
 
-const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, updateList, activeHeaders }) => {
+const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, updateList }) => {
 
     if (displayFulfilled === false) {
 
         return (
-            <div id="all-active-todos-container" className={`${activeHeaders.includes("header-actives") ? "visible" : ""} `}>
+            <div className="all-todos-container">
+
                 {todos != null && todos.filter(entries => entries.fulfilled === false).map((entries) => (
 
                     <div className='todoEntry-container' key={entries.id}>
@@ -30,7 +31,6 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
 
                         </div>
 
-                        {/* change desc-popup so that it's outside this div, so that it doesnt have this ass background when transitioning */}
                         <div className={`todoEntry-desc-popup ${activeTodos.includes(entries.id) ? "visible" : "hidden"}`}>
                             <div className="todoEntry-desc-text">
                                 <p>{entries.desc}</p>
@@ -40,8 +40,6 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
                     </div>
                 ))
                 }
-
-                {/* put desc-popup here */}
             </div>
         )
 
@@ -49,7 +47,7 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
     else {
 
         return (
-            <div id="all-fulfilled-todos-container" className={`${activeHeaders.includes("header-fulfilled") ? "visible" : ""} `}>
+            <div className="all-todos-container">
                 {todos != null && todos.filter(entries => entries.fulfilled === true).map((entries) => (
 
                     <div className='todoEntry-container todoEntryCompleted-container' key={entries.id}>

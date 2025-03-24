@@ -1,31 +1,19 @@
 #all-active-todos-container,
-#all-fulfilled-todos-container {
+#all-fulfilled-todos-container,
+.all-todos-container {
     display: block;
     overflow: hidden;
 
-    opacity: 0;
+    /* opacity: 0;
     max-height: 0;
 
     transform: scaleY(0);
     transform-origin: top;
 
-    transition: all 0.3s linear;
+    transition: all 0.3s linear; */
 
     margin: auto;
     width: 60%;
-}
-
-#all-active-todos-container.visible,
-#all-fulfilled-todos-container.visible {
-
-    opacity: 1;
-
-    /* falls es scrollable sein soll */
-    /* max-height: 60vh; */
-    max-height: 1000vh;
-
-    transform: scaleY(1);
-    overflow-y: scroll;
 }
 
 .todoEntry-container {
@@ -111,23 +99,24 @@
     opacity: 0;
     overflow: hidden;
     transform: translateY(-10%);
-    transform: scaleY(0);
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     transform-origin: top;
 
     background-color: rgba(255, 255, 255, 0.11);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .todoEntry-desc-popup.hidden {
     opacity: 0;
     max-height: 0;
-    transform: scaleY(0);
     transform: translateY(0);
 }
 
 .todoEntry-desc-popup.visible {
     opacity: 1;
-    transform: scaleY(1);
     transform: translateY(0);
 
     max-height: 500px;
@@ -140,9 +129,14 @@
     overflow-y: auto;
 
     width: 90%;
-    min-height: 7vh;
 
     color: white;
     font-weight: normal;
+
+    margin-top: 2%;
+    margin-bottom: 2%;
+
+
+    background-color: rgb(66, 66, 27);
 
 }
