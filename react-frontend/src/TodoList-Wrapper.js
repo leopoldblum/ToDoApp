@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import TodoList from './TodoListAndHeader';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
+
+export const todoListProvider = createContext(null);
 
 
 const TodoListWrapper = () => {
@@ -13,6 +15,8 @@ const TodoListWrapper = () => {
 
     // header die ausgeklappt sind => "header-actives", "header-fulfilled"
     const [activeHeaders, setActiveHeaders] = useState(["header-actives"])
+
+
 
     const updateList = async () => {
         try {
@@ -74,15 +78,17 @@ const TodoListWrapper = () => {
     }, []);
 
     return (
-        <div>
+        <todoListProvider.Provider value={{ activeTodos, todos, activeHeaders, toggleHeaderState, toggleCollapseAllDesc, toggleDesc, updateList }}>
+            <div>
 
-            <TodoEditOrAddButton isEdit={false} currentTodo={null} updateList={updateList} />
+                <TodoEditOrAddButton isEdit={false} currentTodo={null} updateList={updateList} />
 
-            {/* cursed */}
-            <TodoList isFulfilled={false} activeTodos={activeTodos} todos={todos} activeHeaders={activeHeaders} toggleHeaderState={toggleHeaderState} toggleCollapseAllDesc={toggleCollapseAllDesc} toggleDesc={toggleDesc} updateList={updateList} />
-            <TodoList isFulfilled={true} activeTodos={activeTodos} todos={todos} activeHeaders={activeHeaders} toggleHeaderState={toggleHeaderState} toggleCollapseAllDesc={toggleCollapseAllDesc} toggleDesc={toggleDesc} updateList={updateList} />
+                {/* cursed */}
+                <TodoList isFulfilled={false} activeTodos={activeTodos} todos={todos} activeHeaders={activeHeaders} toggleHeaderState={toggleHeaderState} toggleCollapseAllDesc={toggleCollapseAllDesc} toggleDesc={toggleDesc} updateList={updateList} />
+                <TodoList isFulfilled={true} activeTodos={activeTodos} todos={todos} activeHeaders={activeHeaders} toggleHeaderState={toggleHeaderState} toggleCollapseAllDesc={toggleCollapseAllDesc} toggleDesc={toggleDesc} updateList={updateList} />
 
-        </div>
+            </div>
+        </todoListProvider.Provider>
     );
 }
 
@@ -98,22 +104,13 @@ export default TodoListWrapper;
         const foo = () => {}
 
 
-    es gibt keine css animationen bei display: none -> block, wie kann man das dann machen?
-        -> warum ist das so wonky mit visibility, height usw.
-        -> max_height: 0 -> max_height: 5000vh ist scuffed af, bessere möglichkeit dafür? 
-
     how to: smooth animationen bei dynamisch großen elementen (max-height > 100vh), wie bspw. todolist elemente
-    => workaround mit scrollbar
 
     best practice für responsive design?
-    => wie dynamic font size?
 
     typescript prob goated
 
     welche seite für design, canva?
-
-    icon, header-state und collapse/delete-all button sind nicht coupled aneinander, wie würde man das am ehesten machen? useState für header und dann per props an elemente?
-    -> done
 
     onClick={() => funtion()} vs {function}
 

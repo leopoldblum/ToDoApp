@@ -2,8 +2,14 @@ import "./TodoListAndHeader.css"
 import TodoDeleteAllFulfilledButton from './TodoDeleteAllFulfilledButton';
 import CollapseButton from './TodoCollapseAllButton';
 import TodoListDisplay from './TodoListDisplay';
+import { useContext } from "react";
+import { todoListProvider } from "./TodoList-Wrapper";
 
 const TodoList = ({ isFulfilled, activeTodos, todos, activeHeaders, toggleHeaderState, toggleCollapseAllDesc, toggleDesc, updateList }) => {
+
+    const data = useContext(todoListProvider);
+    console.log(data.todos)
+    // useContext instead of passing down all the props
 
     const headerType = isFulfilled ? "header-fulfilled" : "header-actives"
 
