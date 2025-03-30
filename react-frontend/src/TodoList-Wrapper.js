@@ -5,7 +5,10 @@ import TodoEditOrAddButton from "./TodoEditOrAddButton";
 
 const TodoListWrapper = () => {
 
+    // alle todos
     const [todos, setTodos] = useState([])
+
+    // todos mit offener desc
     const [activeTodos, setActiveTodos] = useState([])
 
     // header die ausgeklappt sind => "header-actives", "header-fulfilled"
@@ -60,7 +63,7 @@ const TodoListWrapper = () => {
         }
         else {
             // no desc are shown -> show all descs
-            const allTodoIDs = todos.map(todo => todo.id)
+            const allTodoIDs = todos.filter(entries => entries.fulfilled === false).map(todo => todo.id)
             setActiveTodos(allTodoIDs);
         }
     }
