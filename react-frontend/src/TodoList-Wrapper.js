@@ -3,7 +3,6 @@ import TodoListAndHeader from './TodoListAndHeader';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
 import { useQuery } from '@tanstack/react-query'
 
-
 /**
  * @param {} content
  * descActiveTodos[],  todos[],  activeHeaders[],  toggleHeaderState(),  toggleCollapseAllDesc(),  toggleDesc(),  updateList() 
@@ -23,7 +22,7 @@ const TodoListWrapper = () => {
     const [activeHeaders, setActiveHeaders] = useState(["header-actives"])
 
 
-    const fetchTodos = async () => {
+    const fetchAllTodos = async () => {
         try {
 
             const response = await fetch("http://localhost:8080/todos")
@@ -36,9 +35,10 @@ const TodoListWrapper = () => {
         }
     }
 
+    // query for fetching todos from server
     const { isPending, isError, data: todosFromFetch, error, refetch: updateList } = useQuery({
         queryKey: ['todos'],
-        queryFn: fetchTodos,
+        queryFn: fetchAllTodos,
     })
 
 
@@ -56,6 +56,9 @@ const TodoListWrapper = () => {
         }
     }, [todosFromFetch]);
 
+
+
+    // toggle and helper functions
     const toggleDesc = (id) => {
         setDescActiveTodos((currentDescActiveTodos) => {
             if (currentDescActiveTodos.includes(id)) {
@@ -66,7 +69,6 @@ const TodoListWrapper = () => {
             }
         });
     }
-
 
     /**
      * @param {string} header_type options: "header-active" "header-fulfilled" 
@@ -96,6 +98,8 @@ const TodoListWrapper = () => {
             setDescActiveTodos(allTodoIDs);
         }
     }
+
+
 
     return (
         <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, toggleHeaderState, toggleCollapseAllDesc, toggleDesc, updateList }}>
