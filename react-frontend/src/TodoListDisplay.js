@@ -22,11 +22,11 @@ const TodoListDisplay = ({ displayFulfilled }) => {
 
                     <div className="todoEntry-box">
                         <div className="todoEntry-box-placeholder-container">
-                            <TodoEditOrAddButton currentTodo={entries} updateList={todoFuncAndData.updateList} />
+                            <TodoEditOrAddButton currentTodo={entries} />
                         </div>
 
                         <div className="todoEntry-box-placeholder-container">
-                            <TodoDeleteButton currentTodo={entries} updateList={todoFuncAndData.updateList} />
+                            <TodoDeleteButton currentTodo={entries} />
                         </div>
 
                         <div className="todoEntry-box-placeholder-container checkbox">

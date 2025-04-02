@@ -1,7 +1,11 @@
 import "./TodoDeleteButton.css"
 import TrashIcon from "@heroicons/react/16/solid/TrashIcon.js"
+import { useContext } from "react";
+import { todoListProvider } from "./TodoList-Wrapper";
 
-const TodoDeleteButton = ({ currentTodo, updateList }) => {
+const TodoDeleteButton = ({ currentTodo }) => {
+
+    const todoFuncAndData = useContext(todoListProvider);
 
     async function deleteTodo(todoID) {
         if (todoID === null)
@@ -21,7 +25,7 @@ const TodoDeleteButton = ({ currentTodo, updateList }) => {
                 throw new Error("Error - Response Status:" + response.status);
             }
 
-            updateList();
+            todoFuncAndData.updateList();
 
         } catch (error) {
             console.error(error);
@@ -30,7 +34,6 @@ const TodoDeleteButton = ({ currentTodo, updateList }) => {
 
     return (
         <div className="todoEntry-desc-delete">
-            {/* <button className="todoEntry-desc-delete-button" onClick={() => deleteTodo(currentTodo.id)}>  </button> */}
             <TrashIcon className="todoEntry-desc-delete-button" onClick={() => deleteTodo(currentTodo.id)} />
         </div >
     );
