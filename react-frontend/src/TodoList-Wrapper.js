@@ -11,7 +11,7 @@ const TodoListWrapper = () => {
     const [todos, setTodos] = useState([])
 
     // todos mit offener desc
-    const [activeTodos, setActiveTodos] = useState([])
+    const [descActiveTodos, setDescActiveTodos] = useState([])
 
     // header die ausgeklappt sind => "header-actives", "header-fulfilled"
     const [activeHeaders, setActiveHeaders] = useState(["header-actives"])
@@ -32,7 +32,7 @@ const TodoListWrapper = () => {
     }
 
     const toggleDesc = (id) => {
-        setActiveTodos((currentActiveTodos) => {
+        setDescActiveTodos((currentActiveTodos) => {
             if (currentActiveTodos.includes(id)) {
                 return currentActiveTodos.filter((activeID) => activeID !== id);
             }
@@ -61,14 +61,14 @@ const TodoListWrapper = () => {
     }
 
     const toggleCollapseAllDesc = () => {
-        if (activeTodos.length !== 0) {
+        if (descActiveTodos.length !== 0) {
             // some desc are shown -> show no desc
-            setActiveTodos([]);
+            setDescActiveTodos([]);
         }
         else {
             // no desc are shown -> show all descs
             const allTodoIDs = todos.filter(entries => entries.fulfilled === false).map(todo => todo.id)
-            setActiveTodos(allTodoIDs);
+            setDescActiveTodos(allTodoIDs);
         }
     }
 
@@ -78,14 +78,14 @@ const TodoListWrapper = () => {
     }, []);
 
     return (
-        <todoListProvider.Provider value={{ activeTodos, todos, activeHeaders, toggleHeaderState, toggleCollapseAllDesc, toggleDesc, updateList }}>
+        <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, toggleHeaderState, toggleCollapseAllDesc, toggleDesc, updateList }}>
             <div>
 
                 <TodoEditOrAddButton isEdit={false} currentTodo={null} updateList={updateList} />
 
                 {/* cursed */}
-                <TodoList isFulfilled={false} activeTodos={activeTodos} todos={todos} activeHeaders={activeHeaders} toggleHeaderState={toggleHeaderState} toggleCollapseAllDesc={toggleCollapseAllDesc} toggleDesc={toggleDesc} updateList={updateList} />
-                <TodoList isFulfilled={true} activeTodos={activeTodos} todos={todos} activeHeaders={activeHeaders} toggleHeaderState={toggleHeaderState} toggleCollapseAllDesc={toggleCollapseAllDesc} toggleDesc={toggleDesc} updateList={updateList} />
+                <TodoList isFulfilled={false} descActiveTodos={descActiveTodos} todos={todos} activeHeaders={activeHeaders} toggleHeaderState={toggleHeaderState} toggleCollapseAllDesc={toggleCollapseAllDesc} toggleDesc={toggleDesc} updateList={updateList} />
+                <TodoList isFulfilled={true} descActiveTodos={descActiveTodos} todos={todos} activeHeaders={activeHeaders} toggleHeaderState={toggleHeaderState} toggleCollapseAllDesc={toggleCollapseAllDesc} toggleDesc={toggleDesc} updateList={updateList} />
 
             </div>
         </todoListProvider.Provider>

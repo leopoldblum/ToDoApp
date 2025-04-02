@@ -3,7 +3,7 @@ import TodoDeleteButton from "./TodoDeleteButton";
 import TodoCustomCheckmark from "./TodoCustomCheckmark";
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
 
-const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, updateList }) => {
+const TodoListDisplay = ({ displayFulfilled, todos, descActiveTodos, toggleDesc, updateList }) => {
 
     return (
         <div className="all-todos-container">
@@ -30,7 +30,7 @@ const TodoListDisplay = ({ displayFulfilled, todos, activeTodos, toggleDesc, upd
 
                     </div>
 
-                    <div className={`todoEntry-desc-popup ${activeTodos.includes(entries.id) ? "visible" : "hidden"}`}>
+                    <div className={`todoEntry-desc-popup ${descActiveTodos.includes(entries.id) ? "visible" : "hidden"}`}>
                         <div className="todoEntry-desc-text">{entries.desc}</div>
                     </div>
 

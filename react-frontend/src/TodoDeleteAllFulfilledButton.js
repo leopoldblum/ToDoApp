@@ -1,6 +1,11 @@
 import "./TodoDeleteAllFulfilledButton.css"
+import { useContext } from "react";
+import { todoListProvider } from "./TodoList-Wrapper";
 
-const TodoDeleteAllFulfilledButton = ({ updateList, activeHeaders }) => {
+const TodoDeleteAllFulfilledButton = () => {
+
+    const todoFuncAndData = useContext(todoListProvider);
+
 
     async function deleteAllFulfilledTodos() {
         try {
@@ -16,7 +21,7 @@ const TodoDeleteAllFulfilledButton = ({ updateList, activeHeaders }) => {
                 throw new Error("Error - Response Status:" + response.status);
             }
 
-            updateList();
+            todoFuncAndData.updateList();
 
         } catch (error) {
             console.error(error);

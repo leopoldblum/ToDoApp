@@ -5,10 +5,9 @@ import TodoListDisplay from './TodoListDisplay';
 import { useContext } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
 
-const TodoList = ({ isFulfilled, activeTodos, todos, activeHeaders, toggleHeaderState, toggleCollapseAllDesc, toggleDesc, updateList }) => {
+const TodoList = ({ isFulfilled }) => {
 
-    const data = useContext(todoListProvider);
-    console.log(data.todos)
+    const todoFuncAndData = useContext(todoListProvider);
     // useContext instead of passing down all the props
 
     const headerType = isFulfilled ? "header-fulfilled" : "header-actives"
@@ -17,11 +16,11 @@ const TodoList = ({ isFulfilled, activeTodos, todos, activeHeaders, toggleHeader
         <div>
             <div className='section-todos-header' >
 
-                <div className={`section-todos-header-icon  ${activeHeaders.includes(headerType) ? "active" : ""} `}>
+                <div className={`section-todos-header-icon  ${todoFuncAndData.activeHeaders.includes(headerType) ? "active" : ""} `}>
                     &gt;
                 </div>
 
-                <div className='section-todos-header-title' onClick={() => toggleHeaderState(headerType)} >
+                <div className='section-todos-header-title' onClick={() => todoFuncAndData.toggleHeaderState(headerType)} >
                     {isFulfilled ?
                         <h1> fulfilled todos </h1>
                         :
@@ -29,18 +28,18 @@ const TodoList = ({ isFulfilled, activeTodos, todos, activeHeaders, toggleHeader
                     }
                 </div>
 
-                <div className={`header-button-container toggle-visibility-container ${activeHeaders.includes(headerType) ? "visible" : ""}`}>
+                <div className={`header-button-container toggle-visibility-container ${todoFuncAndData.activeHeaders.includes(headerType) ? "visible" : ""}`}>
                     {isFulfilled ?
-                        <TodoDeleteAllFulfilledButton updateList={updateList} activeHeaders={activeHeaders} />
+                        <TodoDeleteAllFulfilledButton />
                         :
-                        <CollapseButton toggleCollapseAllDesc={toggleCollapseAllDesc} />
+                        <CollapseButton toggleCollapseAllDesc={todoFuncAndData.toggleCollapseAllDesc} />
                     }
                 </div>
 
             </div>
 
-            <div className={`toggle-visibility-container ${activeHeaders.includes(headerType) ? "visible" : ""}`}>
-                <TodoListDisplay displayFulfilled={isFulfilled ? true : false} todos={todos} activeTodos={activeTodos} toggleDesc={toggleDesc} updateList={updateList} />
+            <div className={`toggle-visibility-container ${todoFuncAndData.activeHeaders.includes(headerType) ? "visible" : ""}`}>
+                <TodoListDisplay displayFulfilled={isFulfilled ? true : false} todos={todoFuncAndData.todos} descActiveTodos={todoFuncAndData.descActiveTodos} toggleDesc={todoFuncAndData.toggleDesc} updateList={todoFuncAndData.updateList} />
             </div>
         </div>
     )
