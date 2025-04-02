@@ -1,12 +1,12 @@
 import React, { useState, useEffect, createContext } from 'react';
 import TodoListAndHeader from './TodoListAndHeader';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
+import { useQuery } from '@tanstack/react-query'
 
 
 /**
  * @param {} content
- * descActiveTodos,  todos,  activeHeaders,  toggleHeaderState(),  toggleCollapseAllDesc(),  toggleDesc(),  updateList() 
- * 
+ * descActiveTodos[],  todos[],  activeHeaders[],  toggleHeaderState(),  toggleCollapseAllDesc(),  toggleDesc(),  updateList() 
  */
 export const todoListProvider = createContext(null);
 
@@ -23,27 +23,46 @@ const TodoListWrapper = () => {
     const [activeHeaders, setActiveHeaders] = useState(["header-actives"])
 
 
-
-    const updateList = async () => {
+    const fetchTodos = async () => {
         try {
 
             const response = await fetch("http://localhost:8080/todos")
             const allEntries = await response.json();
 
-            setTodos(allEntries);
+            return allEntries;
         }
         catch (error) {
             console.error("recv error:", error);
         }
     }
 
+    const { isPending, isError, data: todosFromFetch, error, refetch: updateList } = useQuery({
+        queryKey: ['todos'],
+        queryFn: fetchTodos,
+    })
+
+
+    if (isPending) {
+        console.log("pending")
+    }
+
+    if (isError) {
+        console.error("error while fetching: " + error.message)
+    }
+
+    useEffect(() => {
+        if (todosFromFetch) {
+            setTodos(todosFromFetch); // 🔄 Update des lokalen States
+        }
+    }, [todosFromFetch]);
+
     const toggleDesc = (id) => {
-        setDescActiveTodos((currentActiveTodos) => {
-            if (currentActiveTodos.includes(id)) {
-                return currentActiveTodos.filter((activeID) => activeID !== id);
+        setDescActiveTodos((currentDescActiveTodos) => {
+            if (currentDescActiveTodos.includes(id)) {
+                return currentDescActiveTodos.filter((activeID) => activeID !== id);
             }
             else {
-                return [...currentActiveTodos, id];
+                return [...currentDescActiveTodos, id];
             }
         });
     }
@@ -78,23 +97,21 @@ const TodoListWrapper = () => {
         }
     }
 
-
-    useEffect(() => {
-        updateList();
-    }, []);
-
     return (
         <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, toggleHeaderState, toggleCollapseAllDesc, toggleDesc, updateList }}>
+
             <div>
 
-                <TodoEditOrAddButton isEdit={false} currentTodo={null} updateList={updateList} />
+                <TodoEditOrAddButton isEdit={false} currentTodo={null} />
 
-                {/* cursed */}
+                {/* not cursed anymore :) */}
                 <TodoListAndHeader isFulfilled={false} />
                 <TodoListAndHeader isFulfilled={true} />
 
             </div>
+
         </todoListProvider.Provider>
+
     );
 }
 
@@ -104,6 +121,7 @@ export default TodoListWrapper;
 
 /*
     gibt es ne elegantere Lösung für updateList, damit die function nicht als prop weitergegeben werden muss?
+    => useContext is epic
 
         function foo(){} 
             vs 

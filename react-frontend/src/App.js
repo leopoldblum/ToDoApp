@@ -3,6 +3,12 @@ import './App.css';
 import "./global-colors.css"
 import TodoListWrapper from './TodoList-Wrapper.js';
 
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
 
 class App extends Component {
   render() {
@@ -11,10 +17,11 @@ class App extends Component {
 
         <div className="title">todos</div>
 
-        {/* insert add button here, hella refactoring tho */}
+        <QueryClientProvider client={queryClient}>
 
-        <TodoListWrapper />
+          <TodoListWrapper />
 
+        </QueryClientProvider>
 
       </div>
     );

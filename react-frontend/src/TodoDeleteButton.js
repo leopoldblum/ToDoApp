@@ -19,7 +19,7 @@ const TodoDeleteButton = ({ currentTodo }) => {
                 },
             );
 
-            console.log("deleteResponse: " + response.status);
+            // console.log("deleteResponse: " + response.status);
 
             if (!response.ok) {
                 throw new Error("Error - Response Status:" + response.status);
