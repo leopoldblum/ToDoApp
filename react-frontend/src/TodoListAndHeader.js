@@ -39,7 +39,7 @@ const TodoList = ({ isFulfilled }) => {
             </div>
 
             <div className={`toggle-visibility-container ${todoFuncAndData.activeHeaders.includes(headerType) ? "visible" : ""}`}>
-                <TodoListDisplay displayFulfilled={isFulfilled ? true : false} todos={todoFuncAndData.todos} descActiveTodos={todoFuncAndData.descActiveTodos} toggleDesc={todoFuncAndData.toggleDesc} updateList={todoFuncAndData.updateList} />
+                <TodoListDisplay displayFulfilled={isFulfilled ? true : false} />
             </div>
         </div>
     )

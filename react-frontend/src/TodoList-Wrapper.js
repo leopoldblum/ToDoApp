@@ -2,6 +2,12 @@ import React, { useState, useEffect, createContext } from 'react';
 import TodoList from './TodoListAndHeader';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
 
+
+/**
+ * @param {} content
+ * descActiveTodos,  todos,  activeHeaders,  toggleHeaderState(),  toggleCollapseAllDesc(),  toggleDesc(),  updateList() 
+ * 
+ */
 export const todoListProvider = createContext(null);
 
 
