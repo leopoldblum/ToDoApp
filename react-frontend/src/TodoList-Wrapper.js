@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from 'react';
-import TodoList from './TodoListAndHeader';
+import TodoListAndHeader from './TodoListAndHeader';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
 
 
@@ -90,8 +90,8 @@ const TodoListWrapper = () => {
                 <TodoEditOrAddButton isEdit={false} currentTodo={null} updateList={updateList} />
 
                 {/* cursed */}
-                <TodoList isFulfilled={false} descActiveTodos={descActiveTodos} todos={todos} activeHeaders={activeHeaders} toggleHeaderState={toggleHeaderState} toggleCollapseAllDesc={toggleCollapseAllDesc} toggleDesc={toggleDesc} updateList={updateList} />
-                <TodoList isFulfilled={true} descActiveTodos={descActiveTodos} todos={todos} activeHeaders={activeHeaders} toggleHeaderState={toggleHeaderState} toggleCollapseAllDesc={toggleCollapseAllDesc} toggleDesc={toggleDesc} updateList={updateList} />
+                <TodoListAndHeader isFulfilled={false} />
+                <TodoListAndHeader isFulfilled={true} />
 
             </div>
         </todoListProvider.Provider>

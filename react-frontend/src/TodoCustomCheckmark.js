@@ -6,13 +6,13 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
 
     const todoFuncAndData = useContext(todoListProvider);
 
-    const [isChecked, setIsChecked] = useState(checked);
+    const [isChecked, setIsChecked] = useState(null);
 
     const checkedBoxRef = useRef();
     const uncheckedBoxRef = useRef();
 
     useEffect(() => {
-        // setIsChecked
+        setIsChecked(checked);
     }, [checked])
 
 

@@ -5,7 +5,7 @@ import TodoListDisplay from './TodoListDisplay';
 import { useContext } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
 
-const TodoList = ({ isFulfilled }) => {
+const TodoListAndHeader = ({ isFulfilled }) => {
 
     const todoFuncAndData = useContext(todoListProvider);
     // useContext instead of passing down all the props
@@ -45,4 +45,4 @@ const TodoList = ({ isFulfilled }) => {
     )
 }
 
-export default TodoList;
+export default TodoListAndHeader;
