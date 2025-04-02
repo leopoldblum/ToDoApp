@@ -1,13 +1,17 @@
 import "./TodoEditOrAddButton.css"
 import PencilSquareIcon from "@heroicons/react/16/solid/PencilSquareIcon.js"
 import XMarkIcon from "@heroicons/react/16/solid/XMarkIcon.js"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useContext } from "react"
+import { todoListProvider } from "./TodoList-Wrapper";
 
 /** 
     @param currentTodo === null -> add button
     @param currentTodo !== null -> edit button
 **/
-const TodoEditOrAddButton = ({ currentTodo, updateList }) => {
+const TodoEditOrAddButton = ({ currentTodo }) => {
+
+    const todoFuncAndData = useContext(todoListProvider);
+
 
     const isEdit = currentTodo === null ? false : true;
 
@@ -106,7 +110,7 @@ const TodoEditOrAddButton = ({ currentTodo, updateList }) => {
             }
 
             closeAndResetModal();
-            updateList();
+            todoFuncAndData.updateList();
 
         } catch (error) {
             console.error(error);
@@ -140,7 +144,7 @@ const TodoEditOrAddButton = ({ currentTodo, updateList }) => {
             }
 
             closeAndResetModal();
-            updateList();
+            todoFuncAndData.updateList();
 
         } catch (error) {
             console.error(error);
