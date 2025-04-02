@@ -30,7 +30,7 @@ const TodoListDisplay = ({ displayFulfilled }) => {
                         </div>
 
                         <div className="todoEntry-box-placeholder-container checkbox">
-                            <TodoCustomCheckmark currentTodo={entries} updateList={todoFuncAndData.updateList} checked={displayFulfilled} />
+                            <TodoCustomCheckmark currentTodo={entries} checked={displayFulfilled} />
                         </div>
 
                     </div>

@@ -1,7 +1,10 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useContext } from "react"
+import { todoListProvider } from "./TodoList-Wrapper";
 import "./TodoCustomCheckmark.css"
 
-const TodoCustomCheckmark = ({ currentTodo, updateList, checked }) => {
+const TodoCustomCheckmark = ({ currentTodo, checked }) => {
+
+    const todoFuncAndData = useContext(todoListProvider);
 
     const [isChecked, setIsChecked] = useState(checked);
 
@@ -55,7 +58,7 @@ const TodoCustomCheckmark = ({ currentTodo, updateList, checked }) => {
                 );
             }
 
-            updateList();
+            todoFuncAndData.updateList();
         } catch (error) {
             console.error(error);
         }
