@@ -32,7 +32,7 @@ const TodoList = ({ isFulfilled }) => {
                     {isFulfilled ?
                         <TodoDeleteAllFulfilledButton />
                         :
-                        <CollapseButton toggleCollapseAllDesc={todoFuncAndData.toggleCollapseAllDesc} />
+                        <CollapseButton />
                     }
                 </div>
 
