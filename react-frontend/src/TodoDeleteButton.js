@@ -2,6 +2,7 @@ import "./TodoDeleteButton.css"
 import TrashIcon from "@heroicons/react/16/solid/TrashIcon.js"
 import { useContext } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
+import { useMutation } from "@tanstack/react-query";
 
 const TodoDeleteButton = ({ currentTodo }) => {
 
@@ -32,9 +33,15 @@ const TodoDeleteButton = ({ currentTodo }) => {
         }
     }
 
+    const mutationDeleteTodo = useMutation({
+        mutationFn: (todoID) => deleteTodo(todoID)
+    })
+
     return (
         <div className="todoEntry-desc-delete">
-            <TrashIcon className="todoEntry-desc-delete-button" onClick={() => deleteTodo(currentTodo.id)} />
+            {/* <TrashIcon className="todoEntry-desc-delete-button" onClick={() => deleteTodo(currentTodo.id)} /> */}
+            <TrashIcon className="todoEntry-desc-delete-button" onClick={() => mutationDeleteTodo.mutate(currentTodo.id)} />
+
         </div >
     );
 }

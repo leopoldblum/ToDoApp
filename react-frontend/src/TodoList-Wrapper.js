@@ -52,7 +52,7 @@ const TodoListWrapper = () => {
 
     useEffect(() => {
         if (todosFromFetch) {
-            setTodos(todosFromFetch); // 🔄 Update des lokalen States
+            setTodos(todosFromFetch);
         }
     }, [todosFromFetch]);
 
@@ -143,4 +143,8 @@ export default TodoListWrapper;
     onClick={() => funtion()} vs {function}
 
     bounded vs unbounded functions
+
+    tanstackQuery:
+        - muss die queryfn selbst die errors catchen, oder wird das beim aufruf der funktion gemacht?
+        - refetch vs query in eigene funktion packen
 */
