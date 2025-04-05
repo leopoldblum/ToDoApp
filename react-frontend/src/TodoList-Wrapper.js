@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 
 /**
  * @param {} content
- * descActiveTodos[],  todos[],  activeHeaders[],  toggleHeaderState(),  setDescActiveTodos(),  toggleDesc(),  updateList() 
+ *  todos[], descActiveTodos[], activeHeaders[] --- setDescActiveTodos(), setActiveHeaders(), updateList() 
  */
 export const todoListProvider = createContext(null);
 
@@ -58,37 +58,9 @@ const TodoListWrapper = () => {
 
 
 
-    // toggle and helper functions
-    const toggleDesc = (id) => {
-        setDescActiveTodos((currentDescActiveTodos) => {
-            if (currentDescActiveTodos.includes(id)) {
-                return currentDescActiveTodos.filter((activeID) => activeID !== id);
-            }
-            else {
-                return [...currentDescActiveTodos, id];
-            }
-        });
-    }
-
-    /**
-     * @param {string} header_type options: "header-active" "header-fulfilled" 
-     * 
-     * toggles given header_type in activeHeaders
-     */
-
-    const toggleHeaderState = (header_type) => {
-        setActiveHeaders((currentActiveHeaders) => {
-            if (currentActiveHeaders.includes(header_type)) {
-                return currentActiveHeaders.filter((activeHeader) => activeHeader !== header_type);
-            }
-            else {
-                return [...currentActiveHeaders, header_type];
-            }
-        })
-    }
 
     return (
-        <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, setDescActiveTodos, toggleHeaderState, toggleDesc, updateList }}>
+        <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, setActiveHeaders, setDescActiveTodos, updateList }}>
 
             <div>
 

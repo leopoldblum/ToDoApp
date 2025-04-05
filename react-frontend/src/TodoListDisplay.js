@@ -9,6 +9,16 @@ const TodoListDisplay = ({ displayFulfilled }) => {
 
     const todoFuncAndData = useContext(todoListProvider);
 
+    const toggleDesc = (id) => {
+        todoFuncAndData.setDescActiveTodos((currentDescActiveTodos) => {
+            if (currentDescActiveTodos.includes(id)) {
+                return currentDescActiveTodos.filter((activeID) => activeID !== id);
+            }
+            else {
+                return [...currentDescActiveTodos, id];
+            }
+        });
+    }
 
     return (
         <div className="all-todos-container">
@@ -16,7 +26,7 @@ const TodoListDisplay = ({ displayFulfilled }) => {
 
                 <div className={`todoEntry-container ${displayFulfilled ? "todoEntryCompleted-container" : ""}`} key={entries.id}>
 
-                    <div className={`todoEntry-box todo-title ${displayFulfilled ? "todo-title-linethrough" : ""}`} onClick={() => todoFuncAndData.toggleDesc(entries.id)}>
+                    <div className={`todoEntry-box todo-title ${displayFulfilled ? "todo-title-linethrough" : ""}`} onClick={() => toggleDesc(entries.id)}>
                         {entries.title}
                     </div>
 

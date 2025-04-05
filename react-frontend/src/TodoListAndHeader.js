@@ -12,6 +12,26 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
     const headerType = isFulfilled ? "header-fulfilled" : "header-actives"
 
+
+
+
+    /**
+  * @param {string} header_type options: "header-active" "header-fulfilled" 
+  * 
+  * toggles given header_type in activeHeaders
+  */
+
+    const toggleHeaderState = (header_type) => {
+        todoFuncAndData.setActiveHeaders((currentActiveHeaders) => {
+            if (currentActiveHeaders.includes(header_type)) {
+                return currentActiveHeaders.filter((activeHeader) => activeHeader !== header_type);
+            }
+            else {
+                return [...currentActiveHeaders, header_type];
+            }
+        })
+    }
+
     return (
         <div>
             <div className='section-todos-header' >
@@ -20,7 +40,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
                     &gt;
                 </div>
 
-                <div className='section-todos-header-title' onClick={() => todoFuncAndData.toggleHeaderState(headerType)} >
+                <div className='section-todos-header-title' onClick={() => toggleHeaderState(headerType)} >
                     {isFulfilled ?
                         <h1> fulfilled todos </h1>
                         :
