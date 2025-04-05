@@ -3,6 +3,7 @@ import PencilSquareIcon from "@heroicons/react/16/solid/PencilSquareIcon.js"
 import XMarkIcon from "@heroicons/react/16/solid/XMarkIcon.js"
 import { useState, useEffect, useRef, useContext } from "react"
 import { todoListProvider } from "./TodoList-Wrapper";
+import { useMutation } from "@tanstack/react-query";
 
 /** 
     @param currentTodo === null -> add button
@@ -151,6 +152,15 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
         }
     }
 
+    const mutationAddTodo = useMutation({
+        mutationFn: submitAddTodo
+    })
+
+
+    const mutationEditTodo = useMutation({
+        mutationFn: submitEditTodo
+    })
+
 
     return (
         <div className="todo-entry-edit-container">
@@ -184,7 +194,9 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
                 <div className="todo-modal-content-container">
 
-                    <form className="modal-form" onSubmit={isEdit ? submitEditTodo : submitAddTodo} >
+                    {/* <form className="modal-form" onSubmit={isEdit ? submitEditTodo : submitAddTodo} > */}
+                    <form className="modal-form" onSubmit={isEdit ? mutationEditTodo.mutate : mutationAddTodo.mutate} >
+
                         <input type="text" className="modal-form-title" placeholder="title" value={formContent.formTitle} autoComplete="off" required onChange={handleTitleChange} />
                         <br />
                         <textarea type="text" className="modal-form-desc" form="addTodoForm-update" onChange={handleDescChange} placeholder="description" value={formContent.formDesc} autoComplete="off" autoCorrect="off" spellCheck="off" />

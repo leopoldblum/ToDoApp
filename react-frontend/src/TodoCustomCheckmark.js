@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useContext } from "react"
 import { todoListProvider } from "./TodoList-Wrapper";
 import "./TodoCustomCheckmark.css"
+import { useMutation } from "@tanstack/react-query";
 
 const TodoCustomCheckmark = ({ currentTodo, checked }) => {
 
@@ -24,7 +25,8 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
 
 
         uncheckedBoxRef.current.addEventListener('transitionend', () => {
-            todoToggleFulfill(currentTodo.id);
+            // todoToggleFulfill(currentTodo.id);
+            mutateCheckbox.mutate(currentTodo.id)
         }, { once: true })
     }
 
@@ -65,6 +67,9 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
 
     }
 
+    const mutateCheckbox = useMutation({
+        mutationFn: (todoID) => todoToggleFulfill(todoID)
+    })
 
     return (
         <div className="custom-checkmark-container">

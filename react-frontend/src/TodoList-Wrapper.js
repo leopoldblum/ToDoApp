@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 
 /**
  * @param {} content
- * descActiveTodos[],  todos[],  activeHeaders[],  toggleHeaderState(),  toggleCollapseAllDesc(),  toggleDesc(),  updateList() 
+ * descActiveTodos[],  todos[],  activeHeaders[],  toggleHeaderState(),  setDescActiveTodos(),  toggleDesc(),  updateList() 
  */
 export const todoListProvider = createContext(null);
 
@@ -87,22 +87,8 @@ const TodoListWrapper = () => {
         })
     }
 
-    const toggleCollapseAllDesc = () => {
-        if (descActiveTodos.length !== 0) {
-            // some desc are shown -> show no desc
-            setDescActiveTodos([]);
-        }
-        else {
-            // no desc are shown -> show all descs
-            const allTodoIDs = todos.filter(entries => entries.fulfilled === false).map(todo => todo.id)
-            setDescActiveTodos(allTodoIDs);
-        }
-    }
-
-
-
     return (
-        <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, toggleHeaderState, toggleCollapseAllDesc, toggleDesc, updateList }}>
+        <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, setDescActiveTodos, toggleHeaderState, toggleDesc, updateList }}>
 
             <div>
 

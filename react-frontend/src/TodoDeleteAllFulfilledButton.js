@@ -1,6 +1,7 @@
 import "./TodoDeleteAllFulfilledButton.css"
 import { useContext } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
+import { useMutation } from "@tanstack/react-query";
 
 const TodoDeleteAllFulfilledButton = () => {
 
@@ -28,9 +29,13 @@ const TodoDeleteAllFulfilledButton = () => {
         }
     }
 
+    const mutateDAFT = useMutation({
+        mutationFn: deleteAllFulfilledTodos
+    })
+
     return (
         <div className="daft-button-container">
-            <button className="daft-button" onClick={() => deleteAllFulfilledTodos()}> clear all </button>
+            <button className="daft-button" onClick={mutateDAFT.mutate}> clear all </button>
         </div >
     )
 }

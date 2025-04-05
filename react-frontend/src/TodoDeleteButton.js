@@ -37,6 +37,18 @@ const TodoDeleteButton = ({ currentTodo }) => {
         mutationFn: (todoID) => deleteTodo(todoID)
     })
 
+    if (mutationDeleteTodo.isPending) {
+        alert("deletion is pending")
+    }
+
+    if (mutationDeleteTodo.isError) {
+        alert("deletion has error")
+    }
+
+    if (mutationDeleteTodo.isSuccess) {
+        alert("deletion succes")
+    }
+
     return (
         <div className="todoEntry-desc-delete">
             {/* <TrashIcon className="todoEntry-desc-delete-button" onClick={() => deleteTodo(currentTodo.id)} /> */}
