@@ -1,11 +1,13 @@
 import "./TodoDeleteAllFulfilledButton.css"
 import { useContext } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const TodoDeleteAllFulfilledButton = () => {
 
     const todoFuncAndData = useContext(todoListProvider);
+    const queryClient = useQueryClient()
+
 
 
     async function deleteAllFulfilledTodos() {
@@ -30,7 +32,22 @@ const TodoDeleteAllFulfilledButton = () => {
     }
 
     const mutateDAFT = useMutation({
-        mutationFn: deleteAllFulfilledTodos
+        mutationFn: deleteAllFulfilledTodos,
+
+        onMutate: async () => {
+            await queryClient.cancelQueries({ queryKey: ['todos'] })
+            const previousTodos = queryClient.getQueryData(['todos'])
+
+            queryClient.setQueryData(['todos'], [])
+
+            return { previousTodos }
+        },
+
+        onError: (err, newTodo, context) => {
+            queryClient.setQueryData(['todos'], context.previousTodos)
+        },
+
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
     })
 
     return (
