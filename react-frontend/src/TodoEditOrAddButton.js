@@ -163,21 +163,43 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
         mutationFn: submitAddTodo,
 
         onMutate: async () => {
-            // console.log("new todo: " + JSON.stringify(newTodo))
+            // optimistically adding todo
+
             const newTodo = { id: "placeholder", title: formContent.formTitle, desc: formContent.formDesc, fulfilled: false };
 
-            console.log("optimistic update adding todo")
             await queryClient.cancelQueries({ queryKey: ['todos'] })
 
             const previousTodos = queryClient.getQueryData(['todos'])
-            // console.log("Prev todos: " + JSON.stringify(previousTodos))
 
             queryClient.setQueryData(['todos'], (old) => [...old, newTodo])
 
-            // console.log("after todos: " + JSON.stringify(queryClient.getQueryData(['todos'])))
-            // closeAndResetModal();
             closeModal();
+            return { previousTodos }
+        },
 
+        onError: (err, newTodo, context) => {
+            queryClient.setQueryData(['todos'], context.previousTodos)
+        },
+
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+    })
+
+
+    const mutationEditTodo = useMutation({
+        mutationFn: submitEditTodo,
+
+        onMutate: async () => {
+            // optimistically updating todo
+
+            const todoBody = { id: currentTodo.id, title: formContent.formTitle, desc: formContent.formDesc, fulfilled: currentTodo.fulfilled };
+
+            await queryClient.cancelQueries({ queryKey: ['todos'] })
+
+            const previousTodos = queryClient.getQueryData(['todos'])
+
+            queryClient.setQueryData(['todos'], (old) => old.map((todo) => todo.id === currentTodo.id ? todoBody : todo))
+
+            closeModal();
             return { previousTodos }
         },
 
@@ -188,11 +210,6 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
         },
 
         onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
-    })
-
-
-    const mutationEditTodo = useMutation({
-        mutationFn: submitEditTodo
     })
 
 

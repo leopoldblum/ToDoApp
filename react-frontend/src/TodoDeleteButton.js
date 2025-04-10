@@ -2,11 +2,12 @@ import "./TodoDeleteButton.css"
 import TrashIcon from "@heroicons/react/16/solid/TrashIcon.js"
 import { useContext } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const TodoDeleteButton = ({ currentTodo }) => {
 
     const todoFuncAndData = useContext(todoListProvider);
+    const queryClient = useQueryClient()
 
     async function deleteTodo(todoID) {
         if (todoID === null)
@@ -27,19 +28,40 @@ const TodoDeleteButton = ({ currentTodo }) => {
             }
 
             todoFuncAndData.updateList();
-
         } catch (error) {
             console.error(error);
         }
     }
 
     const mutationDeleteTodo = useMutation({
-        mutationFn: (todoID) => deleteTodo(todoID)
+        mutationFn: (todoID) => deleteTodo(todoID),
+
+        onMutate: async (todoID) => {
+            // console.log("optimistic update - deleting todo id: " + todoID)
+
+            await queryClient.cancelQueries({ queryKey: ['todos'] })
+
+            const previousTodos = queryClient.getQueryData(['todos'])
+
+            // console.log("Prev todos: " + JSON.stringify(previousTodos))
+            queryClient.setQueryData(['todos'], (old) => old.filter(item => item.id !== todoID))
+            // console.log("after todos: " + JSON.stringify(queryClient.getQueryData(['todos'])))
+
+            return { previousTodos }
+        },
+
+        onError: (err, newTodo, context) => {
+            queryClient.setQueryData(['todos'], context.previousTodos)
+        },
+
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
     })
+
 
     if (mutationDeleteTodo.isError) {
         console.error("deletion has failed, error")
     }
+
 
     return (
         <div className="todoEntry-desc-delete">

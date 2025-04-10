@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 
 /**
  * @param {} content
- *  todos[], descActiveTodos[], activeHeaders[] --- setTodos(), setDescActiveTodos(), setActiveHeaders(), updateList() 
+ *  todos[], descActiveTodos[], activeHeaders[] --- setDescActiveTodos(), setActiveHeaders(), updateList() 
  */
 export const todoListProvider = createContext(null);
 
@@ -55,7 +55,7 @@ const TodoListWrapper = () => {
 
 
     return (
-        <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, setTodos, setActiveHeaders, setDescActiveTodos, updateList }}>
+        <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, setActiveHeaders, setDescActiveTodos, updateList }}>
 
             <div>
 
