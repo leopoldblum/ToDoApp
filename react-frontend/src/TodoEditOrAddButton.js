@@ -3,7 +3,7 @@ import PencilSquareIcon from "@heroicons/react/16/solid/PencilSquareIcon.js"
 import XMarkIcon from "@heroicons/react/16/solid/XMarkIcon.js"
 import { useState, useEffect, useRef, useContext } from "react"
 import { todoListProvider } from "./TodoList-Wrapper";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 /** 
     @param currentTodo === null -> add button
@@ -12,6 +12,8 @@ import { useMutation } from "@tanstack/react-query";
 const TodoEditOrAddButton = ({ currentTodo }) => {
 
     const todoFuncAndData = useContext(todoListProvider);
+
+    const queryClient = useQueryClient()
 
 
     const isEdit = currentTodo === null ? false : true;
@@ -70,9 +72,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
 
 
-    function closeAndResetModal() {
-        setIsModalOpen(false);
-
+    function clearModal() {
         if (isEdit) {
             setFormContent({
                 formTitle: currentTodo.title,
@@ -85,6 +85,15 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                 formDesc: ""
             })
         }
+    }
+
+    function closeModal() {
+        setIsModalOpen(false);
+    }
+
+    function closeAndClearModal() {
+        closeModal();
+        clearModal();
     }
 
 
@@ -110,7 +119,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                 );
             }
 
-            closeAndResetModal();
+            closeAndClearModal();
             todoFuncAndData.updateList();
 
         } catch (error) {
@@ -136,15 +145,13 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                 },
             );
 
-            console.log("postNewTodoResponse: " + postNewTodoResponse.status);
-
             if (!postNewTodoResponse.ok) {
                 throw new Error(
                     "Error - Response Status:" + postNewTodoResponse.status,
                 );
             }
 
-            closeAndResetModal();
+            closeAndClearModal();
             todoFuncAndData.updateList();
 
         } catch (error) {
@@ -153,7 +160,34 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
     }
 
     const mutationAddTodo = useMutation({
-        mutationFn: submitAddTodo
+        mutationFn: submitAddTodo,
+
+        onMutate: async () => {
+            // console.log("new todo: " + JSON.stringify(newTodo))
+            const newTodo = { id: "placeholder", title: formContent.formTitle, desc: formContent.formDesc, fulfilled: false };
+
+            console.log("optimistic update adding todo")
+            await queryClient.cancelQueries({ queryKey: ['todos'] })
+
+            const previousTodos = queryClient.getQueryData(['todos'])
+            // console.log("Prev todos: " + JSON.stringify(previousTodos))
+
+            queryClient.setQueryData(['todos'], (old) => [...old, newTodo])
+
+            // console.log("after todos: " + JSON.stringify(queryClient.getQueryData(['todos'])))
+            // closeAndResetModal();
+            closeModal();
+
+            return { previousTodos }
+        },
+
+        onError: (err, newTodo, context) => {
+            queryClient.setQueryData(['todos'], context.previousTodos)
+            // todoFuncAndData.setTodos(context.previousTodos)
+
+        },
+
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
     })
 
 
@@ -177,7 +211,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                 </button>
             }
 
-            <dialog className="modal-container" ref={dialogRef} onClose={closeAndResetModal}>
+            <dialog className="modal-container" ref={dialogRef} onClose={closeAndClearModal}>
 
                 <div className="modal-title-container">
 
@@ -187,7 +221,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
 
                     <div className="modal-close-button-container">
-                        <XMarkIcon className="modal-close-button" onClick={closeAndResetModal} />
+                        <XMarkIcon className="modal-close-button" onClick={closeAndClearModal} />
                     </div>
 
                 </div>

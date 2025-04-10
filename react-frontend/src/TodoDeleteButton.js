@@ -37,16 +37,8 @@ const TodoDeleteButton = ({ currentTodo }) => {
         mutationFn: (todoID) => deleteTodo(todoID)
     })
 
-    if (mutationDeleteTodo.isPending) {
-        alert("deletion is pending")
-    }
-
     if (mutationDeleteTodo.isError) {
-        alert("deletion has error")
-    }
-
-    if (mutationDeleteTodo.isSuccess) {
-        alert("deletion succes")
+        console.error("deletion has failed, error")
     }
 
     return (

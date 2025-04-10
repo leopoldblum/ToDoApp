@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 
 /**
  * @param {} content
- *  todos[], descActiveTodos[], activeHeaders[] --- setDescActiveTodos(), setActiveHeaders(), updateList() 
+ *  todos[], descActiveTodos[], activeHeaders[] --- setTodos(), setDescActiveTodos(), setActiveHeaders(), updateList() 
  */
 export const todoListProvider = createContext(null);
 
@@ -36,15 +36,10 @@ const TodoListWrapper = () => {
     }
 
     // query for fetching todos from server
-    const { isPending, isError, data: todosFromFetch, error, refetch: updateList } = useQuery({
+    const { isError, data: todosFromFetch, error, refetch: updateList } = useQuery({
         queryKey: ['todos'],
         queryFn: fetchAllTodos,
     })
-
-
-    if (isPending) {
-        console.log("pending")
-    }
 
     if (isError) {
         console.error("error while fetching: " + error.message)
@@ -60,7 +55,7 @@ const TodoListWrapper = () => {
 
 
     return (
-        <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, setActiveHeaders, setDescActiveTodos, updateList }}>
+        <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, setTodos, setActiveHeaders, setDescActiveTodos, updateList }}>
 
             <div>
 
@@ -105,4 +100,5 @@ export default TodoListWrapper;
     tanstackQuery:
         - muss die queryfn selbst die errors catchen, oder wird das beim aufruf der funktion gemacht?
         - refetch vs query in eigene funktion packen
+        - warum brauch onMutate ein return statement?
 */
