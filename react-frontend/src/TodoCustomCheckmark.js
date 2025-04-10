@@ -100,11 +100,11 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
 
             const previousTodos = queryClient.getQueryData(['todos'])
 
-            console.log("before: " + JSON.stringify(queryClient.getQueryData(['todos'])))
+            // console.log("before: " + JSON.stringify(queryClient.getQueryData(['todos'])))
 
             queryClient.setQueryData(['todos'], (old) => old.map((todo) => todo.id === currentTodo.id ? todoBody : todo))
 
-            console.log("after: " + JSON.stringify(queryClient.getQueryData(['todos'])))
+            // console.log("after: " + JSON.stringify(queryClient.getQueryData(['todos'])))
 
             return { previousTodos }
         },
@@ -112,6 +112,7 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
         onError: (err, newTodo, context) => {
             queryClient.setQueryData(['todos'], context.previousTodos)
             // todoFuncAndData.setTodos(context.previousTodos)
+            console.log("error occured: " + err)
 
         },
 

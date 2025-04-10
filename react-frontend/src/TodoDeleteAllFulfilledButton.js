@@ -45,6 +45,7 @@ const TodoDeleteAllFulfilledButton = () => {
 
         onError: (err, newTodo, context) => {
             queryClient.setQueryData(['todos'], context.previousTodos)
+            console.log("error occured: " + err)
         },
 
         onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),

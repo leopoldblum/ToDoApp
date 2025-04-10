@@ -206,6 +206,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
         onError: (err, newTodo, context) => {
             queryClient.setQueryData(['todos'], context.previousTodos)
             // todoFuncAndData.setTodos(context.previousTodos)
+            console.log("error occured: " + err)
 
         },
 
