@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState, useContext } from "react"
 import { todoListProvider } from "./TodoList-Wrapper";
 import "./TodoCustomCheckmark.css"
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const TodoCustomCheckmark = ({ currentTodo, checked }) => {
 
     const todoFuncAndData = useContext(todoListProvider);
+    const queryClient = useQueryClient()
+
 
     const [isChecked, setIsChecked] = useState(null);
 
@@ -17,17 +19,36 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
     }, [checked])
 
 
-
     function toggleButtonWithStates() {
         setIsChecked(prev => !prev);
+
         uncheckedBoxRef.current.classList.add("shake");
         checkedBoxRef.current.classList.add("shake");
 
+        // Beide Methoden kombinieren: Event-Listener und Fallback-Timer
+        let mutationTriggered = false;
 
-        uncheckedBoxRef.current.addEventListener('transitionend', () => {
-            // todoToggleFulfill(currentTodo.id);
-            mutateCheckbox.mutate(currentTodo.id)
-        }, { once: true })
+        const triggerMutation = () => {
+            if (!mutationTriggered) {
+                mutationTriggered = true;
+                mutateCheckbox.mutate(currentTodo.id);
+            }
+        };
+
+        // Event-Listener für beide Elemente
+        const handleTransitionEnd = () => triggerMutation();
+
+        uncheckedBoxRef.current.addEventListener('transitionend', handleTransitionEnd, { once: true });
+        checkedBoxRef.current.addEventListener('transitionend', handleTransitionEnd, { once: true });
+
+        // Sicherheits-Timer, der in jedem Fall ausgelöst wird
+        // setTimeout(triggerMutation, 350);
+
+        // Animations-Klassen entfernen (für zukünftige Animationen)
+        setTimeout(() => {
+            uncheckedBoxRef.current?.classList.remove("shake");
+            checkedBoxRef.current?.classList.remove("shake");
+        }, 400);
     }
 
 
@@ -68,7 +89,33 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
     }
 
     const mutateCheckbox = useMutation({
-        mutationFn: (todoID) => todoToggleFulfill(todoID)
+        mutationFn: (todoID) => todoToggleFulfill(todoID),
+
+        onMutate: async () => {
+            // optimistically toggling checkbox of todo
+
+            const todoBody = { id: currentTodo.id, title: currentTodo.title, desc: currentTodo.desc, fulfilled: !currentTodo.fulfilled };
+
+            await queryClient.cancelQueries({ queryKey: ['todos'] })
+
+            const previousTodos = queryClient.getQueryData(['todos'])
+
+            console.log("before: " + JSON.stringify(queryClient.getQueryData(['todos'])))
+
+            queryClient.setQueryData(['todos'], (old) => old.map((todo) => todo.id === currentTodo.id ? todoBody : todo))
+
+            console.log("after: " + JSON.stringify(queryClient.getQueryData(['todos'])))
+
+            return { previousTodos }
+        },
+
+        onError: (err, newTodo, context) => {
+            queryClient.setQueryData(['todos'], context.previousTodos)
+            // todoFuncAndData.setTodos(context.previousTodos)
+
+        },
+
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
     })
 
     return (
