@@ -149,6 +149,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
             closeAndClearModal();
         } catch (error) {
             console.error(error);
+            throw error;
         }
     }
 
@@ -162,16 +163,18 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
             await queryClient.cancelQueries({ queryKey: ['todos'] })
 
-            const previousTodos = queryClient.getQueryData(['todos'])
+            const previousTodos = queryClient.getQueryData(['todos']) || []
 
-            queryClient.setQueryData(['todos'], (old) => [...old, newTodo])
+            queryClient.setQueryData(['todos'], (old) => old ? [...old, newTodo] : [newTodo]);
 
             closeModal();
             return { previousTodos }
         },
 
         onError: (err, newTodo, context) => {
-            queryClient.setQueryData(['todos'], context.previousTodos)
+            queryClient.setQueryData(['todos'], context.previousTodos || [])
+            console.error("error when adding todo: " + err)
+            throw err;
         },
 
         onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
@@ -198,8 +201,8 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
         onError: (err, newTodo, context) => {
             queryClient.setQueryData(['todos'], context.previousTodos)
-            // todoFuncAndData.setTodos(context.previousTodos)
-            console.log("error occured: " + err)
+            console.error("error when editing todo: " + err)
+            throw err;
 
         },
 
