@@ -1,14 +1,9 @@
 import "./TodoDeleteAllFulfilledButton.css"
-import { useContext } from "react";
-import { todoListProvider } from "./TodoList-Wrapper";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const TodoDeleteAllFulfilledButton = () => {
 
-    const todoFuncAndData = useContext(todoListProvider);
     const queryClient = useQueryClient()
-
-
 
     async function deleteAllFulfilledTodos() {
         try {
@@ -19,12 +14,9 @@ const TodoDeleteAllFulfilledButton = () => {
                 },
             );
 
-
             if (!response.ok) {
                 throw new Error("Error - Response Status:" + response.status);
             }
-
-            todoFuncAndData.updateList();
 
         } catch (error) {
             console.error(error);
@@ -38,7 +30,7 @@ const TodoDeleteAllFulfilledButton = () => {
             await queryClient.cancelQueries({ queryKey: ['todos'] })
             const previousTodos = queryClient.getQueryData(['todos'])
 
-            queryClient.setQueryData(['todos'], [])
+            queryClient.setQueryData(['todos'], previousTodos.filter(todo => todo.fulfilled === false))
 
             return { previousTodos }
         },

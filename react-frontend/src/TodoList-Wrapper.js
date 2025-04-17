@@ -31,6 +31,7 @@ const TodoListWrapper = () => {
     }
 
     useEffect(() => {
+        console.log("todosFromFetch changed:", todosFromFetch);
         if (todosFromFetch) {
             console.log("fetched all todos");
             setPreviousTodosHistory(prevHistory => [...prevHistory, todos]); // ← Nutzt den aktuellen State
@@ -43,6 +44,12 @@ const TodoListWrapper = () => {
         console.log("prev todos: ")
         console.log(previousTodosHistory.map(entry => entry))
     }
+
+
+    /** 
+     * @todo doesnt work properly yet
+     *  there can be more than one todo to undo, e.g. when deleting all fulfilled todos...
+     */
 
     async function undoLastAction() {
 

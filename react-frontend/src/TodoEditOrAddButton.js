@@ -1,8 +1,7 @@
 import "./TodoEditOrAddButton.css"
 import PencilSquareIcon from "@heroicons/react/16/solid/PencilSquareIcon.js"
 import XMarkIcon from "@heroicons/react/16/solid/XMarkIcon.js"
-import { useState, useEffect, useRef, useContext } from "react"
-import { todoListProvider } from "./TodoList-Wrapper";
+import { useState, useEffect, useRef } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 /** 
@@ -10,8 +9,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
     @param currentTodo !== null -> edit button
 **/
 const TodoEditOrAddButton = ({ currentTodo }) => {
-
-    const todoFuncAndData = useContext(todoListProvider);
 
     const queryClient = useQueryClient()
 
@@ -120,8 +117,6 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
             }
 
             closeAndClearModal();
-            todoFuncAndData.updateList();
-
         } catch (error) {
             console.error(error);
         }
@@ -152,8 +147,6 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
             }
 
             closeAndClearModal();
-            todoFuncAndData.updateList();
-
         } catch (error) {
             console.error(error);
         }
