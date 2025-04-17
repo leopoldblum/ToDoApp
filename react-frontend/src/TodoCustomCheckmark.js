@@ -25,7 +25,6 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
         uncheckedBoxRef.current.classList.add("shake");
         checkedBoxRef.current.classList.add("shake");
 
-        // Beide Methoden kombinieren: Event-Listener und Fallback-Timer
         let mutationTriggered = false;
 
         const triggerMutation = () => {
@@ -41,10 +40,6 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
         uncheckedBoxRef.current.addEventListener('transitionend', handleTransitionEnd, { once: true });
         checkedBoxRef.current.addEventListener('transitionend', handleTransitionEnd, { once: true });
 
-        // Sicherheits-Timer, der in jedem Fall ausgelöst wird
-        // setTimeout(triggerMutation, 350);
-
-        // Animations-Klassen entfernen (für zukünftige Animationen)
         setTimeout(() => {
             uncheckedBoxRef.current?.classList.remove("shake");
             checkedBoxRef.current?.classList.remove("shake");

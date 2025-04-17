@@ -1,8 +1,8 @@
 import React, { useState, useEffect, createContext } from 'react';
 import TodoListAndHeader from './TodoListAndHeader';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
-import { useQuery } from '@tanstack/react-query'
-
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { isEqual } from 'lodash';
 /**
  * @param {} content
  *  todos[], descActiveTodos[], activeHeaders[] --- setDescActiveTodos(), setActiveHeaders(), updateList() 
@@ -15,12 +15,15 @@ const TodoListWrapper = () => {
     // alle todos
     const [todos, setTodos] = useState([])
 
+    const [previousTodosHistory, setPreviousTodosHistory] = useState([])
+
     // todos mit offener desc
     const [descActiveTodos, setDescActiveTodos] = useState([])
 
     // header die ausgeklappt sind => "header-actives", "header-fulfilled"
     const [activeHeaders, setActiveHeaders] = useState(["header-actives"])
 
+    const queryClient = useQueryClient()
 
     const fetchAllTodos = async () => {
         try {
@@ -47,17 +50,87 @@ const TodoListWrapper = () => {
 
     useEffect(() => {
         if (todosFromFetch) {
+            console.log("fetched all todos");
+            setPreviousTodosHistory(prevHistory => [...prevHistory, todos]); // ← Nutzt den aktuellen State
             setTodos(todosFromFetch);
         }
+        // eslint-disable-next-line
     }, [todosFromFetch]);
 
+    function displayPrevTodos() {
+        console.log("prev todos: ")
+        console.log(previousTodosHistory.map(entry => entry))
+    }
 
+    async function undoLastAction() {
+
+        // inits with an empty array
+        if (previousTodosHistory.length <= 1) {
+            console.error("No more states to undo left.")
+            return;
+        }
+
+        // previous state of todos
+        const lastTodos = previousTodosHistory[previousTodosHistory.length - 1];
+
+        //add deleted todo 
+        var todoToAdd = lastTodos.filter(prevTodo => !todos.some(currTodo => currTodo.id === prevTodo.id));
+
+        // delete added todo
+        const todoToRemove = todos.filter(currTodo => !lastTodos.some(prevTodo => prevTodo.id === currTodo.id));
+
+        // catch modified todos
+        const modifiedTodo = lastTodos.filter(prevTodo => todos.some(currTodo => currTodo.id === prevTodo.id && !isEqual(prevTodo, currTodo))
+        )
+
+        if (todoToRemove.length !== 0) todoToAdd = [];
+
+        if (todoToAdd.length !== 0) {
+            console.log("deleted a todo, which has to be added again")
+            console.log("todosToAdd: " + JSON.stringify(todoToAdd))
+
+            return
+        }
+        if (todoToRemove.length !== 0) {
+            console.log("added a todo, which has to be deleted now")
+            console.log("todosToRemove: " + JSON.stringify(todoToRemove))
+
+            return
+        }
+        if (modifiedTodo.length !== 0) {
+            console.log("modified a todo, which has to be unmodified now")
+            console.log("modifiedTodos: " + JSON.stringify(modifiedTodo))
+
+            return
+        }
+
+
+        setPreviousTodosHistory(prev => prev.slice(0, -1))
+    }
+
+    // const mutateUndoLastAction = useMutation({
+    //     mutationFn: undoLastAction
+    // })
 
 
     return (
         <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, setActiveHeaders, setDescActiveTodos, updateList }}>
 
             <div>
+                <button onClick={displayPrevTodos}> debug display </button>
+
+                <br />
+                <br />
+
+                {previousTodosHistory.length > 1 &&
+                    <button onClick={undoLastAction}> undo button frfr </button>
+                }
+
+
+                <br />
+                <br />
+
+
 
                 <TodoEditOrAddButton isEdit={false} currentTodo={null} />
 
@@ -67,7 +140,7 @@ const TodoListWrapper = () => {
 
             </div>
 
-        </todoListProvider.Provider>
+        </todoListProvider.Provider >
 
     );
 }
