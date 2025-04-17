@@ -1,8 +1,9 @@
 import React, { useState, useEffect, createContext } from 'react';
 import TodoListAndHeader from './TodoListAndHeader';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { isEqual } from 'lodash';
+import { useFetchTodos } from './api/queryHooksAndMutations';
+
 /**
  * @param {} content
  *  todos[], descActiveTodos[], activeHeaders[] --- setDescActiveTodos(), setActiveHeaders(), updateList() 
@@ -23,26 +24,7 @@ const TodoListWrapper = () => {
     // header die ausgeklappt sind => "header-actives", "header-fulfilled"
     const [activeHeaders, setActiveHeaders] = useState(["header-actives"])
 
-    const queryClient = useQueryClient()
-
-    const fetchAllTodos = async () => {
-        try {
-
-            const response = await fetch("http://localhost:8080/todos")
-            const allEntries = await response.json();
-
-            return allEntries;
-        }
-        catch (error) {
-            console.error("recv error:", error);
-        }
-    }
-
-    // query for fetching todos from server
-    const { isError, data: todosFromFetch, error, refetch: updateList } = useQuery({
-        queryKey: ['todos'],
-        queryFn: fetchAllTodos,
-    })
+    const { isError, data: todosFromFetch, error, refetch: updateList } = useFetchTodos();
 
     if (isError) {
         console.error("error while fetching: " + error.message)
@@ -83,6 +65,7 @@ const TodoListWrapper = () => {
         const modifiedTodo = lastTodos.filter(prevTodo => todos.some(currTodo => currTodo.id === prevTodo.id && !isEqual(prevTodo, currTodo))
         )
 
+        // todosToRemove also end up in toAdd, because of cache shenanigans, toAdd needs to be cleared
         if (todoToRemove.length !== 0) todoToAdd = [];
 
         if (todoToAdd.length !== 0) {

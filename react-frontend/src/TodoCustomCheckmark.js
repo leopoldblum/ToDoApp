@@ -1,13 +1,8 @@
-import { useEffect, useRef, useState, useContext } from "react"
-import { todoListProvider } from "./TodoList-Wrapper";
+import { useEffect, useRef, useState } from "react"
 import "./TodoCustomCheckmark.css"
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutateCheckbox } from "./api/queryHooksAndMutations";
 
 const TodoCustomCheckmark = ({ currentTodo, checked }) => {
-
-    const todoFuncAndData = useContext(todoListProvider);
-    const queryClient = useQueryClient()
-
 
     const [isChecked, setIsChecked] = useState(null);
 
@@ -46,73 +41,7 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
         }, 400);
     }
 
-
-    const todoToggleFulfill = async (todoID) => {
-        if (todoID === null)
-            throw new Error("todoID is null, cant update fulfillment!");
-
-        const getDataResponse = await fetch(
-            "http://localhost:8080/todo/" + todoID,
-        );
-        const myData = await getDataResponse.json();
-
-        myData.fulfilled = !myData.fulfilled;
-
-        try {
-            const updateResponse = await fetch(
-                "http://localhost:8080/updateTodo/" + todoID,
-                {
-                    method: "POST",
-                    body: JSON.stringify(myData),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                },
-            );
-
-            if (!updateResponse.ok) {
-                throw new Error(
-                    "Error - Response Status:" + updateResponse.status,
-                );
-            }
-
-            todoFuncAndData.updateList();
-        } catch (error) {
-            console.error(error);
-        }
-
-    }
-
-    const mutateCheckbox = useMutation({
-        mutationFn: (todoID) => todoToggleFulfill(todoID),
-
-        onMutate: async () => {
-            // optimistically toggling checkbox of todo
-
-            const todoBody = { id: currentTodo.id, title: currentTodo.title, desc: currentTodo.desc, fulfilled: !currentTodo.fulfilled };
-
-            await queryClient.cancelQueries({ queryKey: ['todos'] })
-
-            const previousTodos = queryClient.getQueryData(['todos'])
-
-            // console.log("before: " + JSON.stringify(queryClient.getQueryData(['todos'])))
-
-            queryClient.setQueryData(['todos'], (old) => old.map((todo) => todo.id === currentTodo.id ? todoBody : todo))
-
-            // console.log("after: " + JSON.stringify(queryClient.getQueryData(['todos'])))
-
-            return { previousTodos }
-        },
-
-        onError: (err, newTodo, context) => {
-            queryClient.setQueryData(['todos'], context.previousTodos)
-            // todoFuncAndData.setTodos(context.previousTodos)
-            console.log("error occured: " + err)
-
-        },
-
-        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
-    })
+    const mutateCheckbox = useMutateCheckbox(currentTodo);
 
     return (
         <div className="custom-checkmark-container">
