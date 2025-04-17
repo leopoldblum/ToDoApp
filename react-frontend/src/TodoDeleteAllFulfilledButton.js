@@ -1,5 +1,5 @@
 import "./TodoDeleteAllFulfilledButton.css"
-import { useMutateDAFT } from "./api/queryHooksAndMutations";
+import { useMutateDAFT } from "./api/queriesAndMutations";
 
 const TodoDeleteAllFulfilledButton = () => {
 

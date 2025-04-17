@@ -28,45 +28,8 @@ export const useFetchTodos = () => {
 };
 
 
-
-
 // ----- mutations -----
 
-
-const todoToggleFulfill = async (todoID) => {
-    if (todoID === null)
-        throw new Error("todoID is null, cant update fulfillment!");
-
-    const getDataResponse = await fetch(
-        "http://localhost:8080/todo/" + todoID,
-    );
-    const myData = await getDataResponse.json();
-
-    myData.fulfilled = !myData.fulfilled;
-
-    try {
-        const updateResponse = await fetch(
-            "http://localhost:8080/updateTodo/" + todoID,
-            {
-                method: "POST",
-                body: JSON.stringify(myData),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            },
-        );
-
-        if (!updateResponse.ok) {
-            throw new Error(
-                "Error - Response Status:" + updateResponse.status,
-            );
-        }
-
-    } catch (error) {
-        console.error(error);
-    }
-
-}
 
 /**
  * 
@@ -110,24 +73,46 @@ export const useMutateCheckbox = (currentTodo) => {
 }
 
 
-async function deleteAllFulfilledTodos() {
+const todoToggleFulfill = async (todoID) => {
+    if (todoID === null)
+        throw new Error("todoID is null, cant update fulfillment!");
+
+    const getDataResponse = await fetch(
+        "http://localhost:8080/todo/" + todoID,
+    );
+    const myData = await getDataResponse.json();
+
+    myData.fulfilled = !myData.fulfilled;
+
     try {
-        const response = await fetch(
-            "http://localhost:8080/deleteAllFulfilledTodos",
+        const updateResponse = await fetch(
+            "http://localhost:8080/updateTodo/" + todoID,
             {
-                method: "DELETE",
+                method: "POST",
+                body: JSON.stringify(myData),
+                headers: {
+                    "Content-Type": "application/json",
+                },
             },
         );
 
-
-        if (!response.ok) {
-            throw new Error("Error - Response Status:" + response.status);
+        if (!updateResponse.ok) {
+            throw new Error(
+                "Error - Response Status:" + updateResponse.status,
+            );
         }
+
     } catch (error) {
         console.error(error);
     }
+
 }
 
+/**
+ * 
+ * @description deletes all fulfilled todos
+ * 
+ */
 export const useMutateDAFT = () => {
 
     const queryClient = useQueryClient();
@@ -151,4 +136,22 @@ export const useMutateDAFT = () => {
 
         onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
     })
+}
+
+async function deleteAllFulfilledTodos() {
+    try {
+        const response = await fetch(
+            "http://localhost:8080/deleteAllFulfilledTodos",
+            {
+                method: "DELETE",
+            },
+        );
+
+
+        if (!response.ok) {
+            throw new Error("Error - Response Status:" + response.status);
+        }
+    } catch (error) {
+        console.error(error);
+    }
 }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import "./TodoCustomCheckmark.css"
-import { useMutateCheckbox } from "./api/queryHooksAndMutations";
+import { useMutateCheckbox } from "./api/queriesAndMutations";
 
 const TodoCustomCheckmark = ({ currentTodo, checked }) => {
 
