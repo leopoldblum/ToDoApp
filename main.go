@@ -92,7 +92,7 @@ func main() {
 				ctx.IndentedJSON(http.StatusBadRequest, "wrong id")
 			}
 
-			ctx.IndentedJSON(http.StatusFound, Todo{idToInt, title, description, fulfilled})
+			ctx.IndentedJSON(http.StatusOK, Todo{idToInt, title, description, fulfilled})
 		default:
 			//panic(err)
 			ctx.IndentedJSON(http.StatusInternalServerError, fmt.Sprintf("Received this Error: %d", err))
@@ -170,7 +170,7 @@ func main() {
 			results = append(results, item)
 		}
 
-		ctx.IndentedJSON(http.StatusFound, results)
+		ctx.IndentedJSON(http.StatusOK, results)
 	})
 
 	// delete
@@ -203,17 +203,3 @@ func main() {
 
 	router.Run("localhost:8080")
 }
-
-// TODO:
-
-// Frontend:
-// Frameworks: react, sveltekit, astro (-> astro_island)
-// cors issues fixen!
-
-// page mit allen todos
-// auf todos klicken -> details auf neuer page anzeigen
-// page stylen mit tailwind
-
-// LATER:
-// delete & update
-// swagger
