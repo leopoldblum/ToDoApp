@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import "./global-colors.css"
-import TodoListWrapper from './TodoList-Wrapper.js';
+import TodoListWrapper from './TodoList-Wrapper.jsx';
 
 import {
   QueryClient,
