@@ -57,6 +57,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
         if (isEdit) {
             mutationEditTodo.mutate({
+                inputId: currentTodo.id,
                 inputTitle: formContent.formTitle,
                 inputDesc: formContent.formDesc,
                 inputFulfilled: currentTodo.fulfilled

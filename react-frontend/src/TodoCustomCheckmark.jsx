@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import "./TodoCustomCheckmark.css"
-import { useMutateCheckbox } from "./api/queriesAndMutations";
+import { useMutationEditTodo } from "./api/queriesAndMutations";
 
 const TodoCustomCheckmark = ({ currentTodo, checked }) => {
 
@@ -8,6 +8,8 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
 
     const checkedBoxRef = useRef();
     const uncheckedBoxRef = useRef();
+
+    const mutationEditTodo = useMutationEditTodo(currentTodo);
 
     useEffect(() => {
         setIsChecked(checked);
@@ -25,7 +27,13 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
         const triggerMutation = () => {
             if (!mutationTriggered) {
                 mutationTriggered = true;
-                mutateCheckbox.mutate(currentTodo.id);
+                mutationEditTodo.mutate({
+                    inputId: currentTodo.id,
+                    inputTitle: currentTodo.title,
+                    inputDesc: currentTodo.desc,
+                    inputFulfilled: !currentTodo.fulfilled
+                })
+
             }
         };
 
@@ -41,7 +49,6 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
         }, 400);
     }
 
-    const mutateCheckbox = useMutateCheckbox(currentTodo);
 
     return (
         <div className="custom-checkmark-container">

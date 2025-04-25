@@ -1,7 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 
-// ----- queries -----
+/**
+ * =============================
+ * Section: Queries
+ * =============================
+ */
+
 
 const fetchAllTodos = async () => {
     try {
@@ -28,197 +33,16 @@ export const useFetchTodos = () => {
 };
 
 
-// ----- mutations -----
-
-
 /**
- * 
- * @param {todo} currentTodo - the todo which fulfillment shall be updated 
- * 
- * @description toggles the fulfillment-status of a given todo
- * 
+ * =============================
+ * Section: CRUD mutations
+ * =============================
  */
-export const useMutateCheckbox = (currentTodo) => {
-
-    const queryClient = useQueryClient();
-
-    return useMutation({
-        mutationFn: (todoID) => todoToggleFulfill(todoID),
-
-        onMutate: async () => {
-            // optimistically toggling checkbox of todo
-
-            const todoBody = { id: currentTodo.id, title: currentTodo.title, desc: currentTodo.desc, fulfilled: !currentTodo.fulfilled };
-
-            await queryClient.cancelQueries({ queryKey: ['todos'] })
-
-            const previousTodos = queryClient.getQueryData(['todos'])
-
-            // console.log("before: " + JSON.stringify(queryClient.getQueryData(['todos'])))
-
-            queryClient.setQueryData(['todos'], (old) => old.map((todo) => todo.id === currentTodo.id ? todoBody : todo))
-
-            // console.log("after: " + JSON.stringify(queryClient.getQueryData(['todos'])))
-
-            return { previousTodos }
-        },
-
-        onError: (err, newTodo, context) => {
-            queryClient.setQueryData(['todos'], context.previousTodos)
-            console.log("error occured: " + err)
-        },
-
-        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
-    })
-}
-
-
-const todoToggleFulfill = async (todoID) => {
-    if (todoID === null)
-        throw new Error("todoID is null, cant update fulfillment!");
-
-    const getDataResponse = await fetch(
-        "http://localhost:8080/todo/" + todoID,
-    );
-    const myData = await getDataResponse.json();
-
-    myData.fulfilled = !myData.fulfilled;
-
-    try {
-        const updateResponse = await fetch(
-            "http://localhost:8080/updateTodo/" + todoID,
-            {
-                method: "POST",
-                body: JSON.stringify(myData),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            },
-        );
-
-        if (!updateResponse.ok) {
-            throw new Error(
-                "Error - Response Status:" + updateResponse.status,
-            );
-        }
-
-    } catch (error) {
-        console.error(error);
-    }
-
-}
-
-/**
- * 
- * @description deletes all fulfilled todos
- * 
- */
-export const useMutateDAFT = () => {
-
-    const queryClient = useQueryClient();
-
-    return useMutation({
-        mutationFn: deleteAllFulfilledTodos,
-
-        onMutate: async () => {
-            await queryClient.cancelQueries({ queryKey: ['todos'] })
-            const previousTodos = queryClient.getQueryData(['todos'])
-
-            queryClient.setQueryData(['todos'], previousTodos.filter(todo => todo.fulfilled === false))
-
-            return { previousTodos }
-        },
-
-        onError: (err, newTodo, context) => {
-            queryClient.setQueryData(['todos'], context.previousTodos)
-            console.log("error occured: " + err)
-        },
-
-        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
-    })
-}
-
-async function deleteAllFulfilledTodos() {
-    try {
-        const response = await fetch(
-            "http://localhost:8080/deleteAllFulfilledTodos",
-            {
-                method: "DELETE",
-            },
-        );
-
-
-        if (!response.ok) {
-            throw new Error("Error - Response Status:" + response.status);
-        }
-    } catch (error) {
-        console.error(error);
-    }
-}
 
 
 /**
  * 
- * @description deletes a todo, specified in .mutate(todoID)
- * 
- */
-export const useMutationDeleteTodo = () => {
-
-    const queryClient = useQueryClient();
-
-    return useMutation({
-        mutationFn: (todoID) => deleteTodo(todoID),
-
-        onMutate: async (todoID) => {
-            // console.log("optimistic update - deleting todo id: " + todoID)
-
-            await queryClient.cancelQueries({ queryKey: ['todos'] })
-
-            const previousTodos = queryClient.getQueryData(['todos'])
-
-            // console.log("Prev todos: " + JSON.stringify(previousTodos))
-            queryClient.setQueryData(['todos'], (old) => old.filter(item => item.id !== todoID))
-            // console.log("after todos: " + JSON.stringify(queryClient.getQueryData(['todos'])))
-
-            return { previousTodos }
-        },
-
-        onError: (err, newTodo, context) => {
-            queryClient.setQueryData(['todos'], context.previousTodos)
-            console.log("error occured: " + err)
-        },
-
-        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
-    })
-}
-
-async function deleteTodo(todoID) {
-    if (todoID === null)
-        throw new Error("todoID is null, cant delete todo!");
-
-    try {
-        const response = await fetch(
-            "http://localhost:8080/todo/" + todoID,
-            {
-                method: "DELETE",
-            },
-        );
-
-        // console.log("deleteResponse: " + response.status);
-
-        if (!response.ok) {
-            throw new Error("Error - Response Status:" + response.status);
-        }
-
-        // todoFuncAndData.updateList();
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-/**
- * 
- * @description adds a new Todo, automatically unfulfilled
+ * @description creates and adds a new Todo, automatically unfulfilled
  * 
  */
 
@@ -283,12 +107,12 @@ export const useMutationEditTodo = (currentTodo) => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ inputTitle, inputDesc }) => editTodo(currentTodo.id, inputTitle, inputDesc, currentTodo.fulfilled),
+        mutationFn: ({ inputId, inputTitle, inputDesc, inputFulfilled }) => editTodo(inputId, inputTitle, inputDesc, inputFulfilled),
 
-        onMutate: async ({ inputTitle, inputDesc }) => {
+        onMutate: async ({ inputId, inputTitle, inputDesc, inputFulfilled }) => {
             // optimistically updating todo
 
-            const todoBody = { id: currentTodo.id, title: inputTitle, desc: inputDesc, fulfilled: currentTodo.fulfilled };
+            const todoBody = { id: inputId, title: inputTitle, desc: inputDesc, fulfilled: inputFulfilled };
 
             await queryClient.cancelQueries({ queryKey: ['todos'] })
 
@@ -336,4 +160,119 @@ async function editTodo(id, title, desc, fulfilled) {
         console.error(error);
     }
 
+}
+
+/**
+ * 
+ * @description deletes a todo, specified in .mutate(todoID)
+ * 
+ */
+export const useMutationDeleteTodo = () => {
+
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (todoID) => deleteTodo(todoID),
+
+        onMutate: async (todoID) => {
+            // console.log("optimistic update - deleting todo id: " + todoID)
+
+            await queryClient.cancelQueries({ queryKey: ['todos'] })
+
+            const previousTodos = queryClient.getQueryData(['todos'])
+
+            // console.log("Prev todos: " + JSON.stringify(previousTodos))
+            queryClient.setQueryData(['todos'], (old) => old.filter(item => item.id !== todoID))
+            // console.log("after todos: " + JSON.stringify(queryClient.getQueryData(['todos'])))
+
+            return { previousTodos }
+        },
+
+        onError: (err, newTodo, context) => {
+            queryClient.setQueryData(['todos'], context.previousTodos)
+            console.log("error occured: " + err)
+        },
+
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+    })
+}
+
+async function deleteTodo(todoID) {
+    if (todoID === null)
+        throw new Error("todoID is null, cant delete todo!");
+
+    try {
+        const response = await fetch(
+            "http://localhost:8080/todo/" + todoID,
+            {
+                method: "DELETE",
+            },
+        );
+
+        // console.log("deleteResponse: " + response.status);
+
+        if (!response.ok) {
+            throw new Error("Error - Response Status:" + response.status);
+        }
+
+        // todoFuncAndData.updateList();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+/**
+ * =============================
+ * Section: additional mutations
+ * =============================
+ */
+
+
+/**
+ * 
+ * @description deletes all fulfilled todos
+ * 
+ */
+export const useMutateDAFT = () => {
+
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: deleteAllFulfilledTodos,
+
+        onMutate: async () => {
+            await queryClient.cancelQueries({ queryKey: ['todos'] })
+            const previousTodos = queryClient.getQueryData(['todos'])
+
+            queryClient.setQueryData(['todos'], previousTodos.filter(todo => todo.fulfilled === false))
+
+            return { previousTodos }
+        },
+
+        onError: (err, newTodo, context) => {
+            queryClient.setQueryData(['todos'], context.previousTodos)
+            console.log("error occured: " + err)
+        },
+
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+    })
+}
+
+async function deleteAllFulfilledTodos() {
+    try {
+        const response = await fetch(
+            "http://localhost:8080/deleteAllFulfilledTodos",
+            {
+                method: "DELETE",
+            },
+        );
+
+
+        if (!response.ok) {
+            throw new Error("Error - Response Status:" + response.status);
+        }
+    } catch (error) {
+        console.error(error);
+    }
 }
