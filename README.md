@@ -6,7 +6,7 @@ A simple todo application with full-stack functionality.
 
 **Frontend**  
 - React, HTML, CSS  
-- Data fetching and optimistic updates via [TanStack Query](https://tanstack.com/query)
+- CRUD and optimistic updates via [TanStack Query](https://tanstack.com/query)
 
 **Backend**  
 - REST API built with Go (Golang)  
