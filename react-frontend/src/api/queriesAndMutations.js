@@ -155,3 +155,57 @@ async function deleteAllFulfilledTodos() {
         console.error(error);
     }
 }
+
+export const useMutationDeleteTodo = () => {
+
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (todoID) => deleteTodo(todoID),
+
+        onMutate: async (todoID) => {
+            // console.log("optimistic update - deleting todo id: " + todoID)
+
+            await queryClient.cancelQueries({ queryKey: ['todos'] })
+
+            const previousTodos = queryClient.getQueryData(['todos'])
+
+            // console.log("Prev todos: " + JSON.stringify(previousTodos))
+            queryClient.setQueryData(['todos'], (old) => old.filter(item => item.id !== todoID))
+            // console.log("after todos: " + JSON.stringify(queryClient.getQueryData(['todos'])))
+
+            return { previousTodos }
+        },
+
+        onError: (err, newTodo, context) => {
+            queryClient.setQueryData(['todos'], context.previousTodos)
+            console.log("error occured: " + err)
+        },
+
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+    })
+}
+
+async function deleteTodo(todoID) {
+    if (todoID === null)
+        throw new Error("todoID is null, cant delete todo!");
+
+    try {
+        const response = await fetch(
+            "http://localhost:8080/todo/" + todoID,
+            {
+                method: "DELETE",
+            },
+        );
+
+        // console.log("deleteResponse: " + response.status);
+
+        if (!response.ok) {
+            throw new Error("Error - Response Status:" + response.status);
+        }
+
+        // todoFuncAndData.updateList();
+    } catch (error) {
+        console.error(error);
+    }
+}
