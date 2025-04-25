@@ -277,3 +277,63 @@ async function addTodo(inputTitle, inputDesc) {
         throw error;
     }
 }
+
+export const useMutationEditTodo = (currentTodo) => {
+
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: ({ inputTitle, inputDesc }) => editTodo(currentTodo.id, inputTitle, inputDesc, currentTodo.fulfilled),
+
+        onMutate: async ({ inputTitle, inputDesc }) => {
+            // optimistically updating todo
+
+            const todoBody = { id: currentTodo.id, title: inputTitle, desc: inputDesc, fulfilled: currentTodo.fulfilled };
+
+            await queryClient.cancelQueries({ queryKey: ['todos'] })
+
+            const previousTodos = queryClient.getQueryData(['todos'])
+
+            queryClient.setQueryData(['todos'], (old) => old.map((todo) => todo.id === currentTodo.id ? todoBody : todo))
+
+            return { previousTodos }
+        },
+
+        onError: (err, newTodo, context) => {
+            queryClient.setQueryData(['todos'], context.previousTodos)
+            console.error("error when editing todo: " + err)
+            throw err;
+
+        },
+
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+    })
+
+}
+
+async function editTodo(id, title, desc, fulfilled) {
+
+    const todoBody = { title: title, desc: desc, fulfilled: fulfilled };
+
+    try {
+        const updateResponse = await fetch(
+            "http://localhost:8080/updateTodo/" + id,
+            {
+                method: "POST",
+                body: JSON.stringify(todoBody),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            },
+        );
+        if (!updateResponse.ok) {
+            throw new Error(
+                "Error - Response Status:" + updateResponse.status,
+            );
+        }
+
+    } catch (error) {
+        console.error(error);
+    }
+
+}

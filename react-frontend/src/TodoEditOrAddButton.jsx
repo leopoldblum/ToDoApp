@@ -2,8 +2,8 @@ import "./TodoEditOrAddButton.css"
 import PencilSquareIcon from "@heroicons/react/16/solid/PencilSquareIcon.js"
 import XMarkIcon from "@heroicons/react/16/solid/XMarkIcon.js"
 import { useState, useEffect, useRef } from "react"
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useMutationAddTodo } from "./api/queriesAndMutations";
+import { useMutationAddTodo, useMutationEditTodo } from "./api/queriesAndMutations";
+
 
 /** 
  * @param currentTodo === null -> add button
@@ -11,10 +11,8 @@ import { useMutationAddTodo } from "./api/queriesAndMutations";
 **/
 const TodoEditOrAddButton = ({ currentTodo }) => {
 
-    const queryClient = useQueryClient()
-
-    const mutationAddTodo = useMutationAddTodo(closeModal, closeAndClearModal);
-    // const mutationEditTodo;
+    const mutationAddTodo = useMutationAddTodo();
+    const mutationEditTodo = useMutationEditTodo(currentTodo);
 
 
     const isEdit = currentTodo === null ? false : true;
@@ -60,7 +58,8 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
         if (isEdit) {
             mutationEditTodo.mutate({
                 inputTitle: formContent.formTitle,
-                inputDesc: formContent.formDesc
+                inputDesc: formContent.formDesc,
+                inputFulfilled: currentTodo.fulfilled
             })
         }
         else {
@@ -115,66 +114,6 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
         closeModal();
         clearModal();
     }
-
-
-    async function submitEditTodo(inputTitle, inputDesc) {
-
-        const todoBody = { title: inputTitle, desc: inputDesc, fulfilled: currentTodo.fulfilled };
-
-        try {
-            const updateResponse = await fetch(
-                "http://localhost:8080/updateTodo/" + currentTodo.id,
-                {
-                    method: "POST",
-                    body: JSON.stringify(todoBody),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                },
-            );
-            if (!updateResponse.ok) {
-                throw new Error(
-                    "Error - Response Status:" + updateResponse.status,
-                );
-            }
-
-            closeAndClearModal();
-
-        } catch (error) {
-            console.error(error);
-        }
-
-    }
-
-
-    const mutationEditTodo = useMutation({
-        mutationFn: ({ inputTitle, inputDesc }) => submitEditTodo(inputTitle, inputDesc),
-
-        onMutate: async ({ inputTitle, inputDesc }) => {
-            // optimistically updating todo
-
-            const todoBody = { id: currentTodo.id, title: inputTitle, desc: inputDesc, fulfilled: currentTodo.fulfilled };
-
-            await queryClient.cancelQueries({ queryKey: ['todos'] })
-
-            const previousTodos = queryClient.getQueryData(['todos'])
-
-            queryClient.setQueryData(['todos'], (old) => old.map((todo) => todo.id === currentTodo.id ? todoBody : todo))
-
-            closeModal();
-            return { previousTodos }
-        },
-
-        onError: (err, newTodo, context) => {
-            queryClient.setQueryData(['todos'], context.previousTodos)
-            console.error("error when editing todo: " + err)
-            throw err;
-
-        },
-
-        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
-    })
-
 
     return (
         <div className="todo-entry-edit-container">
