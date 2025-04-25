@@ -222,11 +222,11 @@ async function deleteTodo(todoID) {
  * 
  */
 
-export const useMutationAddTodo = ({ closeModal, closeAndClearModal }) => {
+export const useMutationAddTodo = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ inputTitle, inputDesc }) => addTodo(inputTitle, inputDesc, closeAndClearModal),
+        mutationFn: ({ inputTitle, inputDesc }) => addTodo(inputTitle, inputDesc),
 
         onMutate: async ({ inputTitle, inputDesc }) => {
             // optimistically adding todo
@@ -239,7 +239,6 @@ export const useMutationAddTodo = ({ closeModal, closeAndClearModal }) => {
 
             queryClient.setQueryData(['todos'], (old) => old ? [...old, newTodo] : [newTodo]);
 
-            closeModal();
             return { previousTodos }
         },
 
@@ -253,9 +252,8 @@ export const useMutationAddTodo = ({ closeModal, closeAndClearModal }) => {
     })
 }
 
-async function addTodo(inputTitle, inputDesc, closeAndClearModal) {
+async function addTodo(inputTitle, inputDesc) {
 
-    // const todoBody = { title: formContent.formTitle, desc: formContent.formDesc, fulfilled: false };
     const todoBody = { title: inputTitle, desc: inputDesc, fulfilled: false };
 
     try {
@@ -274,7 +272,6 @@ async function addTodo(inputTitle, inputDesc, closeAndClearModal) {
                 "Error - Response Status:" + postNewTodoResponse.status,
             );
         }
-        closeAndClearModal();
     } catch (error) {
         console.error(error);
         throw error;
