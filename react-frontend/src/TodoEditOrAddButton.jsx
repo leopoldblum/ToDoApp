@@ -3,14 +3,18 @@ import PencilSquareIcon from "@heroicons/react/16/solid/PencilSquareIcon.js"
 import XMarkIcon from "@heroicons/react/16/solid/XMarkIcon.js"
 import { useState, useEffect, useRef } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutationAddTodo } from "./api/queriesAndMutations";
 
 /** 
-    @param currentTodo === null -> add button
-    @param currentTodo !== null -> edit button
+ * @param currentTodo === null -> add button
+ * @param currentTodo !== null -> edit button
 **/
 const TodoEditOrAddButton = ({ currentTodo }) => {
 
     const queryClient = useQueryClient()
+
+    const mutationAddTodo = useMutationAddTodo(closeModal, closeAndClearModal);
+    // const mutationEditTodo;
 
 
     const isEdit = currentTodo === null ? false : true;
@@ -65,6 +69,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                 inputDesc: formContent.formDesc
             })
         }
+        closeAndClearModal();
     }
 
     /** 
@@ -140,61 +145,6 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
         }
 
     }
-
-    async function submitAddTodo(inputTitle, inputDesc) {
-
-        // const todoBody = { title: formContent.formTitle, desc: formContent.formDesc, fulfilled: false };
-        const todoBody = { title: inputTitle, desc: inputDesc, fulfilled: false };
-
-        try {
-            const postNewTodoResponse = await fetch(
-                "http://localhost:8080/todo",
-                {
-                    method: "POST",
-                    body: JSON.stringify(todoBody),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                },
-            );
-            if (!postNewTodoResponse.ok) {
-                throw new Error(
-                    "Error - Response Status:" + postNewTodoResponse.status,
-                );
-            }
-            closeAndClearModal();
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
-    }
-
-    const mutationAddTodo = useMutation({
-        mutationFn: ({ inputTitle, inputDesc }) => submitAddTodo(inputTitle, inputDesc),
-
-        onMutate: async ({ inputTitle, inputDesc }) => {
-            // optimistically adding todo
-
-            const newTodo = { id: "placeholder", title: inputTitle, desc: inputDesc, fulfilled: false };
-
-            await queryClient.cancelQueries({ queryKey: ['todos'] })
-
-            const previousTodos = queryClient.getQueryData(['todos']) || []
-
-            queryClient.setQueryData(['todos'], (old) => old ? [...old, newTodo] : [newTodo]);
-
-            closeModal();
-            return { previousTodos }
-        },
-
-        onError: (err, newTodo, context) => {
-            queryClient.setQueryData(['todos'], context.previousTodos || [])
-            console.error("error when adding todo: " + err)
-            throw err;
-        },
-
-        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
-    })
 
 
     const mutationEditTodo = useMutation({

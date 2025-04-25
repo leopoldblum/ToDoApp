@@ -156,6 +156,12 @@ async function deleteAllFulfilledTodos() {
     }
 }
 
+
+/**
+ * 
+ * @description deletes a todo, specified in .mutate(todoID)
+ * 
+ */
 export const useMutationDeleteTodo = () => {
 
     const queryClient = useQueryClient();
@@ -207,5 +213,70 @@ async function deleteTodo(todoID) {
         // todoFuncAndData.updateList();
     } catch (error) {
         console.error(error);
+    }
+}
+
+/**
+ * 
+ * @description adds a new Todo, automatically unfulfilled
+ * 
+ */
+
+export const useMutationAddTodo = ({ closeModal, closeAndClearModal }) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: ({ inputTitle, inputDesc }) => addTodo(inputTitle, inputDesc, closeAndClearModal),
+
+        onMutate: async ({ inputTitle, inputDesc }) => {
+            // optimistically adding todo
+
+            const newTodo = { id: "placeholder", title: inputTitle, desc: inputDesc, fulfilled: false };
+
+            await queryClient.cancelQueries({ queryKey: ['todos'] })
+
+            const previousTodos = queryClient.getQueryData(['todos']) || []
+
+            queryClient.setQueryData(['todos'], (old) => old ? [...old, newTodo] : [newTodo]);
+
+            closeModal();
+            return { previousTodos }
+        },
+
+        onError: (err, newTodo, context) => {
+            queryClient.setQueryData(['todos'], context.previousTodos || [])
+            console.error("error when adding todo: " + err)
+            throw err;
+        },
+
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+    })
+}
+
+async function addTodo(inputTitle, inputDesc, closeAndClearModal) {
+
+    // const todoBody = { title: formContent.formTitle, desc: formContent.formDesc, fulfilled: false };
+    const todoBody = { title: inputTitle, desc: inputDesc, fulfilled: false };
+
+    try {
+        const postNewTodoResponse = await fetch(
+            "http://localhost:8080/todo",
+            {
+                method: "POST",
+                body: JSON.stringify(todoBody),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            },
+        );
+        if (!postNewTodoResponse.ok) {
+            throw new Error(
+                "Error - Response Status:" + postNewTodoResponse.status,
+            );
+        }
+        closeAndClearModal();
+    } catch (error) {
+        console.error(error);
+        throw error;
     }
 }
