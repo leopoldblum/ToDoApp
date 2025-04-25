@@ -6,7 +6,7 @@ import { useFetchTodos } from './api/queriesAndMutations';
 
 /**
  * @param {} content
- *  todos[], descActiveTodos[], activeHeaders[] --- setDescActiveTodos(), setActiveHeaders(), updateList() 
+ *  todos[], descActiveTodos[], activeHeaders[] --- setDescActiveTodos(), setActiveHeaders() 
  */
 export const todoListProvider = createContext(null);
 
@@ -24,7 +24,7 @@ const TodoListWrapper = () => {
     // header die ausgeklappt sind => "header-actives", "header-fulfilled"
     const [activeHeaders, setActiveHeaders] = useState(["header-actives"])
 
-    const { isError, data: todosFromFetch, error, refetch: updateList } = useFetchTodos();
+    const { isError, data: todosFromFetch, error } = useFetchTodos();
 
     if (isError) {
         console.error("error while fetching: " + error.message)
@@ -104,7 +104,7 @@ const TodoListWrapper = () => {
 
 
     return (
-        <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, setActiveHeaders, setDescActiveTodos, updateList }}>
+        <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, setActiveHeaders, setDescActiveTodos }}>
 
             <div>
                 <button onClick={displayPrevTodos}> debug display </button>
