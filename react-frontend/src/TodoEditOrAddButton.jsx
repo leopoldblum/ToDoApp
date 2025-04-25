@@ -32,23 +32,6 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
         }
     }, [isModalOpen]);
 
-    // update formcontent when props change
-    useEffect(() => {
-        if (isEdit) {
-            setFormContent({
-                formTitle: currentTodo.title,
-                formDesc: currentTodo.desc
-            });
-        }
-        else {
-            setFormContent({
-                formTitle: "",
-                formDesc: ""
-            })
-        }
-    }, [currentTodo, isEdit]);
-
-
     // update formcontent on user-input
     function handleTitleChange(e) {
         const newTitle = e.target.value;
@@ -67,7 +50,46 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
         }))
     }
 
+    function handleSubmit(e) {
+        e.preventDefault()
 
+        if (isEdit) {
+            mutationEditTodo.mutate({
+                inputTitle: formContent.formTitle,
+                inputDesc: formContent.formDesc
+            })
+        }
+        else {
+            mutationAddTodo.mutate({
+                inputTitle: formContent.formTitle,
+                inputDesc: formContent.formDesc
+            })
+        }
+    }
+
+    /** 
+    *   @description opens the modal and sets its content on open
+    **/
+    function openModal() {
+        if (isEdit) {
+            setFormContent({
+                formTitle: currentTodo.title,
+                formDesc: currentTodo.desc
+            });
+        }
+        else {
+            setFormContent({
+                formTitle: "",
+                formDesc: ""
+            })
+        }
+
+        setIsModalOpen(true);
+    }
+
+    function closeModal() {
+        setIsModalOpen(false);
+    }
 
     function clearModal() {
         if (isEdit) {
@@ -84,20 +106,15 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
         }
     }
 
-    function closeModal() {
-        setIsModalOpen(false);
-    }
-
     function closeAndClearModal() {
         closeModal();
         clearModal();
     }
 
 
-    async function submitEditTodo(e) {
-        e.preventDefault();
+    async function submitEditTodo(inputTitle, inputDesc) {
 
-        const todoBody = { title: formContent.formTitle, desc: formContent.formDesc, fulfilled: currentTodo.fulfilled };
+        const todoBody = { title: inputTitle, desc: inputDesc, fulfilled: currentTodo.fulfilled };
 
         try {
             const updateResponse = await fetch(
@@ -117,16 +134,17 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
             }
 
             closeAndClearModal();
+
         } catch (error) {
             console.error(error);
         }
 
     }
 
-    async function submitAddTodo(e) {
-        e.preventDefault();
+    async function submitAddTodo(inputTitle, inputDesc) {
 
-        const todoBody = { title: formContent.formTitle, desc: formContent.formDesc, fulfilled: false };
+        // const todoBody = { title: formContent.formTitle, desc: formContent.formDesc, fulfilled: false };
+        const todoBody = { title: inputTitle, desc: inputDesc, fulfilled: false };
 
         try {
             const postNewTodoResponse = await fetch(
@@ -139,13 +157,11 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                     },
                 },
             );
-
             if (!postNewTodoResponse.ok) {
                 throw new Error(
                     "Error - Response Status:" + postNewTodoResponse.status,
                 );
             }
-
             closeAndClearModal();
         } catch (error) {
             console.error(error);
@@ -154,12 +170,12 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
     }
 
     const mutationAddTodo = useMutation({
-        mutationFn: submitAddTodo,
+        mutationFn: ({ inputTitle, inputDesc }) => submitAddTodo(inputTitle, inputDesc),
 
-        onMutate: async () => {
+        onMutate: async ({ inputTitle, inputDesc }) => {
             // optimistically adding todo
 
-            const newTodo = { id: "placeholder", title: formContent.formTitle, desc: formContent.formDesc, fulfilled: false };
+            const newTodo = { id: "placeholder", title: inputTitle, desc: inputDesc, fulfilled: false };
 
             await queryClient.cancelQueries({ queryKey: ['todos'] })
 
@@ -182,12 +198,12 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
 
     const mutationEditTodo = useMutation({
-        mutationFn: submitEditTodo,
+        mutationFn: ({ inputTitle, inputDesc }) => submitEditTodo(inputTitle, inputDesc),
 
-        onMutate: async () => {
+        onMutate: async ({ inputTitle, inputDesc }) => {
             // optimistically updating todo
 
-            const todoBody = { id: currentTodo.id, title: formContent.formTitle, desc: formContent.formDesc, fulfilled: currentTodo.fulfilled };
+            const todoBody = { id: currentTodo.id, title: inputTitle, desc: inputDesc, fulfilled: currentTodo.fulfilled };
 
             await queryClient.cancelQueries({ queryKey: ['todos'] })
 
@@ -215,12 +231,12 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
             {/* Edit Button */}
             {isEdit &&
-                <PencilSquareIcon className="todo-entry-edit-button" onClick={() => setIsModalOpen(true)} />
+                <PencilSquareIcon className="todo-entry-edit-button" onClick={openModal} />
             }
 
             {/* Add Button */}
             {!isEdit &&
-                <button className="openPopup-button" onClick={() => setIsModalOpen(true)}>
+                <button className="openPopup-button" onClick={openModal}>
                     add a new todo
                 </button>
             }
@@ -242,14 +258,14 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
                 <div className="todo-modal-content-container">
 
-                    {/* <form className="modal-form" onSubmit={isEdit ? submitEditTodo : submitAddTodo} > */}
-                    <form className="modal-form" onSubmit={isEdit ? mutationEditTodo.mutate : mutationAddTodo.mutate} >
+                    <form className="modal-form" onSubmit={handleSubmit} >
 
                         <input type="text" className="modal-form-title" placeholder="title" value={formContent.formTitle} autoComplete="off" required onChange={handleTitleChange} />
                         <br />
                         <textarea type="text" className="modal-form-desc" form="addTodoForm-update" onChange={handleDescChange} placeholder="description" value={formContent.formDesc} autoComplete="off" autoCorrect="off" spellCheck="off" />
                         <br />
                         <input type="submit" className="modal-form-submitButton" value={isEdit ? "update" : "add"} />
+
                     </form>
 
                 </div>
