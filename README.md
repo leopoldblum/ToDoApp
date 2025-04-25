@@ -11,3 +11,4 @@ A simple todo application with full-stack functionality.
 **Backend**  
 - REST API built with Go (Golang)  
 - PostgreSQL for database
+
