@@ -49,6 +49,22 @@ func insertTodoInDB(title string, desc string, fulfilled bool, getDB *sql.DB) bo
 	return true */
 }
 
+func insertTodoWithSetIDInDB(id int, title string, desc string, fulfilled bool, getDB *sql.DB) bool {
+	sqlStatement := "INSERT INTO todos (id, title, description, fulfilled) VALUES ($1, $2, $3, $4)"
+
+	_, err := getDB.Exec(sqlStatement, id, title, desc, fulfilled)
+	return err == nil
+}
+
+func updateMaxValueOfIDinDB(getDB *sql.DB) bool {
+	sqlStatement := "SELECT setval('todos_id_seq', COALESCE((SELECT MAX(id) FROM todos), 1))"
+	var newID int64
+
+	err := getDB.QueryRow(sqlStatement).Scan(&newID)
+
+	return err == nil
+}
+
 func main() {
 	//setup connection to database
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+"password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
@@ -116,6 +132,23 @@ func main() {
 			ctx.IndentedJSON(http.StatusNotModified, "oops, something went wrong")
 		}
 
+	})
+
+	// add with ID
+	router.POST("todoWithID", func(ctx *gin.Context) {
+		todo := Todo{}
+
+		if err := ctx.ShouldBindJSON(&todo); err != nil {
+			ctx.IndentedJSON(401, "couldnt bind body")
+			return
+		}
+
+		if insertTodoWithSetIDInDB(todo.Id, todo.Title, todo.Description, todo.Fulfilled, db) {
+			ctx.IndentedJSON(http.StatusCreated, "succesfully added Entry")
+			updateMaxValueOfIDinDB(db)
+		} else {
+			ctx.IndentedJSON(http.StatusNotModified, "oops, something went wrong")
+		}
 	})
 
 	// update
