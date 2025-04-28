@@ -2,7 +2,7 @@ import React, { useState, useEffect, createContext } from 'react';
 import TodoListAndHeader from './TodoListAndHeader';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
 import { isEqual } from 'lodash';
-import { useFetchTodos } from './api/queriesAndMutations';
+import { useFetchTodos, useMutationAddTodo, useMutationDeleteTodo, useMutationEditTodo } from './api/queriesAndMutations';
 
 /**
  * @param {} content
@@ -26,6 +26,11 @@ const TodoListWrapper = () => {
 
     const { isError, data: todosFromFetch, error } = useFetchTodos();
 
+    const mutateAdd = useMutationAddTodo();
+    const mutateDelete = useMutationDeleteTodo();
+    const mutationEditTodo = useMutationEditTodo();
+
+
     if (isError) {
         console.error("error while fetching: " + error.message)
     }
@@ -33,16 +38,23 @@ const TodoListWrapper = () => {
     useEffect(() => {
         console.log("todosFromFetch changed:", todosFromFetch);
         if (todosFromFetch) {
-            console.log("fetched all todos");
-            setPreviousTodosHistory(prevHistory => [...prevHistory, todos]); // ← Nutzt den aktuellen State
-            setTodos(todosFromFetch);
+            // console.log("fetched all todos: \n" + JSON.stringify(todosFromFetch));
+
+            if (!todosFromFetch.some((element) => element.id === "placeholder")) {
+                setPreviousTodosHistory(prevHistory => [...prevHistory, todos]);
+                setTodos(todosFromFetch);
+            }
+            else {
+                console.log("found placeholder")
+            }
+
         }
         // eslint-disable-next-line
     }, [todosFromFetch]);
 
+
     function displayPrevTodos() {
-        console.log("prev todos: ")
-        console.log(previousTodosHistory.map(entry => entry))
+        console.log("prev todos: " + JSON.stringify(previousTodosHistory.map(entry => entry)))
     }
 
 
@@ -63,39 +75,73 @@ const TodoListWrapper = () => {
         const lastTodos = previousTodosHistory[previousTodosHistory.length - 1];
 
         //add deleted todo 
-        var todoToAdd = lastTodos.filter(prevTodo => !todos.some(currTodo => currTodo.id === prevTodo.id));
+        var todosToAdd = lastTodos.filter(prevTodo => !todos.some(currTodo => currTodo.id === prevTodo.id));
 
         // delete added todo
-        const todoToRemove = todos.filter(currTodo => !lastTodos.some(prevTodo => prevTodo.id === currTodo.id));
+        const todosToRemove = todos.filter(currTodo => !lastTodos.some(prevTodo => prevTodo.id === currTodo.id));
 
         // catch modified todos
-        const modifiedTodo = lastTodos.filter(prevTodo => todos.some(currTodo => currTodo.id === prevTodo.id && !isEqual(prevTodo, currTodo))
-        )
+        const modifiedTodos = lastTodos.filter(prevTodo => todos.some(currTodo => currTodo.id === prevTodo.id && !isEqual(prevTodo, currTodo)))
 
         // todosToRemove also end up in toAdd, because of cache shenanigans, toAdd needs to be cleared
-        if (todoToRemove.length !== 0) todoToAdd = [];
+        // if (todosToRemove.length !== 0) todosToAdd = [];
 
-        if (todoToAdd.length !== 0) {
-            console.log("deleted a todo, which has to be added again")
-            console.log("todosToAdd: " + JSON.stringify(todoToAdd))
+        console.log("todosToAdd: \n" + JSON.stringify(todosToAdd))
+        console.log("todosToRemove: \n" + JSON.stringify(todosToRemove))
+        console.log("modifiedTodos: \n" + JSON.stringify(modifiedTodos))
 
-            return
+        // add a todo again
+        if (todosToAdd.length !== 0) {
+            console.log("deleted " + todosToAdd.length + " todo(s), which have to be added again")
+            todosToAdd.forEach((el) => {
+                console.log("added" + JSON.stringify(el));
+                // mutateAdd.mutate({
+                //     title: el.title,
+                //     desc: el.desc,
+                //     fulfilled: el.fulfilled,
+                // });
+
+                // setPreviousTodosHistory(prev => prev.slice(0, -1))
+            }
+            )
         }
-        if (todoToRemove.length !== 0) {
+
+        // delete a todo again
+        else if (todosToRemove.length !== 0) {
             console.log("added a todo, which has to be deleted now")
-            console.log("todosToRemove: " + JSON.stringify(todoToRemove))
+            console.log("todosToRemove: " + JSON.stringify(todosToRemove))
 
-            return
+            todosToRemove.forEach((el) => {
+                // mutateDelete.mutate(el.id);
+                console.log("removed" + JSON.stringify(el));
+                // setPreviousTodosHistory(prev => prev.slice(0, -1));
+            })
         }
-        if (modifiedTodo.length !== 0) {
+
+        // modify todos again
+        else if (modifiedTodos.length !== 0) {
             console.log("modified a todo, which has to be unmodified now")
-            console.log("modifiedTodos: " + JSON.stringify(modifiedTodo))
+            console.log("modifiedTodos: " + JSON.stringify(modifiedTodos))
 
-            return
+            modifiedTodos.forEach((el) => {
+                console.log("edited: " + el.id + ", " + el.title + ", " + el.desc + ", " + el.fulfilled);
+
+                mutationEditTodo.mutate({
+                    inputId: el.id,
+                    inputTitle: el.title,
+                    inputDesc: el.desc,
+                    inputFulfilled: el.fulfilled
+                },
+                    {
+                        // without this the prevTodo gets deleted first instead of simply removing the inbetween step to make the undo possible 
+                        onSuccess: () => setPreviousTodosHistory(prev => prev.slice(0, -1))
+                    }
+                );
+            })
         }
 
+        setPreviousTodosHistory(prev => prev.slice(0, -1));
 
-        setPreviousTodosHistory(prev => prev.slice(0, -1))
     }
 
     // const mutateUndoLastAction = useMutation({
