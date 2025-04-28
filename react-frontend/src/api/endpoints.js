@@ -24,32 +24,64 @@ export const fetchAllTodos = async () => {
  * =============================
  */
 
-export async function addTodo(title, desc, fulfilled) {
+export async function addTodo(id, title, desc, fulfilled) {
 
-    const todoBody = { title: title, desc: desc, fulfilled: fulfilled };
+    var todoBody;
 
-    try {
-        const postNewTodoResponse = await fetch(
-            "http://localhost:8080/todo",
-            {
-                method: "POST",
-                body: JSON.stringify(todoBody),
-                headers: {
-                    "Content-Type": "application/json",
+    if (id === undefined) {
+        // no id was specified
+        todoBody = { title: title, desc: desc, fulfilled: fulfilled };
+
+        try {
+            const postNewTodoResponse = await fetch(
+                "http://localhost:8080/todo",
+                {
+                    method: "POST",
+                    body: JSON.stringify(todoBody),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
                 },
-            },
-        );
-        if (!postNewTodoResponse.ok) {
-            throw new Error(
-                "Error - Response Status:" + postNewTodoResponse.status,
             );
+            if (!postNewTodoResponse.ok) {
+                throw new Error(
+                    "Error - Response Status:" + postNewTodoResponse.status,
+                );
+            }
+        } catch (error) {
+            console.error(error);
+            throw error;
         }
-    } catch (error) {
-        console.error(error);
-        throw error;
     }
-}
+    else {
+        // a specific id was given
+        todoBody = { id: id, title: title, desc: desc, fulfilled: fulfilled };
 
+        try {
+            const postNewTodoResponse = await fetch(
+                "http://localhost:8080/todoWithID",
+                {
+                    method: "POST",
+                    body: JSON.stringify(todoBody),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                },
+            );
+            if (!postNewTodoResponse.ok) {
+                throw new Error(
+                    "Error - Response Status:" + postNewTodoResponse.status,
+                );
+            }
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+
+
+
+}
 
 export async function editTodo(id, title, desc, fulfilled) {
 

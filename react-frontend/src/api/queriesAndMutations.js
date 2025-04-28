@@ -36,12 +36,12 @@ export const useMutationAddTodo = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ title, desc, fulfilled }) => addTodo(title, desc, fulfilled),
+        mutationFn: ({ id, title, desc, fulfilled }) => addTodo(id, title, desc, fulfilled),
 
-        onMutate: async ({ title, desc, fulfilled }) => {
+        onMutate: async ({ id, title, desc, fulfilled }) => {
             // optimistically adding todo
 
-            const newTodo = { id: "placeholder", title: title, desc: desc, fulfilled: fulfilled };
+            const newTodo = { id: id, title: title, desc: desc, fulfilled: fulfilled };
 
             await queryClient.cancelQueries({ queryKey: ['todos'] })
 
