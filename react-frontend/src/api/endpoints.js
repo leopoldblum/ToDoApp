@@ -28,7 +28,7 @@ export async function addTodo(id, title, desc, fulfilled) {
 
     var todoBody;
 
-    if (id === undefined) {
+    if (id === null) {
         // no id was specified
         todoBody = { title: title, desc: desc, fulfilled: fulfilled };
 

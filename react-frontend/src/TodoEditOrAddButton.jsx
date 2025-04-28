@@ -65,7 +65,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
         }
         else {
             mutationAddTodo.mutate({
-                id: undefined,
+                id: null,
                 title: formContent.formTitle,
                 desc: formContent.formDesc,
                 fulfilled: false
