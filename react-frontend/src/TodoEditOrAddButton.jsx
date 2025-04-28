@@ -12,7 +12,7 @@ import { useMutationAddTodo, useMutationEditTodo } from "./api/queriesAndMutatio
 const TodoEditOrAddButton = ({ currentTodo }) => {
 
     const mutationAddTodo = useMutationAddTodo();
-    const mutationEditTodo = useMutationEditTodo(currentTodo);
+    const mutationEditTodo = useMutationEditTodo();
 
 
     const isEdit = currentTodo === null ? false : true;

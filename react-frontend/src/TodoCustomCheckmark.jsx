@@ -9,7 +9,7 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
     const checkedBoxRef = useRef();
     const uncheckedBoxRef = useRef();
 
-    const mutationEditTodo = useMutationEditTodo(currentTodo);
+    const mutationEditTodo = useMutationEditTodo();
 
     useEffect(() => {
         setIsChecked(checked);

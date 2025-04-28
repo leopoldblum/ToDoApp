@@ -63,7 +63,7 @@ export const useMutationAddTodo = () => {
 }
 
 
-export const useMutationEditTodo = (currentTodo) => {
+export const useMutationEditTodo = () => {
 
     const queryClient = useQueryClient();
 
@@ -79,7 +79,7 @@ export const useMutationEditTodo = (currentTodo) => {
 
             const previousTodos = queryClient.getQueryData(['todos'])
 
-            queryClient.setQueryData(['todos'], (old) => old.map((todo) => todo.id === currentTodo.id ? todoBody : todo))
+            queryClient.setQueryData(['todos'], (old) => old.map((todo) => todo.id === inputId ? todoBody : todo))
 
             return { previousTodos }
         },
