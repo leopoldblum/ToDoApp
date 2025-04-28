@@ -24,9 +24,9 @@ export const fetchAllTodos = async () => {
  * =============================
  */
 
-export async function addTodo(inputTitle, inputDesc) {
+export async function addTodo(title, desc, fulfilled) {
 
-    const todoBody = { title: inputTitle, desc: inputDesc, fulfilled: false };
+    const todoBody = { title: title, desc: desc, fulfilled: fulfilled };
 
     try {
         const postNewTodoResponse = await fetch(

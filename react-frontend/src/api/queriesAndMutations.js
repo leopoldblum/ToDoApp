@@ -28,7 +28,7 @@ export const useFetchTodos = () => {
 
 /**
  * 
- * @description creates and adds a new Todo, automatically unfulfilled
+ * @description creates and adds a new Todo
  * 
  */
 
@@ -36,12 +36,12 @@ export const useMutationAddTodo = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ inputTitle, inputDesc }) => addTodo(inputTitle, inputDesc),
+        mutationFn: ({ title, desc, fulfilled }) => addTodo(title, desc, fulfilled),
 
-        onMutate: async ({ inputTitle, inputDesc }) => {
+        onMutate: async ({ title, desc, fulfilled }) => {
             // optimistically adding todo
 
-            const newTodo = { id: "placeholder", title: inputTitle, desc: inputDesc, fulfilled: false };
+            const newTodo = { id: "placeholder", title: title, desc: desc, fulfilled: fulfilled };
 
             await queryClient.cancelQueries({ queryKey: ['todos'] })
 
