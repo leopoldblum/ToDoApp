@@ -23,64 +23,45 @@ export const fetchAllTodos = async () => {
  * Section: CRUD 
  * =============================
  */
+/**
+ * 
+ * @param {(int | null)} id when null => autoId in database || when specified => add Todo with that ID in database 
+ * @param {string} title title of todo
+ * @param {string} desc description of todo
+ * @param {boolean} fulfilled fulfillment-status of todo 
+ */
 
 export async function addTodo(id, title, desc, fulfilled) {
 
     var todoBody;
 
-    if (id === null) {
+    if (id === null) todoBody = { title: title, desc: desc, fulfilled: fulfilled };
+    else todoBody = { id: id, title: title, desc: desc, fulfilled: fulfilled };
+
+    try {
         // no id was specified
-        todoBody = { title: title, desc: desc, fulfilled: fulfilled };
-
-        try {
-            const postNewTodoResponse = await fetch(
-                "http://localhost:8080/todo",
-                {
-                    method: "POST",
-                    body: JSON.stringify(todoBody),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+        const postNewTodoResponse = await fetch(
+            id === null ? "http://localhost:8080/todo" : "http://localhost:8080/todoWithID",
+            {
+                method: "POST",
+                body: JSON.stringify(todoBody),
+                headers: {
+                    "Content-Type": "application/json",
                 },
+            },
+        );
+
+
+        if (!postNewTodoResponse.ok) {
+            throw new Error(
+                "Error - Response Status:" + postNewTodoResponse.status,
             );
-            if (!postNewTodoResponse.ok) {
-                throw new Error(
-                    "Error - Response Status:" + postNewTodoResponse.status,
-                );
-            }
-        } catch (error) {
-            console.error(error);
-            throw error;
         }
+
+    } catch (error) {
+        console.error(error);
+        throw error;
     }
-    else {
-        // a specific id was given
-        todoBody = { id: id, title: title, desc: desc, fulfilled: fulfilled };
-
-        try {
-            const postNewTodoResponse = await fetch(
-                "http://localhost:8080/todoWithID",
-                {
-                    method: "POST",
-                    body: JSON.stringify(todoBody),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                },
-            );
-            if (!postNewTodoResponse.ok) {
-                throw new Error(
-                    "Error - Response Status:" + postNewTodoResponse.status,
-                );
-            }
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
-    }
-
-
-
 }
 
 export async function editTodo(id, title, desc, fulfilled) {
