@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect, createContext, useRef } from 'react';
 import TodoListAndHeader from './TodoListAndHeader';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
 import { isEqual } from 'lodash';
@@ -17,6 +17,8 @@ const TodoListWrapper = () => {
     const [todos, setTodos] = useState([])
 
     const [blockTodosHistory, setBlockTodosHistory] = useState(false)
+
+    const blockHistory = useRef(false)
 
     const [previousTodosHistory, setPreviousTodosHistory] = useState([])
 
@@ -43,14 +45,15 @@ const TodoListWrapper = () => {
             const oldTodos = [...todos]; // Erstelle eine echte Kopie
 
             if (!todosFromFetch.some((element) => element.id === null)) {
-                if (!blockTodosHistory) {
+                if (!blockHistory.current) {
                     setPreviousTodosHistory(prevHistory => [...prevHistory, oldTodos]);
                 }
-                setTodos(todosFromFetch);
             }
             else {
                 console.log("found placeholder")
             }
+
+            setTodos(todosFromFetch);
         }
         // eslint-disable-next-line
     }, [todosFromFetch]);
@@ -74,7 +77,8 @@ const TodoListWrapper = () => {
     async function undoLastAction() {
 
         // locking history, so that any changes made while undoing wont get added to it
-        setBlockTodosHistory(true);
+        // setBlockTodosHistory(true);
+        blockHistory.current = true
 
         try {
             if (previousTodosHistory.length <= 0) {
@@ -130,7 +134,8 @@ const TodoListWrapper = () => {
 
         } finally {
             // unlocking history
-            setBlockTodosHistory(false);
+            // setBlockTodosHistory(false);
+            blockHistory.current = false
             await new Promise(resolve => setTimeout(resolve, 200));
         }
     }
@@ -145,7 +150,7 @@ const TodoListWrapper = () => {
                 <br />
 
                 {previousTodosHistory.length > 1 &&
-                    <button onClick={undoLastAction}> Undo Last Action </button>
+                    <button onClick={() => undoLastAction()}> Undo Last Action </button>
                 }
 
                 <br />
