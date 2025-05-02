@@ -72,7 +72,8 @@ const TodoListWrapper = () => {
     }
 
     async function undoLastAction() {
-        console.log("locking history")
+
+        // locking history, so that any changes made while undoing wont get added to it
         setBlockTodosHistory(true);
 
         try {
@@ -95,8 +96,6 @@ const TodoListWrapper = () => {
             if (todosToAdd.length !== 0) {
                 //re-adding all todos, slightly bugged 
 
-                console.log(`Adding ${todosToAdd.length} todos:`, todosToAdd);
-
                 for (const todoA of todosToAdd) {
                     await mutateAdd.mutateAsync({
                         id: todoA.id,
@@ -105,22 +104,16 @@ const TodoListWrapper = () => {
                         fulfilled: todoA.fulfilled,
                     })
                 }
-                console.log("all " + todosToAdd.length + " todos have been re-added");
 
             } else if (todosToRemove.length !== 0) {
                 // re-deleting all todos
 
-                console.log(`Removing ${todosToRemove.length} todos:`, todosToRemove);
-
                 for (const todoD of todosToRemove) {
                     await mutateDelete.mutateAsync(todoD.id)
                 }
-                console.log("all todos have been re-deleted");
 
             } else if (modifiedTodos.length !== 0) {
                 // re-modifying all todos
-
-                console.log(`Modifying ${modifiedTodos.length} todos:`, modifiedTodos);
 
                 for (const todoM of modifiedTodos) {
                     await mutationEditTodo.mutateAsync({
@@ -130,15 +123,13 @@ const TodoListWrapper = () => {
                         inputFulfilled: todoM.fulfilled,
                     })
                 }
-
-                console.log("all todos have been re-modified");
             }
 
         } catch (error) {
             console.error("Undo failed:", error);
 
         } finally {
-            console.log("unlocking history")
+            // unlocking history
             setBlockTodosHistory(false);
             await new Promise(resolve => setTimeout(resolve, 200));
         }
