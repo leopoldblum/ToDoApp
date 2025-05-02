@@ -16,6 +16,8 @@ const TodoListWrapper = () => {
     // alle todos
     const [todos, setTodos] = useState([])
 
+    const [blockTodosHistory, setBlockTodosHistory] = useState(false)
+
     const [previousTodosHistory, setPreviousTodosHistory] = useState([])
 
     // todos mit offener desc
@@ -36,137 +38,127 @@ const TodoListWrapper = () => {
     }
 
     useEffect(() => {
-        console.log("todosFromFetch changed:", todosFromFetch);
+        // console.log("todosFromFetch changed:", todosFromFetch);
         if (todosFromFetch) {
-            // console.log("fetched all todos: \n" + JSON.stringify(todosFromFetch));
+            const oldTodos = [...todos]; // Erstelle eine echte Kopie
 
-            if (!todosFromFetch.some((element) => element.id === "placeholder")) {
-                setPreviousTodosHistory(prevHistory => [...prevHistory, todos]);
+            if (!todosFromFetch.some((element) => element.id === null)) {
+                if (!blockTodosHistory) {
+                    setPreviousTodosHistory(prevHistory => [...prevHistory, oldTodos]);
+                }
                 setTodos(todosFromFetch);
             }
             else {
                 console.log("found placeholder")
             }
-
         }
         // eslint-disable-next-line
     }, [todosFromFetch]);
 
 
     function displayPrevTodos() {
-        console.log("prev todos: " + JSON.stringify(previousTodosHistory.map(entry => entry)))
+        console.log("prevtodos.length: " + previousTodosHistory.length)
+        previousTodosHistory.forEach((el, index) => {
+            console.log(`History[${index}]:`, JSON.stringify(el))
+        })
+        console.log("Current todos:", JSON.stringify(todos))
     }
 
-
-    /** 
-     * @todo doesnt work properly yet
-     *  there can be more than one todo to undo, e.g. when deleting all fulfilled todos...
-     */
+    function removeNFomHistory(n) {
+        setPreviousTodosHistory(prev => {
+            if (prev.length < n) return [];
+            return prev.slice(0, -n);
+        });
+    }
 
     async function undoLastAction() {
+        console.log("locking history")
+        setBlockTodosHistory(true);
 
-        // inits with an empty array
-        if (previousTodosHistory.length <= 1) {
-            console.error("No more states to undo left.")
-            return;
-        }
-
-        // previous state of todos
-        const lastTodos = previousTodosHistory[previousTodosHistory.length - 1];
-
-        //add deleted todo 
-        var todosToAdd = lastTodos.filter(prevTodo => !todos.some(currTodo => currTodo.id === prevTodo.id));
-
-        // delete added todo
-        const todosToRemove = todos.filter(currTodo => !lastTodos.some(prevTodo => prevTodo.id === currTodo.id));
-
-        // catch modified todos
-        const modifiedTodos = lastTodos.filter(prevTodo => todos.some(currTodo => currTodo.id === prevTodo.id && !isEqual(prevTodo, currTodo)))
-
-        // todosToRemove also end up in toAdd, because of cache shenanigans, toAdd needs to be cleared
-        // if (todosToRemove.length !== 0) todosToAdd = [];
-
-        console.log("todosToAdd: \n" + JSON.stringify(todosToAdd))
-        console.log("todosToRemove: \n" + JSON.stringify(todosToRemove))
-        console.log("modifiedTodos: \n" + JSON.stringify(modifiedTodos))
-
-        // add a todo again
-        if (todosToAdd.length !== 0) {
-            console.log("deleted " + todosToAdd.length + " todo(s), which have to be added again")
-            todosToAdd.forEach((el) => {
-                console.log("added" + JSON.stringify(el));
-                // mutateAdd.mutate({
-                //     title: el.title,
-                //     desc: el.desc,
-                //     fulfilled: el.fulfilled,
-                // });
-
-                // setPreviousTodosHistory(prev => prev.slice(0, -1))
+        try {
+            if (previousTodosHistory.length <= 0) {
+                console.error("No more states to undo left.");
+                return;
             }
-            )
+
+            const lastTodos = previousTodosHistory[previousTodosHistory.length - 1];
+
+            const todosToAdd = lastTodos.filter(prevTodo => !todos.some(currTodo => currTodo.id === prevTodo.id));
+            const todosToRemove = todos.filter(currTodo => !lastTodos.some(prevTodo => prevTodo.id === currTodo.id));
+            const modifiedTodos = lastTodos.filter(prevTodo => {
+                const currTodo = todos.find(t => t.id === prevTodo.id);
+                return currTodo && !isEqual(prevTodo, currTodo);
+            });
+
+            removeNFomHistory(1);
+
+            if (todosToAdd.length !== 0) {
+                //re-adding all todos, slightly bugged 
+
+                console.log(`Adding ${todosToAdd.length} todos:`, todosToAdd);
+
+                for (const todoA of todosToAdd) {
+                    await mutateAdd.mutateAsync({
+                        id: todoA.id,
+                        title: todoA.title,
+                        desc: todoA.desc,
+                        fulfilled: todoA.fulfilled,
+                    })
+                }
+                console.log("all " + todosToAdd.length + " todos have been re-added");
+
+            } else if (todosToRemove.length !== 0) {
+                // re-deleting all todos
+
+                console.log(`Removing ${todosToRemove.length} todos:`, todosToRemove);
+
+                for (const todoD of todosToRemove) {
+                    await mutateDelete.mutateAsync(todoD.id)
+                }
+                console.log("all todos have been re-deleted");
+
+            } else if (modifiedTodos.length !== 0) {
+                // re-modifying all todos
+
+                console.log(`Modifying ${modifiedTodos.length} todos:`, modifiedTodos);
+
+                for (const todoM of modifiedTodos) {
+                    await mutationEditTodo.mutateAsync({
+                        inputId: todoM.id,
+                        inputTitle: todoM.title,
+                        inputDesc: todoM.desc,
+                        inputFulfilled: todoM.fulfilled,
+                    })
+                }
+
+                console.log("all todos have been re-modified");
+            }
+
+        } catch (error) {
+            console.error("Undo failed:", error);
+
+        } finally {
+            console.log("unlocking history")
+            setBlockTodosHistory(false);
+            await new Promise(resolve => setTimeout(resolve, 200));
         }
-
-        // delete a todo again
-        else if (todosToRemove.length !== 0) {
-            console.log("added a todo, which has to be deleted now")
-            console.log("todosToRemove: " + JSON.stringify(todosToRemove))
-
-            todosToRemove.forEach((el) => {
-                // mutateDelete.mutate(el.id);
-                console.log("removed" + JSON.stringify(el));
-                // setPreviousTodosHistory(prev => prev.slice(0, -1));
-            })
-        }
-
-        // modify todos again
-        else if (modifiedTodos.length !== 0) {
-            console.log("modified a todo, which has to be unmodified now")
-            console.log("modifiedTodos: " + JSON.stringify(modifiedTodos))
-
-            modifiedTodos.forEach((el) => {
-                console.log("edited: " + el.id + ", " + el.title + ", " + el.desc + ", " + el.fulfilled);
-
-                mutationEditTodo.mutate({
-                    inputId: el.id,
-                    inputTitle: el.title,
-                    inputDesc: el.desc,
-                    inputFulfilled: el.fulfilled
-                },
-                    {
-                        // without this the prevTodo gets deleted first instead of simply removing the inbetween step to make the undo possible 
-                        onSuccess: () => setPreviousTodosHistory(prev => prev.slice(0, -1))
-                    }
-                );
-            })
-        }
-
-        setPreviousTodosHistory(prev => prev.slice(0, -1));
-
     }
-
-    // const mutateUndoLastAction = useMutation({
-    //     mutationFn: undoLastAction
-    // })
-
 
     return (
         <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, setActiveHeaders, setDescActiveTodos }}>
 
             <div>
-                <button onClick={displayPrevTodos}> debug display </button>
+                <button onClick={displayPrevTodos}> Debug History </button>
 
                 <br />
                 <br />
 
                 {previousTodosHistory.length > 1 &&
-                    <button onClick={undoLastAction}> undo button frfr </button>
+                    <button onClick={undoLastAction}> Undo Last Action </button>
                 }
 
-
                 <br />
                 <br />
-
-
 
                 <TodoEditOrAddButton isEdit={false} currentTodo={null} />
 
@@ -177,37 +169,7 @@ const TodoListWrapper = () => {
             </div>
 
         </todoListProvider.Provider >
-
     );
 }
 
-
 export default TodoListWrapper;
-
-
-/*
-    gibt es ne elegantere Lösung für updateList, damit die function nicht als prop weitergegeben werden muss?
-    => useContext is epic
-
-        function foo(){} 
-            vs 
-        const foo = () => {}
-
-
-    how to: smooth animationen bei dynamisch großen elementen (max-height > 100vh), wie bspw. todolist elemente
-
-    best practice für responsive design?
-
-    typescript prob goated
-
-    welche seite für design, canva?
-
-    onClick={() => funtion()} vs {function}
-
-    bounded vs unbounded functions
-
-    tanstackQuery:
-        - muss die queryfn selbst die errors catchen, oder wird das beim aufruf der funktion gemacht?
-        - refetch vs query in eigene funktion packen
-        - warum brauch onMutate ein return statement?
-*/

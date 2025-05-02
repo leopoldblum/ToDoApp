@@ -27,9 +27,10 @@ export const useFetchTodos = () => {
 
 
 /**
- * 
- * @description creates and adds a new Todo
- * 
+ * @param {(int | null)} id when null => autoId in database || when specified => add Todo with that ID in database 
+ * @param {string} title title of todo
+ * @param {string} desc description of todo
+ * @param {boolean} fulfilled fulfillment-status of todo 
  */
 
 export const useMutationAddTodo = () => {

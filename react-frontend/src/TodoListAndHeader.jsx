@@ -14,12 +14,11 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
 
 
-
     /**
-  * @param {string} header_type options: "header-active" "header-fulfilled" 
-  * 
-  * toggles given header_type in activeHeaders
-  */
+    * @param {string} header_type options: "header-active" "header-fulfilled" 
+    * 
+    * toggles given header_type in activeHeaders
+    */
 
     const toggleHeaderState = (header_type) => {
         todoFuncAndData.setActiveHeaders((currentActiveHeaders) => {
