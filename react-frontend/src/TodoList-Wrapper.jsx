@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useRef } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import TodoListAndHeader from './TodoListAndHeader';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
 import { isEqual } from 'lodash';
@@ -17,8 +17,6 @@ const TodoListWrapper = () => {
     const [todos, setTodos] = useState([])
 
     const [blockTodosHistory, setBlockTodosHistory] = useState(false)
-
-    const blockHistory = useRef(false)
 
     const [previousTodosHistory, setPreviousTodosHistory] = useState([])
 
@@ -42,22 +40,27 @@ const TodoListWrapper = () => {
     useEffect(() => {
         // console.log("todosFromFetch changed:", todosFromFetch);
         if (todosFromFetch) {
-            const oldTodos = [...todos]; // Erstelle eine echte Kopie
 
-            if (!todosFromFetch.some((element) => element.id === null)) {
-                if (!blockHistory.current) {
-                    setPreviousTodosHistory(prevHistory => [...prevHistory, oldTodos]);
+            if (todos.every(todo => todo.id !== null)) {
+                if (!blockTodosHistory) {
+                    setPreviousTodosHistory(prevHistory => [...prevHistory, todos]);
                 }
+
+                // setTodos(todosFromFetch);
+                // entweder working history or working optimistic updates ....
+
             }
             else {
                 console.log("found placeholder")
             }
 
             setTodos(todosFromFetch);
+
         }
+
+        // displayPrevTodos();
         // eslint-disable-next-line
     }, [todosFromFetch]);
-
 
     function displayPrevTodos() {
         console.log("prevtodos.length: " + previousTodosHistory.length)
@@ -77,8 +80,7 @@ const TodoListWrapper = () => {
     async function undoLastAction() {
 
         // locking history, so that any changes made while undoing wont get added to it
-        // setBlockTodosHistory(true);
-        blockHistory.current = true
+        setBlockTodosHistory(true);
 
         try {
             if (previousTodosHistory.length <= 0) {
@@ -134,9 +136,7 @@ const TodoListWrapper = () => {
 
         } finally {
             // unlocking history
-            // setBlockTodosHistory(false);
-            blockHistory.current = false
-            await new Promise(resolve => setTimeout(resolve, 200));
+            setBlockTodosHistory(false);
         }
     }
 
@@ -149,7 +149,7 @@ const TodoListWrapper = () => {
                 <br />
                 <br />
 
-                {previousTodosHistory.length > 1 &&
+                {previousTodosHistory.length > 0 &&
                     <button onClick={() => undoLastAction()}> Undo Last Action </button>
                 }
 
