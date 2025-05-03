@@ -1,7 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react';
 import TodoListAndHeader from './TodoListAndHeader';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
-import { isEqual } from 'lodash';
 import { useFetchTodos, useMutationAddTodo, useMutationDeleteTodo, useMutationEditTodo } from './api/queriesAndMutations';
 
 /**
@@ -16,10 +15,6 @@ const TodoListWrapper = () => {
     // alle todos
     const [todos, setTodos] = useState([])
 
-    const [blockTodosHistory, setBlockTodosHistory] = useState(false)
-
-    const [previousTodosHistory, setPreviousTodosHistory] = useState([])
-
     // todos mit offener desc
     const [descActiveTodos, setDescActiveTodos] = useState([])
 
@@ -28,9 +23,9 @@ const TodoListWrapper = () => {
 
     const { isError, data: todosFromFetch, error } = useFetchTodos();
 
-    const mutateAdd = useMutationAddTodo();
-    const mutateDelete = useMutationDeleteTodo();
-    const mutationEditTodo = useMutationEditTodo();
+    // const mutateAdd = useMutationAddTodo();
+    // const mutateDelete = useMutationDeleteTodo();
+    // const mutationEditTodo = useMutationEditTodo();
 
 
     if (isError) {
@@ -38,123 +33,19 @@ const TodoListWrapper = () => {
     }
 
     useEffect(() => {
-        // console.log("todosFromFetch changed:", todosFromFetch);
+        console.log("todosFromFetch changed:", todosFromFetch);
+
         if (todosFromFetch) {
-
-            if (todos.every(todo => todo.id !== null)) {
-                if (!blockTodosHistory) {
-                    setPreviousTodosHistory(prevHistory => [...prevHistory, todos]);
-                }
-
-                // setTodos(todosFromFetch);
-                // entweder working history or working optimistic updates ....
-
-            }
-            else {
-                console.log("found placeholder")
-            }
-
-            setTodos(todosFromFetch);
-
+            setTodos(todosFromFetch)
         }
 
-        // displayPrevTodos();
         // eslint-disable-next-line
     }, [todosFromFetch]);
-
-    function displayPrevTodos() {
-        console.log("prevtodos.length: " + previousTodosHistory.length)
-        previousTodosHistory.forEach((el, index) => {
-            console.log(`History[${index}]:`, JSON.stringify(el))
-        })
-        console.log("Current todos:", JSON.stringify(todos))
-    }
-
-    function removeNFomHistory(n) {
-        setPreviousTodosHistory(prev => {
-            if (prev.length < n) return [];
-            return prev.slice(0, -n);
-        });
-    }
-
-    async function undoLastAction() {
-
-        // locking history, so that any changes made while undoing wont get added to it
-        setBlockTodosHistory(true);
-
-        try {
-            if (previousTodosHistory.length <= 0) {
-                console.error("No more states to undo left.");
-                return;
-            }
-
-            const lastTodos = previousTodosHistory[previousTodosHistory.length - 1];
-
-            const todosToAdd = lastTodos.filter(prevTodo => !todos.some(currTodo => currTodo.id === prevTodo.id));
-            const todosToRemove = todos.filter(currTodo => !lastTodos.some(prevTodo => prevTodo.id === currTodo.id));
-            const modifiedTodos = lastTodos.filter(prevTodo => {
-                const currTodo = todos.find(t => t.id === prevTodo.id);
-                return currTodo && !isEqual(prevTodo, currTodo);
-            });
-
-            removeNFomHistory(1);
-
-            if (todosToAdd.length !== 0) {
-                //re-adding all todos, slightly bugged 
-
-                for (const todoA of todosToAdd) {
-                    await mutateAdd.mutateAsync({
-                        id: todoA.id,
-                        title: todoA.title,
-                        desc: todoA.desc,
-                        fulfilled: todoA.fulfilled,
-                    })
-                }
-
-            } else if (todosToRemove.length !== 0) {
-                // re-deleting all todos
-
-                for (const todoD of todosToRemove) {
-                    await mutateDelete.mutateAsync(todoD.id)
-                }
-
-            } else if (modifiedTodos.length !== 0) {
-                // re-modifying all todos
-
-                for (const todoM of modifiedTodos) {
-                    await mutationEditTodo.mutateAsync({
-                        inputId: todoM.id,
-                        inputTitle: todoM.title,
-                        inputDesc: todoM.desc,
-                        inputFulfilled: todoM.fulfilled,
-                    })
-                }
-            }
-
-        } catch (error) {
-            console.error("Undo failed:", error);
-
-        } finally {
-            // unlocking history
-            setBlockTodosHistory(false);
-        }
-    }
 
     return (
         <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, setActiveHeaders, setDescActiveTodos }}>
 
             <div>
-                <button onClick={displayPrevTodos}> Debug History </button>
-
-                <br />
-                <br />
-
-                {previousTodosHistory.length > 0 &&
-                    <button onClick={() => undoLastAction()}> Undo Last Action </button>
-                }
-
-                <br />
-                <br />
 
                 <TodoEditOrAddButton isEdit={false} currentTodo={null} />
 
