@@ -5,7 +5,7 @@ import { isEqual } from "lodash";
 import { useFetchTodos, useMutationAddTodo, useMutationDeleteTodo, useMutationEditTodo } from './api/queriesAndMutations';
 
 /**
- * @param {} content 
+ * @param {} content
  * todos[], descActiveTodos[], activeHeaders[] --- setDescActiveTodos(), setActiveHeaders()
  */
 export const todoListProvider = createContext(null);
@@ -13,13 +13,19 @@ export const todoListProvider = createContext(null);
 const TodoListWrapper = () => {
     // alle todos
     const [todos, setTodos] = useState([]);
+
+    // history
     const [todoHistory, setTodoHistory] = useState([]);
+
+    // for blocking when undoing
     const isHistoryBlockedRef = useRef(false);
 
+    // skipping first setHistory
     const initialLoadDoneRef = useRef(false);
 
     // todos mit offener desc
     const [descActiveTodos, setDescActiveTodos] = useState([]);
+
     // header die ausgeklappt sind => "header-actives", "header-fulfilled"
     const [activeHeaders, setActiveHeaders] = useState(["header-actives"]);
 
@@ -38,35 +44,47 @@ const TodoListWrapper = () => {
     };
 
     const updateTodosAndManageHistory = () => {
+
+        // check if it is a valid fetch, that contains data
         if (todosFromFetch) {
-            // Check if this is an actual update (not initial load)
+
+            // check whether this is an actual update (not initial load)
             if (initialLoadDoneRef.current) {
-                if ((todos.some((el) => el.id === null)) === false) {
+
+                // check that it doesnt contain optmistic update data
+                if (!(todos.some((el) => el.id === null))) {
 
                     // only write in history when it's supposed to, not when undoing things
                     if (isHistoryBlockedRef.current === false) {
-                        console.log("setting history");
+
+                        // console.log("setting history");
                         setTodoHistory(prev => [...prev, [...todos]]);
                     }
-                    else {
-                        // console.log("undoing..., not setting history");
-                    }
+                    // else: undos things, therefore should not add to history
                 }
-                else {
-                    // console.log("added a placeholder, skipping add to history");
-                }
+                // else: fetched an optmistic update which should not be in the history
             } else {
-                // console.log("Initial loaded, skipping history entry");   
+                // is a first load: skip, cuz we dont have sth to put in the history atp
+
+                // console.log("Initial loaded, skipping history entry");
                 initialLoadDoneRef.current = true;
             }
 
             setTodos([...todosFromFetch]);
+        }
+        else if (todosFromFetch === null) {
+            // edge case when there are no todos in DB when mounting, has to update initialLoadState here as well
+
+            if (!initialLoadDoneRef.current) {
+                initialLoadDoneRef.current = true;
+            }
         }
     };
 
     useEffect(() => {
         // console.log("todosFromFetch changed:", todosFromFetch);
         updateTodosAndManageHistory();
+
         // eslint-disable-next-line
     }, [todosFromFetch]);
 
@@ -82,8 +100,10 @@ const TodoListWrapper = () => {
                 return;
             }
 
+            // last state of todos
             const lastTodos = todoHistory[todoHistory.length - 1];
 
+            // calc differences between current state and last state
             const todosToAdd = lastTodos.filter(prevTodo => !todos.some(currTodo => currTodo.id === prevTodo.id));
             const todosToRemove = todos.filter(currTodo => !lastTodos.some(prevTodo => prevTodo.id === currTodo.id));
             const modifiedTodos = lastTodos.filter(prevTodo => {
@@ -91,10 +111,11 @@ const TodoListWrapper = () => {
                 return currTodo && !isEqual(prevTodo, currTodo);
             });
 
+            // remove last state from history
             setTodoHistory(prev => prev.slice(0, -1))
 
             if (todosToAdd.length !== 0) {
-                //re-adding all todos, slightly bugged 
+                // re-adding all deleted todos
 
                 for (const todoA of todosToAdd) {
                     await mutateAdd.mutateAsync({
@@ -126,10 +147,11 @@ const TodoListWrapper = () => {
             }
 
         } catch (error) {
+            // sth went wrong
             console.error("Undo failed:", error);
 
         } finally {
-            // unlocking history
+            // done with undoing, unlocking history
             isHistoryBlockedRef.current = false;
         }
     }
