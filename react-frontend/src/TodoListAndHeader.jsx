@@ -40,11 +40,9 @@ const TodoListAndHeader = ({ isFulfilled }) => {
                 </div>
 
                 <div className='section-todos-header-title' onClick={() => toggleHeaderState(headerType)} >
-                    {isFulfilled ?
-                        <h1> fulfilled todos </h1>
-                        :
-                        <h1> active todos </h1>
-                    }
+
+                    <h1> {isFulfilled ? "fulfilled todos" : "active todos"}  ({todoFuncAndData.todos.filter(entries => entries.fulfilled === isFulfilled).length}) </h1>
+
                 </div>
 
                 <div className={`header-button-container toggle-visibility-container ${todoFuncAndData.activeHeaders.includes(headerType) ? "visible" : ""}`}>
