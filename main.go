@@ -18,6 +18,7 @@ type Body struct {
 	Title       string `json:"title"`
 	Description string `json:"desc"`
 	Fulfilled   bool   `json:"fulfilled"`
+	UserID      string `json:"userid"`
 }
 
 type Todo struct {
@@ -26,6 +27,7 @@ type Todo struct {
 	Title       string `json:"title"`
 	Description string `json:"desc"`
 	Fulfilled   bool   `json:"fulfilled"`
+	UserID      string `json:"userid"`
 }
 
 const (
@@ -36,11 +38,11 @@ const (
 	dbname   = "postgres"
 )
 
-func insertTodoInDB(title string, desc string, fulfilled bool, getDB *sql.DB) bool {
-	sqlStatement := "INSERT INTO todos (title, description, fulfilled) VALUES ($1, $2, $3)"
+func insertTodoInDB(title string, desc string, fulfilled bool, userid string, getDB *sql.DB) bool {
+	sqlStatement := "INSERT INTO todos (title, description, fulfilled, userid) VALUES ($1, $2, $3, $4)"
 	//sqlStatement := `INSERT INTO todos (title, description, fulfilled) VALUES ('test_inVSCode23423423', 'test_desc23423432', false)`
 
-	_, err := getDB.Exec(sqlStatement, title, desc, fulfilled)
+	_, err := getDB.Exec(sqlStatement, title, desc, fulfilled, userid)
 	return err == nil
 	/* if err != nil {
 		return false
@@ -49,10 +51,10 @@ func insertTodoInDB(title string, desc string, fulfilled bool, getDB *sql.DB) bo
 	return true */
 }
 
-func insertTodoWithSetIDInDB(id int, title string, desc string, fulfilled bool, getDB *sql.DB) bool {
-	sqlStatement := "INSERT INTO todos (id, title, description, fulfilled) VALUES ($1, $2, $3, $4)"
+func insertTodoWithSetIDInDB(id int, title string, desc string, fulfilled bool, userid string, getDB *sql.DB) bool {
+	sqlStatement := "INSERT INTO todos (id, title, description, fulfilled, userid) VALUES ($1, $2, $3, $4, $5)"
 
-	_, err := getDB.Exec(sqlStatement, id, title, desc, fulfilled)
+	_, err := getDB.Exec(sqlStatement, id, title, desc, fulfilled, userid)
 	return err == nil
 }
 
@@ -92,16 +94,17 @@ func main() {
 
 	// get entry with id
 	router.GET("todo/:id", func(ctx *gin.Context) {
-		sqlStatement := `SELECT id, title, description, fulfilled FROM todos WHERE id=$1`
+		sqlStatement := `SELECT id, title, description, fulfilled, userid FROM todos WHERE id=$1`
 		var getId = ctx.Param("id")
 
 		var title string
 		var description string
 		var fulfilled bool
+		var userid string
 
 		row := db.QueryRow(sqlStatement, getId)
 
-		switch err := row.Scan(&getId, &title, &description, &fulfilled); err {
+		switch err := row.Scan(&getId, &title, &description, &fulfilled, &userid); err {
 		case sql.ErrNoRows:
 			ctx.IndentedJSON(http.StatusNotFound, "No entry with this ID found")
 		case nil:
@@ -112,7 +115,7 @@ func main() {
 				ctx.IndentedJSON(http.StatusBadRequest, "wrong id")
 			}
 
-			ctx.IndentedJSON(http.StatusOK, Todo{idToInt, title, description, fulfilled})
+			ctx.IndentedJSON(http.StatusOK, Todo{idToInt, title, description, fulfilled, userid})
 		default:
 			//panic(err)
 			ctx.IndentedJSON(http.StatusInternalServerError, fmt.Sprintf("Received this Error: %d", err))
@@ -130,7 +133,7 @@ func main() {
 		}
 		//fmt.Println(body)
 
-		if insertTodoInDB(body.Title, body.Description, body.Fulfilled, db) {
+		if insertTodoInDB(body.Title, body.Description, body.Fulfilled, body.UserID, db) {
 			ctx.IndentedJSON(http.StatusCreated, "succesfully added Entry")
 		} else {
 			ctx.IndentedJSON(http.StatusNotModified, "oops, something went wrong")
@@ -147,7 +150,7 @@ func main() {
 			return
 		}
 
-		if insertTodoWithSetIDInDB(todo.Id, todo.Title, todo.Description, todo.Fulfilled, db) {
+		if insertTodoWithSetIDInDB(todo.Id, todo.Title, todo.Description, todo.Fulfilled, todo.UserID, db) {
 			ctx.IndentedJSON(http.StatusCreated, "succesfully added Entry")
 			updateMaxValueOfIDinDB(db)
 		} else {
@@ -166,13 +169,16 @@ func main() {
 			return
 		}
 
+		//TODO: add error when ID to edit doesnt exist
+
 		var newTitle = body.Title
 		var newDesc = body.Description
 		var newFulfilled = body.Fulfilled
+		var newUserid = body.UserID
 
-		sqlStatement := `UPDATE todos SET title = $2, description = $3, fulfilled = $4 WHERE id=$1`
+		sqlStatement := `UPDATE todos SET title = $2, description = $3, fulfilled = $4, userid = $5 WHERE id=$1`
 
-		_, err := db.Exec(sqlStatement, id_select, newTitle, newDesc, newFulfilled)
+		_, err := db.Exec(sqlStatement, id_select, newTitle, newDesc, newFulfilled, newUserid)
 		if err != nil {
 			ctx.IndentedJSON(http.StatusInternalServerError, fmt.Sprintf("Received this Error: %d", err))
 		}
@@ -197,7 +203,7 @@ func main() {
 		for rows.Next() {
 			var item Todo
 
-			err = rows.Scan(&item.Id, &item.Title, &item.Description, &item.Fulfilled)
+			err = rows.Scan(&item.Id, &item.Title, &item.Description, &item.Fulfilled, &item.UserID)
 
 			if err != nil {
 				// panic("sdaf")

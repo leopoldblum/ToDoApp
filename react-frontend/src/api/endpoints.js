@@ -31,12 +31,12 @@ export const fetchAllTodos = async () => {
  * @param {boolean} fulfilled fulfillment-status of todo 
  */
 
-export async function addTodo(id, title, desc, fulfilled) {
+export async function addTodo(id, title, desc, fulfilled, userID) {
 
     var todoBody;
 
-    if (id === null) todoBody = { title: title, desc: desc, fulfilled: fulfilled };
-    else todoBody = { id: id, title: title, desc: desc, fulfilled: fulfilled };
+    if (id === null) todoBody = { title: title, desc: desc, fulfilled: fulfilled, userID: userID };
+    else todoBody = { id: id, title: title, desc: desc, fulfilled: fulfilled, userID: userID };
 
     try {
         // no id was specified

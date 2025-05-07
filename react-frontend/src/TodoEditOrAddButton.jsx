@@ -1,8 +1,9 @@
 import "./TodoEditOrAddButton.css"
 import PencilSquareIcon from "@heroicons/react/16/solid/PencilSquareIcon.js"
 import XMarkIcon from "@heroicons/react/16/solid/XMarkIcon.js"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useContext } from "react"
 import { useMutationAddTodo, useMutationEditTodo } from "./api/queriesAndMutations";
+import { todoListProvider } from "./TodoList-Wrapper";
 
 
 /** 
@@ -13,6 +14,8 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
     const mutationAddTodo = useMutationAddTodo();
     const mutationEditTodo = useMutationEditTodo();
+
+    const todoFuncAndData = useContext(todoListProvider);
 
 
     const isEdit = currentTodo === null ? false : true;
@@ -68,7 +71,8 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                 id: null,
                 title: formContent.formTitle,
                 desc: formContent.formDesc,
-                fulfilled: false
+                fulfilled: false,
+                userid: todoFuncAndData.userIDref.current
             })
         }
         closeAndClearModal();

@@ -43,15 +43,15 @@ export const useMutationAddTodo = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ id, title, desc, fulfilled }) => addTodo(id, title, desc, fulfilled),
+        mutationFn: ({ id, title, desc, fulfilled, userID }) => addTodo(id, title, desc, fulfilled, userID),
 
-        onMutate: async ({ id, title, desc, fulfilled }) => {
+        onMutate: async ({ id, title, desc, fulfilled, userID }) => {
             // optimistically adding todo
             const placeholderID = "placeholder_" + crypto.randomUUID()
 
-            const newTodo = { id: placeholderID, title: title, desc: desc, fulfilled: fulfilled };
+            const newTodo = { id: placeholderID, title: title, desc: desc, fulfilled: fulfilled, userID: userID };
 
-            console.log("placeholder todo id: " + newTodo.id)
+            console.log("placeholder todo: " + JSON.stringify(newTodo))
 
             await queryClient.cancelQueries({ queryKey: ['todos'] })
 

@@ -12,6 +12,9 @@ import { useFetchTodos, useMutationAddTodo, useMutationDeleteTodo, useMutationEd
 export const todoListProvider = createContext(null);
 
 const TodoListWrapper = () => {
+
+    const userIDref = useRef(null);
+
     // alle todos - remove use todoFromFetch
     const [todos, setTodos] = useState([]);
 
@@ -92,15 +95,15 @@ const TodoListWrapper = () => {
 
     // handling userID
     useEffect(() => {
-        const userID = localStorage.getItem("userID")
+        userIDref.current = localStorage.getItem("userID")
 
-        if (!userID) {
+        if (userIDref.current !== null) {
             const generateUuserID = crypto.randomUUID()
             localStorage.setItem("userID", generateUuserID)
             console.log("userID set to UUID: " + generateUuserID)
         }
         else {
-            console.log("userID is already set to: " + userID)
+            console.log("userID is already set to: " + userIDref.current)
         }
     }, [])
 
@@ -182,7 +185,7 @@ const TodoListWrapper = () => {
 
 
     return (
-        <todoListProvider.Provider value={{ descActiveTodos, todos, activeHeaders, setActiveHeaders, setDescActiveTodos }}>
+        <todoListProvider.Provider value={{ userIDref, descActiveTodos, todos, activeHeaders, setActiveHeaders, setDescActiveTodos }}>
 
             <div>
 
