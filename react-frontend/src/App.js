@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import "./global-colors.css"
 import TodoListWrapper from './TodoList-Wrapper.jsx';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
 
 import {
   QueryClient,
@@ -9,6 +11,8 @@ import {
 } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
+
+
 
 class App extends Component {
   render() {
@@ -19,7 +23,11 @@ class App extends Component {
 
         <QueryClientProvider client={queryClient}>
 
+
+          <ReactQueryDevtools initialIsOpen={false} />
+
           <TodoListWrapper />
+
 
         </QueryClientProvider>
 

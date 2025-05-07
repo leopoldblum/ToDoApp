@@ -4,6 +4,7 @@ import TodoEditOrAddButton from "./TodoEditOrAddButton";
 import { isEqual } from "lodash";
 import { useFetchTodos, useMutationAddTodo, useMutationDeleteTodo, useMutationEditTodo } from './api/queriesAndMutations';
 
+
 /**
  * @param {} content
  * todos[], descActiveTodos[], activeHeaders[] --- setDescActiveTodos(), setActiveHeaders()
@@ -11,7 +12,7 @@ import { useFetchTodos, useMutationAddTodo, useMutationDeleteTodo, useMutationEd
 export const todoListProvider = createContext(null);
 
 const TodoListWrapper = () => {
-    // alle todos
+    // alle todos - remove use todoFromFetch
     const [todos, setTodos] = useState([]);
 
     // history
@@ -126,14 +127,20 @@ const TodoListWrapper = () => {
                     })
                 }
 
-            } else if (todosToRemove.length !== 0) {
+                return
+            }
+
+            if (todosToRemove.length !== 0) {
                 // re-deleting all todos
 
                 for (const todoD of todosToRemove) {
                     await mutateDelete.mutateAsync(todoD.id)
                 }
 
-            } else if (modifiedTodos.length !== 0) {
+                return
+            }
+
+            if (modifiedTodos.length !== 0) {
                 // re-modifying all todos
 
                 for (const todoM of modifiedTodos) {
@@ -144,6 +151,8 @@ const TodoListWrapper = () => {
                         inputFulfilled: todoM.fulfilled,
                     })
                 }
+
+                return
             }
 
         } catch (error) {

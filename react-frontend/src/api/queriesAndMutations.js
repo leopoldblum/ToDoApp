@@ -15,6 +15,7 @@ export const useFetchTodos = () => {
     return useQuery({
         queryKey: ['todos'],
         queryFn: fetchAllTodos,
+        staleTime: 50000,
     })
 };
 
