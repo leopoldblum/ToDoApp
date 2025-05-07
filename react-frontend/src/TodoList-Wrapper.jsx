@@ -53,7 +53,7 @@ const TodoListWrapper = () => {
             if (initialLoadDoneRef.current) {
 
                 // check that it doesnt contain optmistic update data
-                if (!(todos.some((el) => el.id === null))) {
+                if (!(todos.some((el) => el.id.toString().startsWith("placeholder_")))) {
 
                     // only write in history when it's supposed to, not when undoing things
                     if (isHistoryBlockedRef.current === false) {
@@ -88,6 +88,21 @@ const TodoListWrapper = () => {
 
         // eslint-disable-next-line
     }, [todosFromFetch]);
+
+
+    // handling userID
+    useEffect(() => {
+        const userID = localStorage.getItem("userID")
+
+        if (!userID) {
+            const generateUuserID = crypto.randomUUID()
+            localStorage.setItem("userID", generateUuserID)
+            console.log("userID set to UUID: " + generateUuserID)
+        }
+        else {
+            console.log("userID is already set to: " + userID)
+        }
+    }, [])
 
 
     async function undoLastAction() {

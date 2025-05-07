@@ -47,8 +47,11 @@ export const useMutationAddTodo = () => {
 
         onMutate: async ({ id, title, desc, fulfilled }) => {
             // optimistically adding todo
+            const placeholderID = "placeholder_" + crypto.randomUUID()
 
-            const newTodo = { id: id, title: title, desc: desc, fulfilled: fulfilled };
+            const newTodo = { id: placeholderID, title: title, desc: desc, fulfilled: fulfilled };
+
+            console.log("placeholder todo id: " + newTodo.id)
 
             await queryClient.cancelQueries({ queryKey: ['todos'] })
 
