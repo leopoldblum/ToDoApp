@@ -11,10 +11,10 @@ import { fetchAllTodos, addTodo, editTodo, deleteTodo, deleteAllFulfilledTodos }
 /**
  * @return fetches and returns todos from server 
  */
-export const useFetchTodos = () => {
+export const useFetchTodos = (userid) => {
     return useQuery({
         queryKey: ['todos'],
-        queryFn: fetchAllTodos,
+        queryFn: () => fetchAllTodos(userid),
 
         // sort data by ID, else it would render twice, first unsorted, then sorted   
         select: (todosFromFetch) =>

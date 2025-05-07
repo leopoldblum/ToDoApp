@@ -4,10 +4,10 @@
  * =============================
  */
 
-export const fetchAllTodos = async () => {
+export const fetchAllTodos = async (userid) => {
     try {
 
-        const response = await fetch("http://localhost:8080/todos")
+        const response = await fetch("http://localhost:8080/getalltodos/" + userid)
         const allEntries = await response.json();
 
         return allEntries;
@@ -31,12 +31,12 @@ export const fetchAllTodos = async () => {
  * @param {boolean} fulfilled fulfillment-status of todo 
  */
 
-export async function addTodo(id, title, desc, fulfilled, userID) {
+export async function addTodo(id, title, desc, fulfilled, userid) {
 
     var todoBody;
 
-    if (id === null) todoBody = { title: title, desc: desc, fulfilled: fulfilled, userID: userID };
-    else todoBody = { id: id, title: title, desc: desc, fulfilled: fulfilled, userID: userID };
+    if (id === null) todoBody = { title: title, desc: desc, fulfilled: fulfilled, userid: userid };
+    else todoBody = { id: id, title: title, desc: desc, fulfilled: fulfilled, userid: userid };
 
     try {
         // no id was specified

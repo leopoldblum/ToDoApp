@@ -188,10 +188,41 @@ func main() {
 	})
 
 	// get all todos
-	router.GET("todos", func(ctx *gin.Context) {
+	router.GET("getalltodos", func(ctx *gin.Context) {
 		sqlStatement := `SELECT * FROM todos ORDER BY id`
 
 		rows, err := db.Query(sqlStatement)
+
+		if err != nil {
+			// panic("error")
+			ctx.IndentedJSON(http.StatusInternalServerError, fmt.Sprintf("Received this Error: %d", err))
+		}
+
+		var results []Todo
+
+		for rows.Next() {
+			var item Todo
+
+			err = rows.Scan(&item.Id, &item.Title, &item.Description, &item.Fulfilled, &item.UserID)
+
+			if err != nil {
+				// panic("sdaf")
+				ctx.IndentedJSON(http.StatusInternalServerError, fmt.Sprintf("Received this Error: %d", err))
+			}
+
+			results = append(results, item)
+		}
+
+		ctx.IndentedJSON(http.StatusOK, results)
+	})
+
+	// get all todos with specific user id
+	router.GET("getalltodos/:userid", func(ctx *gin.Context) {
+		var userid_select = ctx.Param("userid")
+
+		sqlStatement := `SELECT * FROM todos WHERE userid=$1 ORDER BY id`
+
+		rows, err := db.Query(sqlStatement, userid_select)
 
 		if err != nil {
 			// panic("error")

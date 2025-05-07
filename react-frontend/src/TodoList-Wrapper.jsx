@@ -13,7 +13,7 @@ export const todoListProvider = createContext(null);
 
 const TodoListWrapper = () => {
 
-    const userIDref = useRef(null);
+    const userIDref = useRef(localStorage.getItem("userID"));
 
     // alle todos - remove use todoFromFetch
     const [todos, setTodos] = useState([]);
@@ -33,7 +33,7 @@ const TodoListWrapper = () => {
     // header die ausgeklappt sind => "header-actives", "header-fulfilled"
     const [activeHeaders, setActiveHeaders] = useState(["header-actives"]);
 
-    const { isError, data: todosFromFetch, error } = useFetchTodos();
+    const { isError, data: todosFromFetch, error } = useFetchTodos(userIDref.current);
 
     if (isError) {
         console.error("error while fetching: " + error.message);
@@ -95,7 +95,7 @@ const TodoListWrapper = () => {
 
     // handling userID
     useEffect(() => {
-        userIDref.current = localStorage.getItem("userID")
+        // userIDref.current = localStorage.getItem("userID")
 
         if (!userIDref.current) {
             const generateUserID = crypto.randomUUID()
