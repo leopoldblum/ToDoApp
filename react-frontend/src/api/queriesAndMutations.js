@@ -43,13 +43,13 @@ export const useMutationAddTodo = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ id, title, desc, fulfilled, userID }) => addTodo(id, title, desc, fulfilled, userID),
+        mutationFn: ({ id, title, desc, fulfilled, userid }) => addTodo(id, title, desc, fulfilled, userid),
 
-        onMutate: async ({ id, title, desc, fulfilled, userID }) => {
+        onMutate: async ({ id, title, desc, fulfilled, userid }) => {
             // optimistically adding todo
             const placeholderID = "placeholder_" + crypto.randomUUID()
 
-            const newTodo = { id: placeholderID, title: title, desc: desc, fulfilled: fulfilled, userID: userID };
+            const newTodo = { id: placeholderID, title: title, desc: desc, fulfilled: fulfilled, userid: userid };
 
             console.log("placeholder todo: " + JSON.stringify(newTodo))
 
@@ -78,18 +78,18 @@ export const useMutationEditTodo = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ inputId, inputTitle, inputDesc, inputFulfilled }) => editTodo(inputId, inputTitle, inputDesc, inputFulfilled),
+        mutationFn: ({ id, title, desc, fulfilled, userid }) => editTodo(id, title, desc, fulfilled, userid),
 
-        onMutate: async ({ inputId, inputTitle, inputDesc, inputFulfilled }) => {
+        onMutate: async ({ id, title, desc, fulfilled, userid }) => {
             // optimistically updating todo
 
-            const todoBody = { id: inputId, title: inputTitle, desc: inputDesc, fulfilled: inputFulfilled };
+            const todoBody = { id: id, title: title, desc: desc, fulfilled: fulfilled, userid: userid };
 
             await queryClient.cancelQueries({ queryKey: ['todos'] })
 
             const previousTodos = queryClient.getQueryData(['todos'])
 
-            queryClient.setQueryData(['todos'], (old) => old.map((todo) => todo.id === inputId ? todoBody : todo))
+            queryClient.setQueryData(['todos'], (old) => old.map((todo) => todo.id === id ? todoBody : todo))
 
             return { previousTodos }
         },

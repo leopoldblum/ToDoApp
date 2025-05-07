@@ -7,7 +7,7 @@ import { useFetchTodos, useMutationAddTodo, useMutationDeleteTodo, useMutationEd
 
 /**
  * @param {} content
- * todos[], descActiveTodos[], activeHeaders[] --- setDescActiveTodos(), setActiveHeaders()
+ * userIDref, todos[], descActiveTodos[], activeHeaders[] --- setDescActiveTodos(), setActiveHeaders()
  */
 export const todoListProvider = createContext(null);
 
@@ -97,10 +97,10 @@ const TodoListWrapper = () => {
     useEffect(() => {
         userIDref.current = localStorage.getItem("userID")
 
-        if (userIDref.current !== null) {
-            const generateUuserID = crypto.randomUUID()
-            localStorage.setItem("userID", generateUuserID)
-            console.log("userID set to UUID: " + generateUuserID)
+        if (!userIDref.current) {
+            const generateUserID = crypto.randomUUID()
+            localStorage.setItem("userID", generateUserID)
+            console.log("userID set to UUID: " + generateUserID)
         }
         else {
             console.log("userID is already set to: " + userIDref.current)
@@ -142,6 +142,7 @@ const TodoListWrapper = () => {
                         title: todoA.title,
                         desc: todoA.desc,
                         fulfilled: todoA.fulfilled,
+                        userid: todoA.userid,
                     })
                 }
 
@@ -163,10 +164,11 @@ const TodoListWrapper = () => {
 
                 for (const todoM of modifiedTodos) {
                     await mutationEditTodo.mutateAsync({
-                        inputId: todoM.id,
-                        inputTitle: todoM.title,
-                        inputDesc: todoM.desc,
-                        inputFulfilled: todoM.fulfilled,
+                        id: todoM.id,
+                        title: todoM.title,
+                        desc: todoM.desc,
+                        fulfilled: todoM.fulfilled,
+                        userid: todoM.userid,
                     })
                 }
 

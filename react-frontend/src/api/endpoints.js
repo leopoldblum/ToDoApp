@@ -64,9 +64,9 @@ export async function addTodo(id, title, desc, fulfilled, userID) {
     }
 }
 
-export async function editTodo(id, title, desc, fulfilled) {
+export async function editTodo(id, title, desc, fulfilled, userid) {
 
-    const todoBody = { title: title, desc: desc, fulfilled: fulfilled };
+    const todoBody = { title: title, desc: desc, fulfilled: fulfilled, userid: userid };
 
     try {
         const updateResponse = await fetch(

@@ -1,8 +1,12 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useContext } from "react"
 import "./TodoCustomCheckmark.css"
 import { useMutationEditTodo } from "./api/queriesAndMutations";
+import { todoListProvider } from "./TodoList-Wrapper";
+
 
 const TodoCustomCheckmark = ({ currentTodo, checked }) => {
+
+    const todoFuncAndData = useContext(todoListProvider);
 
     const [isChecked, setIsChecked] = useState(null);
 
@@ -28,10 +32,11 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
             if (!mutationTriggered) {
                 mutationTriggered = true;
                 mutationEditTodo.mutate({
-                    inputId: currentTodo.id,
-                    inputTitle: currentTodo.title,
-                    inputDesc: currentTodo.desc,
-                    inputFulfilled: !currentTodo.fulfilled
+                    id: currentTodo.id,
+                    title: currentTodo.title,
+                    desc: currentTodo.desc,
+                    fulfilled: !currentTodo.fulfilled,
+                    userid: todoFuncAndData.userIDref.current
                 })
 
             }
