@@ -86,6 +86,10 @@ func main() {
 
 	router.Use(cors.Default())
 
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowOrigins = []string{"http://localhost:3000"}
+	router.Use(cors.New(corsConfig))
+
 	// get entry with id
 	router.GET("todo/:id", func(ctx *gin.Context) {
 		sqlStatement := `SELECT id, title, description, fulfilled FROM todos WHERE id=$1`
