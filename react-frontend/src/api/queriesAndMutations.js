@@ -13,7 +13,7 @@ import { fetchAllTodos, addTodo, editTodo, deleteTodo, deleteAllFulfilledTodos }
  */
 export const useFetchTodos = (userid) => {
     return useQuery({
-        queryKey: ['todos'],
+        queryKey: ['todos', userid],
         queryFn: () => fetchAllTodos(userid),
 
         // sort data by ID, else it would render twice, first unsorted, then sorted   
@@ -47,28 +47,30 @@ export const useMutationAddTodo = () => {
 
         onMutate: async ({ id, title, desc, fulfilled, userid }) => {
             // optimistically adding todo
+            const queryKey = ['todos', userid];
+
             const placeholderID = "placeholder_" + crypto.randomUUID()
 
             const newTodo = { id: placeholderID, title: title, desc: desc, fulfilled: fulfilled, userid: userid };
 
-            console.log("placeholder todo: " + JSON.stringify(newTodo))
+            // console.log("placeholder todo: " + JSON.stringify(newTodo))
 
-            await queryClient.cancelQueries({ queryKey: ['todos'] })
+            await queryClient.cancelQueries({ queryKey })
 
-            const previousTodos = queryClient.getQueryData(['todos']) || []
+            const previousTodos = queryClient.getQueryData(queryKey) || []
 
-            queryClient.setQueryData(['todos'], (old) => old ? [...old, newTodo] : [newTodo]);
+            queryClient.setQueryData(queryKey, (old) => old ? [...old, newTodo] : [newTodo]);
 
-            return { previousTodos }
+            return { previousTodos, queryKey }
         },
 
         onError: (err, newTodo, context) => {
-            queryClient.setQueryData(['todos'], context.previousTodos || [])
+            queryClient.setQueryData([context.queryKey], context.previousTodos || [])
             console.error("error when adding todo: " + err)
             throw err;
         },
 
-        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+        onSettled: (data, error, variables) => queryClient.invalidateQueries({ queryKey: ['todos', variables.userid] }),
     })
 }
 
@@ -82,26 +84,27 @@ export const useMutationEditTodo = () => {
 
         onMutate: async ({ id, title, desc, fulfilled, userid }) => {
             // optimistically updating todo
+            const queryKey = ['todos', userid];
 
             const todoBody = { id: id, title: title, desc: desc, fulfilled: fulfilled, userid: userid };
 
-            await queryClient.cancelQueries({ queryKey: ['todos'] })
+            await queryClient.cancelQueries({ queryKey })
 
-            const previousTodos = queryClient.getQueryData(['todos'])
+            const previousTodos = queryClient.getQueryData(queryKey)
 
-            queryClient.setQueryData(['todos'], (old) => old.map((todo) => todo.id === id ? todoBody : todo))
+            queryClient.setQueryData(queryKey, (old) => old.map((todo) => todo.id === id ? todoBody : todo))
 
-            return { previousTodos }
+            return { previousTodos, queryKey }
         },
 
         onError: (err, newTodo, context) => {
-            queryClient.setQueryData(['todos'], context.previousTodos)
+            queryClient.setQueryData([context.queryKey], context.previousTodos)
             console.error("error when editing todo: " + err)
             throw err;
 
         },
 
-        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+        onSettled: (data, error, variables) => queryClient.invalidateQueries({ queryKey: ['todos', variables.userid] }),
     })
 }
 
@@ -116,28 +119,30 @@ export const useMutationDeleteTodo = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (todoID) => deleteTodo(todoID),
+        mutationFn: ({ todoID }) => deleteTodo(todoID),
 
-        onMutate: async (todoID) => {
-            // console.log("optimistic update - deleting todo id: " + todoID)
+        onMutate: async ({ todoID, userid }) => {
+            const queryKey = ['todos', userid];
 
-            await queryClient.cancelQueries({ queryKey: ['todos'] })
+            console.log("userid in deleteMutation: " + userid)
 
-            const previousTodos = queryClient.getQueryData(['todos'])
+            await queryClient.cancelQueries({ queryKey });
 
-            // console.log("Prev todos: " + JSON.stringify(previousTodos))
-            queryClient.setQueryData(['todos'], (old) => old.filter(item => item.id !== todoID))
-            // console.log("after todos: " + JSON.stringify(queryClient.getQueryData(['todos'])))
+            const previousTodos = queryClient.getQueryData(queryKey) || [];
 
-            return { previousTodos }
+            queryClient.setQueryData(queryKey, (old) =>
+                old ? old.filter(item => item.id !== todoID) : []
+            );
+
+            return { previousTodos, queryKey };
         },
 
         onError: (err, newTodo, context) => {
-            queryClient.setQueryData(['todos'], context.previousTodos)
+            queryClient.setQueryData([context.queryKey], context.previousTodos)
             console.log("error occured: " + err)
         },
 
-        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+        onSettled: (error, data, variables) => queryClient.invalidateQueries({ queryKey: ['todos', variables.userid] }),
     })
 }
 
@@ -159,22 +164,25 @@ export const useMutateDAFT = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: deleteAllFulfilledTodos,
+        mutationFn: ({ userid }) => deleteAllFulfilledTodos(userid),
 
-        onMutate: async () => {
-            await queryClient.cancelQueries({ queryKey: ['todos'] })
-            const previousTodos = queryClient.getQueryData(['todos'])
+        onMutate: async ({ userid }) => {
+            const queryKey = ['todos', userid];
 
-            queryClient.setQueryData(['todos'], previousTodos.filter(todo => todo.fulfilled === false))
+            await queryClient.cancelQueries({ queryKey })
 
-            return { previousTodos }
+            const previousTodos = queryClient.getQueryData(queryKey)
+
+            queryClient.setQueryData(queryKey, previousTodos.filter(todo => todo.fulfilled === false))
+
+            return { previousTodos, queryKey }
         },
 
         onError: (err, newTodo, context) => {
-            queryClient.setQueryData(['todos'], context.previousTodos)
+            queryClient.setQueryData(context.queryKey, context.previousTodos)
             console.log("error occured: " + err)
         },
 
-        onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+        onSettled: (error, data, variables) => queryClient.invalidateQueries({ queryKey: ['todos', variables.userid] }),
     })
 }

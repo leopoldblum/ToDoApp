@@ -124,10 +124,10 @@ export
  */
 
 
-export async function deleteAllFulfilledTodos() {
+export async function deleteAllFulfilledTodos(userid) {
     try {
         const response = await fetch(
-            "http://localhost:8080/deleteAllFulfilledTodos",
+            "http://localhost:8080/deleteAllFulfilledTodos/" + userid,
             {
                 method: "DELETE",
             },

@@ -93,17 +93,15 @@ const TodoListWrapper = () => {
     }, [todosFromFetch]);
 
 
-    // handling userID
+    // handling userID on mount
     useEffect(() => {
-        // userIDref.current = localStorage.getItem("userID")
-
         if (!userIDref.current) {
             const generateUserID = crypto.randomUUID()
             localStorage.setItem("userID", generateUserID)
-            console.log("userID set to UUID: " + generateUserID)
+            // console.log("userID set to UUID: " + generateUserID)
         }
         else {
-            console.log("userID is already set to: " + userIDref.current)
+            // console.log("userID is already set to: " + userIDref.current)
         }
     }, [])
 
