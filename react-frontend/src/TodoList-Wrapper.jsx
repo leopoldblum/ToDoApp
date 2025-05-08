@@ -13,9 +13,10 @@ export const todoListProvider = createContext(null);
 
 const TodoListWrapper = () => {
 
+    // saves userID
     const userIDref = useRef(localStorage.getItem("userID"));
 
-    // alle todos - remove use todoFromFetch
+    // all todos - remove use todoFromFetch
     const [todos, setTodos] = useState([]);
 
     // history

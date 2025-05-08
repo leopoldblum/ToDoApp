@@ -1,6 +1,7 @@
 ## basic todo app
 
 A simple todo application with full-stack functionality.
+Each browser instance is assigned a unique ID, which the todos are tied to.
 
 ###  Tech Stack
 

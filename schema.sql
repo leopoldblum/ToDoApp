@@ -3,5 +3,5 @@ CREATE TABLE todos (
 	title TEXT not NULL,
 	description TEXT not NULL,
 	fulfilled BOOLEAN not NULL
-	user_id TEXT not NULL,
+	userid TEXT not NULL,
 );

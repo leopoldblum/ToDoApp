@@ -68,7 +68,6 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
             })
         }
         else {
-            console.log("adding with userid: " + todoFuncAndData.userIDref.current)
             mutationAddTodo.mutate({
                 id: null,
                 title: formContent.formTitle,
