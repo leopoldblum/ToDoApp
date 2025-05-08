@@ -1,7 +1,8 @@
 ## basic todo app
 
 A simple todo application with full-stack functionality.
-Every browser profile is assigned a unique ID, which is retained between sessions, with todos tied to that ID.
+
+A persistent unique ID is assigned to each browser using localStorage, and all todos are linked to that ID.
 
 ###  Tech Stack
 
