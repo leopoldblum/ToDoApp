@@ -36,7 +36,8 @@ export const useFetchTodos = (userid) => {
  * @param {(int | null)} id when null => autoId in database || when specified => add Todo with that ID in database 
  * @param {string} title title of todo
  * @param {string} desc description of todo
- * @param {boolean} fulfilled fulfillment-status of todo 
+ * @param {boolean} fulfilled fulfillment-status of todo
+ * @param {string} userid userid of this browser instance 
  */
 
 export const useMutationAddTodo = () => {
