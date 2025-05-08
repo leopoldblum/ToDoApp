@@ -124,8 +124,6 @@ export const useMutationDeleteTodo = () => {
         onMutate: async ({ todoID, userid }) => {
             const queryKey = ['todos', userid];
 
-            console.log("userid in deleteMutation: " + userid)
-
             await queryClient.cancelQueries({ queryKey });
 
             const previousTodos = queryClient.getQueryData(queryKey) || [];

@@ -151,7 +151,10 @@ const TodoListWrapper = () => {
                 // re-deleting all todos
 
                 for (const todoD of todosToRemove) {
-                    await mutateDelete.mutateAsync(todoD.id)
+                    await mutateDelete.mutateAsync({
+                        todoID: todoD.id,
+                        userid: todoD.userid,
+                    })
                 }
 
                 return

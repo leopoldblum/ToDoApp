@@ -11,7 +11,6 @@ const TodoDeleteButton = ({ currentTodo }) => {
     const todoFuncAndData = useContext(todoListProvider);
     const mutationDeleteTodo = useMutationDeleteTodo();
 
-    console.log("userid in deleteButton.jsx: " + JSON.stringify(todoFuncAndData.userIDref.current))
 
     if (mutationDeleteTodo.isError) {
         console.error("deletion has failed, error")
