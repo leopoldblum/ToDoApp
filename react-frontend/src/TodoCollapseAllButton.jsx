@@ -1,4 +1,4 @@
-import "./TodoCollapseAllButton.css"
+// import "./TodoCollapseAllButton.css"
 import { useContext } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
 
@@ -19,9 +19,9 @@ const CollapseButton = () => {
     }
 
     return (
-        <div className="w-full bg-amber-200">
+        <div className="w-full">
             <button
-                className="w-3/4 bg-amber-800 text-amber-50 font-medium pl-4 pr-4 pt-3 pb-3 border-0 rounded-md hover:bg-emerald-300 hover:cursor-pointer transition duration-500 hover:scale-105"
+                className="w-3/4 bg-amber-800 text-gray-100 font-medium pl-4 pr-4 pt-3 pb-3 border-0 rounded-md hover:bg-emerald-300 hover:cursor-pointer transition duration-500 hover:scale-95"
                 onClick={() => toggleCollapseAllDesc()}>
                 toggle desc
             </button>
