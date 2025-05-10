@@ -19,8 +19,12 @@ const CollapseButton = () => {
     }
 
     return (
-        <div className={`collapse-container`}>
-            <button className="collapse-all-button" onClick={() => toggleCollapseAllDesc()}> toggle desc</button>
+        <div className="w-full bg-amber-200">
+            <button
+                className="w-3/4 bg-amber-800 text-amber-50 font-medium pl-4 pr-4 pt-3 pb-3 border-0 rounded-md hover:bg-emerald-300 hover:cursor-pointer transition duration-500 hover:scale-105"
+                onClick={() => toggleCollapseAllDesc()}>
+                toggle desc
+            </button>
         </div>
     );
 };

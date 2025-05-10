@@ -3,6 +3,7 @@ import './App.css';
 import "./global-colors.css"
 import TodoListWrapper from './TodoList-Wrapper.jsx';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import "./output.css"
 
 
 import {
@@ -19,7 +20,7 @@ class App extends Component {
     return (
       <div className="App">
 
-        <div className="title">todos</div>
+        <div className="text-gray-50 text-6xl font-extrabold m-auto p-3 bg-amber-200" > todos </div>
 
         <QueryClientProvider client={queryClient}>
 
