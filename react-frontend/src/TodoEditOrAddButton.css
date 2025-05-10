@@ -71,24 +71,6 @@
 
 
 
-
-.todo-entry-edit-container {
-    width: 100%;
-}
-
-.todo-entry-edit-button {
-    width: 50%;
-    padding: 12%;
-
-    cursor: pointer;
-}
-
-.todo-entry-edit-button:hover {
-    color: rgb(99, 184, 218);
-
-    transition: all 0.2s ease-in-out;
-}
-
 .openPopup-button {
     background-color: var(--accent-color);
     color: white;
