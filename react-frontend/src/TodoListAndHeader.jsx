@@ -9,6 +9,8 @@ const TodoListAndHeader = ({ isFulfilled }) => {
     const todoFuncAndData = useContext(todoListProvider);
 
     const headerType = isFulfilled ? "header-fulfilled" : "header-actives"
+    const isHeaderTypeActive = todoFuncAndData.activeHeaders.includes(headerType)
+    const specificTodoCounter = todoFuncAndData.todos.filter(entries => entries.fulfilled === isFulfilled).length
 
     /**
     * @param {string} header_type options: "header-active" "header-fulfilled" 
@@ -31,17 +33,17 @@ const TodoListAndHeader = ({ isFulfilled }) => {
         <div>
             <div className='h-25 w-6/10 ml-auto mr-auto mt-2 flex items-center justify-center bg-gray-600 cursor-pointer'>
 
-                <div className={`flex-1 h-3/4 flex justify-center items-center bg-amber-800/40 text-amber-400 font-bold pointer-events-auto select-none transition-all duration-200 ease-in ${todoFuncAndData.activeHeaders.includes(headerType) ? "rotate-90" : ""} `}>
+                <div className={`flex-1 h-3/4 flex justify-center items-center bg-amber-800/40 text-amber-400 font-bold pointer-events-auto select-none transition-all duration-200 ease-in ${isHeaderTypeActive ? "rotate-90" : ""} `}>
                     &gt;
                 </div>
 
-                <div className='flex-10 h-3/4 text-left pl-3 bg-amber-300/70' onClick={() => toggleHeaderState(headerType)} >
+                <div className='flex-10 h-3/4 text-left pl-3 bg-amber-300/70 flex items-center' onClick={() => toggleHeaderState(headerType)} >
 
-                    <h1> {isFulfilled ? "fulfilled todos" : "active todos"}  ({todoFuncAndData.todos.filter(entries => entries.fulfilled === isFulfilled).length}) </h1>
+                    <h1> {isFulfilled ? "fulfilled todos" : "active todos"}  ({specificTodoCounter}) </h1>
 
                 </div>
 
-                <div className={`flex-2 h-3/4 flex justify-center items-center bg-blue-400/50 transition-all duration-200 ease-in origin-top ${todoFuncAndData.activeHeaders.includes(headerType) ? "max-h-2000 visible scale-y-100" : "invisible max-h-0 overflow-hidden scale-y-0"}`}>
+                <div className={`flex-2 h-3/4 flex justify-center items-center bg-blue-400/50 transition-all duration-200 ease-in origin-top ${isHeaderTypeActive ? "max-h-2000 visible scale-y-100" : "invisible max-h-0 overflow-hidden scale-y-0"}`}>
                     {isFulfilled ?
                         <TodoDeleteAllFulfilledButton />
                         :
@@ -51,7 +53,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
             </div>
 
-            <div className={`transition-all duration-200 ease origin-top ${todoFuncAndData.activeHeaders.includes(headerType) ? "max-h-1000 visible scale-y-100" : "invisible max-h-0 overflow-hidden scale-y-0"}`}>
+            <div className={`transition-all duration-200 ease origin-top ${isHeaderTypeActive ? "max-h-1000 visible scale-y-100" : "invisible max-h-0 overflow-hidden scale-y-0"}`}>
                 <TodoListDisplay displayFulfilled={isFulfilled ? true : false} />
             </div>
         </div>
