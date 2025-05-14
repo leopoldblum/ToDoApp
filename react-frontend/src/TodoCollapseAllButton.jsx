@@ -1,10 +1,14 @@
 // import "./TodoCollapseAllButton.css"
 import { useContext } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
+import BarsArrowDownIcon from "@heroicons/react/16/solid/BarsArrowDownIcon.js"
+import BarsArrowUpIcon from "@heroicons/react/16/solid/BarsArrowUpIcon.js"
 
 const CollapseButton = () => {
 
     const todoFuncAndData = useContext(todoListProvider);
+
+    const areAllDescCollapsed = (todoFuncAndData.descActiveTodos.length === 0)
 
     const toggleCollapseAllDesc = () => {
         if (todoFuncAndData.descActiveTodos.length !== 0) {
@@ -18,14 +22,24 @@ const CollapseButton = () => {
         }
     }
 
+
     return (
-        <div className="w-full">
-            <button
-                className="w-3/4 bg-amber-800 text-gray-100 font-medium pl-4 pr-4 pt-3 pb-3 border-0 rounded-md hover:bg-emerald-300 hover:cursor-pointer transition duration-500 hover:scale-95"
-                onClick={() => toggleCollapseAllDesc()}>
-                toggle desc
-            </button>
+        <div className="w-full h-full flex justify-center items-center ">
+
+            <div className="pl-6 pr-6 pt-4 pb-4 rounded-md hover:bg-emerald-300/60 hover:cursor-pointer transition duration-500 hover:scale-95"
+                onClick={toggleCollapseAllDesc}>
+
+                <div className="w-10 h-10 relative font-medium ">
+
+                    <BarsArrowDownIcon className={` absolute inset-0 object-cover transition-all duration-500 ease-in-out ${areAllDescCollapsed ? "opacity-100" : "opacity-0 scale-85"}`} />
+                    <BarsArrowUpIcon className={`absolute inset-0 object-cover transition-all duration-500 ease-in-out ${areAllDescCollapsed ? "opacity-0 scale-85" : "opacity-100"}`} />
+
+                </div>
+
+
+            </div>
         </div>
+
     );
 };
 

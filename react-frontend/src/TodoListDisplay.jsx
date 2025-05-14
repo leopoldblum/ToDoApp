@@ -26,11 +26,11 @@ const TodoListDisplay = ({ displayFulfilled }) => {
             {todoFuncAndData.todos != null && todoFuncAndData.todos.filter(entries => entries.fulfilled === displayFulfilled).map((entries) => (
 
                 // set height for todo entry here
-                <div className={"flex flex-col justify-center items-center h-auto mt-5 mb-5"} key={entries.id}>
+                <div className={"flex flex-col justify-center items-center h-auto mt-5 mb-5 select-none"} key={entries.id}>
 
                     {/* title */}
                     <div className="flex flex-row justify-center items-center bg-amber-300/25 w-full">
-                        <div className={`flex flex-2/3 items-center overflow-auto text-left  pl-10 pr-10 pt-5 pb-5 break-all ${displayFulfilled ? "line-through text-neutral-400/100" : ""}`}
+                        <div className={`flex flex-2/3 items-center overflow-auto text-left  pl-10 pr-10 pt-5 pb-5 break-all cursor-pointer ${displayFulfilled ? "line-through text-neutral-400/100" : ""}`}
                             onClick={() => toggleDesc(entries.id)}>
                             {entries.title}
                         </div>
