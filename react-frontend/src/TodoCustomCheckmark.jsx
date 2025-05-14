@@ -30,10 +30,10 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
 
 
     return (
-        <div className="h-full w-full text-amber-500 relative justify-center items-center">
+        <div className="flex justify-center items-center min-w-15">
 
             <img
-                className={`absolute h-full border-none select-none transition-all duration-500 cursor-pointer p-3 invert-90 `}
+                className={`border-none select-none transition-all duration-500 cursor-pointer p-2 invert-90`}
                 onClick={toggleButtonWithStates}
                 src={isChecked ? "/box-checked.svg" : "/box-unchecked.svg"}
                 alt="checkbox"
