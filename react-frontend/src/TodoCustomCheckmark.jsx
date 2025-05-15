@@ -48,14 +48,14 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
                     className={`invert-90 absolute inset-0 object-cover transition-all duration-500 ease-in-out ${isChecked ? "opacity-0 scale-50 rotate-20" : "opacity-100 scale-100"}`}
                     src={"/box-unchecked.svg"}
                     alt="unchecked checkbox"
-                // onTransitionEnd={handleTransitionEnd}
+                    onTransitionEnd={() => console.log("unchecked trans ended")}
                 />
 
                 <img
                     className={`invert-90 absolute inset-0 object-cover transition-all duration-500 ease-in-out ${!isChecked ? "opacity-0 scale-50 rotate-20 " : "opacity-100 scale-100"}`}
                     src={"/box-checked.svg"}
                     alt="checked checkbox"
-                // onTransitionEnd={handleTransitionEnd}
+                    onTransitionEnd={() => console.log("checked trans ended")}
                 />
 
             </div>

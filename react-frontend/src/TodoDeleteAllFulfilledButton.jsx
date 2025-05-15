@@ -2,7 +2,7 @@
 import { useMutateDAFT } from "./api/queriesAndMutations";
 import { todoListProvider } from "./TodoList-Wrapper";
 import { useContext } from "react";
-import SparkleIcon from "@heroicons/react/24/outline/SparklesIcon.js"
+import ArchiveBoxXMarkIcon from "@heroicons/react/24/outline/ArchiveBoxXMarkIcon.js"
 
 
 const TodoDeleteAllFulfilledButton = () => {
@@ -24,7 +24,7 @@ const TodoDeleteAllFulfilledButton = () => {
                 onClick={() => mutateDAFT.mutate({ userid: todoFuncAndData.userIDref.current })}>
 
                 <div className="w-10 h-10 relative font-medium ">
-                    <SparkleIcon className={` absolute inset-0 object-cover transition-all duration-500 ease-in-out`} />
+                    <ArchiveBoxXMarkIcon className={` absolute inset-0 object-cover transition-all duration-500 ease-in-out`} />
                 </div>
 
 
