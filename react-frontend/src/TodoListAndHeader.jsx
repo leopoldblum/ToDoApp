@@ -53,7 +53,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
             </div>
 
-            <div className={`w-8/10 ml-auto mr-auto transition-all duration-400 origin-top ${isHeaderTypeActive ? "max-h-1000 scale-y-100" : "max-h-0 overflow-hidden scale-y-0"}`}>
+            <div className={`w-8/10 ml-auto mr-auto transition-all duration-400 ease-out ${isHeaderTypeActive ? "max-h-500" : "max-h-0 overflow-hidden"}`}>
                 <TodoListDisplay displayFulfilled={isFulfilled ? true : false} />
             </div>
         </div>
