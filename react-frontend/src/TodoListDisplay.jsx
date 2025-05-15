@@ -36,7 +36,7 @@ const TodoListDisplay = ({ displayFulfilled }) => {
                             {entries.title}
                         </div>
 
-                        <div className="flex flex-1/3 justify-center items-center ">
+                        <div className="flex flex-1/3 justify-center items-center text-[#321d34]">
 
                             <div className="flex flex-1/3 justify-center items-center ">
                                 <TodoEditOrAddButton currentTodo={entries} />

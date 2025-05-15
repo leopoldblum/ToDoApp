@@ -43,7 +43,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
                 </div>
 
-                <div className={` flex-3/15 h-3/4 flex justify-center items-center transition-all duration-200 ease-in ${isHeaderTypeActive ? "max-h-2000 opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>
+                <div className={` flex-3/15 h-3/4 flex justify-center items-center text-[#321d34] transition-all duration-200 ease-in ${isHeaderTypeActive ? "max-h-2000 opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>
                     {isFulfilled ?
                         <TodoDeleteAllFulfilledButton />
                         :
