@@ -1,9 +1,11 @@
 import "./TodoEditOrAddButton.css"
-import PencilSquareIcon from "@heroicons/react/16/solid/PencilSquareIcon.js"
-import XMarkIcon from "@heroicons/react/16/solid/XMarkIcon.js"
+import PencilSquareIcon from "@heroicons/react/24/outline/PencilSquareIcon.js"
+import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon.js"
 import { useState, useEffect, useRef, useContext } from "react"
 import { useMutationAddTodo, useMutationEditTodo } from "./api/queriesAndMutations";
 import { todoListProvider } from "./TodoList-Wrapper";
+import PlusIcon from "@heroicons/react/24/outline/PlusIcon.js"
+
 
 
 /** 
@@ -130,14 +132,19 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
             {isEdit &&
 
                 <div className="flex justify-center items-center w-full ">
-                    <PencilSquareIcon className="w-15 p-4 cursor-pointer hover:text-red-400 hover:scale-95 transition-all duration-200 ease-in-out" onClick={openModal} />
+                    <PencilSquareIcon
+                        className="w-15 p-4 cursor-pointer hover:text-red-400 hover:scale-95 transition-all duration-200 ease-in-out"
+                        onClick={openModal}
+                    />
                 </div>
             }
 
             {/* Add Button */}
             {!isEdit &&
-                <button className="openPopup-button" onClick={openModal}>
-                    add a new todo
+                <button className="flex items-center justify-center transition-all cursor-pointer duration-200 hover:scale-120 hover:text-red-400"
+                    onClick={openModal}
+                >
+                    <PlusIcon className='h-6' />
                 </button>
             }
 

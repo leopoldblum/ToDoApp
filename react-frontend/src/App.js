@@ -17,19 +17,9 @@ const queryClient = new QueryClient()
 class App extends Component {
   render() {
     return (
-      <div className="flex justify-center pt-1/10 min-h-screen text-center bg-[#f6ebdc] text-[#d94355] font-bold">
+      <div className="flex justify-center min-h-screen min-w-300 text-center bg-[#f6ebdc] text-[#d94355] font-bold font-sans">
 
         <div className='w-7/10'>
-
-          <div className='bg-cyan-800/75 flex flex-row items-end'>
-
-            <div className="text-6xl font-extrabold p-3 text-left"> todos </div>
-            <div className="text-s font-extrabold p-3 text-left"> nightmode </div>
-            <div className="text-s font-extrabold p-3 text-left"> add </div>
-            <div className="text-s font-extrabold p-3 text-left"> undo </div>
-
-          </div>
-
 
           <QueryClientProvider client={queryClient}>
 

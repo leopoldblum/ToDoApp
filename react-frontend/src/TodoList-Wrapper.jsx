@@ -3,6 +3,8 @@ import TodoListAndHeader from './TodoListAndHeader';
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
 import { isEqual } from "lodash";
 import { useFetchTodos, useMutationAddTodo, useMutationDeleteTodo, useMutationEditTodo } from './api/queriesAndMutations';
+import ArrowUturnLeftIcon from "@heroicons/react/24/outline/ArrowUturnLeftIcon.js"
+import MoonIcon from "@heroicons/react/24/outline/MoonIcon.js"
 
 
 /**
@@ -44,9 +46,9 @@ const TodoListWrapper = () => {
     const mutateDelete = useMutationDeleteTodo();
     const mutationEditTodo = useMutationEditTodo();
 
-    const showHistory = () => {
-        todoHistory.forEach((el, index) => console.log("history[" + index + "]: " + JSON.stringify(el)));
-    };
+    // const debugShowHistory = () => {
+    //     todoHistory.forEach((el, index) => console.log("history[" + index + "]: " + JSON.stringify(el)));
+    // };
 
     const updateTodosAndManageHistory = () => {
 
@@ -187,13 +189,36 @@ const TodoListWrapper = () => {
         }
     }
 
-
     return (
         <todoListProvider.Provider value={{ userIDref, descActiveTodos, todos, activeHeaders, setActiveHeaders, setDescActiveTodos }}>
 
             <div>
 
-                <TodoEditOrAddButton isEdit={false} currentTodo={null} />
+                <div className=' flex flex-row items-baseline '>
+
+                    <div className="text-6xl font-extrabold p-3 select-none"> todos </div>
+
+                    {/* darkmode */}
+                    <button className="flex justify-center items-center cursor-pointer text-s font-extrabold p-3 ml-2  transition-all duration-200 hover:scale-90 hover:text-red-400">
+                        <MoonIcon className='h-6' />
+                    </button>
+
+                    {/* add todo */}
+                    <div className='flex justify-center items-center p-3 ml-2 text-s font-extrabold'>
+                        <TodoEditOrAddButton currentTodo={null} />
+                    </div>
+
+
+                    {/* undo last action */}
+                    <button className={`flex items-center ${todoHistory.length > 0 ? "" : "text-neutral-400 cursor-not-allowed"} justify-center p-3 ml-2  transition-all duration-200 hover:scale-90 hover:text-red-400`}
+                        onClick={undoLastAction}>
+                        <ArrowUturnLeftIcon className='h-6' />
+                    </button>
+
+
+                </div>
+
+                {/* <TodoEditOrAddButton currentTodo={null} /> */}
 
                 {/* not cursed anymore :) */}
                 <TodoListAndHeader isFulfilled={false} />

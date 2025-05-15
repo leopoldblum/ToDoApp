@@ -1,4 +1,4 @@
-import TrashIcon from "@heroicons/react/16/solid/TrashIcon.js"
+import TrashIcon from "@heroicons/react/24/outline/TrashIcon.js"
 import { useMutationDeleteTodo } from "./api/queriesAndMutations";
 import { todoListProvider } from "./TodoList-Wrapper";
 import { useContext } from "react";
