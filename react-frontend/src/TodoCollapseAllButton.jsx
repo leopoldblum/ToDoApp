@@ -26,7 +26,7 @@ const CollapseButton = () => {
     return (
         <div className="w-full h-full flex justify-center items-center ">
 
-            <div className="pl-6 pr-6 pt-4 pb-4 rounded-md hover:bg-emerald-300/60 hover:cursor-pointer transition duration-500 hover:scale-95"
+            <div className="pl-6 pr-6 pt-4 pb-4 rounded-md hover:cursor-pointer hover:text-red-400 transition duration-500 hover:scale-95"
                 onClick={toggleCollapseAllDesc}>
 
                 <div className="w-10 h-10 relative font-medium ">
