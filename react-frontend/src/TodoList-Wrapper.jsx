@@ -193,15 +193,15 @@ const TodoListWrapper = () => {
 
             <div>
 
-                <button onClick={showHistory} style={{ padding: 50 }}>  debug history </button>
+                {/* <button onClick={showHistory} style={{ padding: 50 }}>  debug history </button> */}
 
-                <br />
+                {/* <br />
                 <br />
                 {todoHistory.length > 0 &&
                     <button onClick={undoLastAction} style={{ padding: 50, backgroundColor: 'lightgreen' }}>  placeholder undo </button>}
 
                 <br />
-                <br />
+                <br /> */}
 
                 <TodoEditOrAddButton isEdit={false} currentTodo={null} />
 

@@ -18,12 +18,11 @@ const queryClient = new QueryClient()
 class App extends Component {
   render() {
     return (
-      <div className="App pt-1/10 min-h-screen text-center bg-gray-950 text-amber-50">
+      <div className="App pt-1/10 min-h-screen text-center bg-[#f6ebdc] text-[#d94355] font-bold">
 
-        <div className="text-gray-50 text-6xl font-extrabold m-auto p-3 bg-amber-200/20" > todos </div>
+        <div className="text-6xl font-extrabold m-auto p-3" > todos </div>
 
         <QueryClientProvider client={queryClient}>
-
 
           <ReactQueryDevtools initialIsOpen={false} />
 
