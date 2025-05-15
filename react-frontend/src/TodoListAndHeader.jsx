@@ -31,7 +31,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
     return (
         <div>
-            <div className='h-20 w-6/10 ml-auto mr-auto mt-8 flex items-center justify-center cursor-pointer border-[#321d34] border-b-2 border-l-2 rounded-bl-xs'>
+            <div className='h-20 w-8/10 ml-auto mr-auto mt-8 flex items-center justify-center cursor-pointer border-[#321d34] border-b-2 border-l-2 rounded-bl-xs'>
 
                 <div className={`flex-1/15  h-3/4 flex text-3xl justify-center items-center pointer-events-auto select-none transition-all duration-200 ease-in ${isHeaderTypeActive ? "rotate-90" : ""} `}>
                     &gt;
@@ -53,7 +53,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
             </div>
 
-            <div className={`w-6/10 ml-auto mr-auto transition-all duration-400 origin-top ${isHeaderTypeActive ? "max-h-1000 scale-y-100" : "max-h-0 overflow-hidden scale-y-0"}`}>
+            <div className={`w-8/10 ml-auto mr-auto transition-all duration-400 origin-top ${isHeaderTypeActive ? "max-h-1000 scale-y-100" : "max-h-0 overflow-hidden scale-y-0"}`}>
                 <TodoListDisplay displayFulfilled={isFulfilled ? true : false} />
             </div>
         </div>

@@ -1,4 +1,3 @@
-import "./TodoListDisplay.css"
 import TodoDeleteButton from "./TodoDeleteButton";
 import TodoCustomCheckmark from "./TodoCustomCheckmark";
 import TodoEditOrAddButton from "./TodoEditOrAddButton";

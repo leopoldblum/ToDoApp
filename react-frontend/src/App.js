@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import './App.css';
 import "./global-colors.css"
 import TodoListWrapper from './TodoList-Wrapper.jsx';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -18,20 +17,32 @@ const queryClient = new QueryClient()
 class App extends Component {
   render() {
     return (
-      <div className="App pt-1/10 min-h-screen text-center bg-[#f6ebdc] text-[#d94355] font-bold">
+      <div className="flex justify-center pt-1/10 min-h-screen text-center bg-[#f6ebdc] text-[#d94355] font-bold">
 
-        <div className="text-6xl font-extrabold m-auto p-3" > todos </div>
+        <div className='w-7/10'>
 
-        <QueryClientProvider client={queryClient}>
+          <div className='bg-cyan-800/75 flex flex-row items-end'>
 
-          <ReactQueryDevtools initialIsOpen={false} />
+            <div className="text-6xl font-extrabold p-3 text-left"> todos </div>
+            <div className="text-s font-extrabold p-3 text-left"> nightmode </div>
+            <div className="text-s font-extrabold p-3 text-left"> add </div>
+            <div className="text-s font-extrabold p-3 text-left"> undo </div>
 
-          <TodoListWrapper />
+          </div>
 
 
-        </QueryClientProvider>
+          <QueryClientProvider client={queryClient}>
 
-      </div>
+            <ReactQueryDevtools initialIsOpen={false} />
+
+            <TodoListWrapper />
+
+
+          </QueryClientProvider>
+        </div>
+
+
+      </div >
     );
   }
 }
