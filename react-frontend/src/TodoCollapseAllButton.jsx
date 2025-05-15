@@ -1,8 +1,8 @@
 // import "./TodoCollapseAllButton.css"
 import { useContext } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
-import BarsArrowDownIcon from "@heroicons/react/16/solid/BarsArrowDownIcon.js"
-import BarsArrowUpIcon from "@heroicons/react/16/solid/BarsArrowUpIcon.js"
+import BarsArrowDownIcon from "@heroicons/react/24/outline/BarsArrowDownIcon.js"
+import BarsArrowUpIcon from "@heroicons/react/24/outline/BarsArrowUpIcon.js"
 
 const CollapseButton = () => {
 
