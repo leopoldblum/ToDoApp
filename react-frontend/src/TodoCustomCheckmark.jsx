@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react"
+import { useEffect, useState, useContext, useRef } from "react"
 import { useMutationEditTodo } from "./api/queriesAndMutations";
 import { todoListProvider } from "./TodoList-Wrapper";
 
@@ -11,33 +11,54 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
 
     const mutationEditTodo = useMutationEditTodo();
 
+    const hasTransitionStartedRef = useRef(true)
+
     useEffect(() => {
         setIsChecked(checked);
     }, [checked])
 
-
-    function toggleButtonWithStates() {
+    const handleClick = () => {
+        hasTransitionStartedRef.current = false
         setIsChecked(prev => !prev);
+    };
 
-        mutationEditTodo.mutate({
-            id: currentTodo.id,
-            title: currentTodo.title,
-            desc: currentTodo.desc,
-            fulfilled: !currentTodo.fulfilled,
-            userid: todoFuncAndData.userIDref.current
-        });
-    }
+    const handleTransitionEnd = () => {
 
+        if (!hasTransitionStartedRef.current) {
+
+            mutationEditTodo.mutate({
+                id: currentTodo.id,
+                title: currentTodo.title,
+                desc: currentTodo.desc,
+                fulfilled: !currentTodo.fulfilled,
+                userid: todoFuncAndData.userIDref.current
+            });
+
+            hasTransitionStartedRef.current = true
+        }
+    };
 
     return (
         <div className="flex justify-center items-center min-w-15">
 
-            <img
-                className={`border-none select-none transition-all duration-500 cursor-pointer p-2 invert-90`}
-                onClick={toggleButtonWithStates}
-                src={isChecked ? "/box-checked.svg" : "/box-unchecked.svg"}
-                alt="checkbox"
-            />
+
+            <div className="w-10 h-10 relative font-medium cursor-pointer" onClick={handleClick} onTransitionEnd={handleTransitionEnd}>
+
+                <img
+                    className={`invert-90 absolute inset-0 object-cover transition-all duration-500 ease-in-out ${isChecked ? "opacity-0 scale-50 rotate-20" : "opacity-100 scale-100"}`}
+                    src={"/box-unchecked.svg"}
+                    alt="unchecked checkbox"
+                // onTransitionEnd={handleTransitionEnd}
+                />
+
+                <img
+                    className={`invert-90 absolute inset-0 object-cover transition-all duration-500 ease-in-out ${!isChecked ? "opacity-0 scale-50 rotate-20 " : "opacity-100 scale-100"}`}
+                    src={"/box-checked.svg"}
+                    alt="checked checkbox"
+                // onTransitionEnd={handleTransitionEnd}
+                />
+
+            </div>
 
         </div>
     )

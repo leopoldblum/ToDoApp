@@ -52,7 +52,7 @@ const TodoListDisplay = ({ displayFulfilled }) => {
                     </div>
 
                     <div
-                        className={` overflow-hidden transition-[max-height] duration-500 ease-in-out w-full ${todoFuncAndData.descActiveTodos.includes(entries.id)
+                        className={` overflow-hidden transition-[max-height] duration-400 ease-in-out w-full ${todoFuncAndData.descActiveTodos.includes(entries.id)
                             ? "max-h-200"
                             : "max-h-0"}`}>
 
@@ -62,10 +62,6 @@ const TodoListDisplay = ({ displayFulfilled }) => {
                             </div>
                         </div>
                     </div>
-
-
-                    {/* description */}
-                    {/* ${todoFuncAndData.descActiveTodos.includes(entries.id) ? "visible" : "hidden"} */}
 
                 </div>
             ))
