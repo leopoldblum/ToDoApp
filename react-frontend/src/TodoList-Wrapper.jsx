@@ -194,6 +194,7 @@ const TodoListWrapper = () => {
 
             <div>
 
+                {/* top bar */}
                 <div className=' flex flex-row items-baseline '>
 
                     <div className="text-6xl font-extrabold p-3 select-none"> todos </div>
@@ -210,17 +211,18 @@ const TodoListWrapper = () => {
 
 
                     {/* undo last action */}
-                    <button className={`flex items-center ${todoHistory.length > 0 ? "" : "text-neutral-400 cursor-not-allowed"} justify-center p-3 ml-2  transition-all duration-200 hover:scale-90 hover:text-red-400`}
-                        onClick={undoLastAction}>
-                        <ArrowUturnLeftIcon className='h-6' />
-                    </button>
+                    <button className={`flex items-center ${todoHistory.length > 0 ? "cursor-pointer" : "text-neutral-400 cursor-not-allowed"} justify-center p-3 ml-2  transition-all duration-200 hover:scale-90 hover:text-red-400`}
+                        onClick={undoLastAction}
+                        disabled={todoHistory.length > 0 ? "" : "disabled"}
+                    >
 
+                        <ArrowUturnLeftIcon className='h-6' />
+
+                    </button>
 
                 </div>
 
-                {/* <TodoEditOrAddButton currentTodo={null} /> */}
-
-                {/* not cursed anymore :) */}
+                {/* todo lists - not cursed anymore :) */}
                 <TodoListAndHeader isFulfilled={false} />
                 <TodoListAndHeader isFulfilled={true} />
 

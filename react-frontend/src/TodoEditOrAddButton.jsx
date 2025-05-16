@@ -1,10 +1,11 @@
 import "./TodoEditOrAddButton.css"
 import PencilSquareIcon from "@heroicons/react/24/outline/PencilSquareIcon.js"
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon.js"
-import { useState, useEffect, useRef, useContext } from "react"
+import { useState, useContext } from "react"
 import { useMutationAddTodo, useMutationEditTodo } from "./api/queriesAndMutations";
 import { todoListProvider } from "./TodoList-Wrapper";
 import PlusIcon from "@heroicons/react/24/outline/PlusIcon.js"
+import CheckIcon from "@heroicons/react/24/outline/CheckIcon.js"
 
 
 
@@ -19,7 +20,6 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
     const todoFuncAndData = useContext(todoListProvider);
 
-
     const isEdit = currentTodo === null ? false : true;
 
     const [formContent, setFormContent] = useState({
@@ -28,16 +28,6 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
     })
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const dialogRef = useRef(null);
-
-    // toggling modal
-    useEffect(() => {
-        if (isModalOpen) {
-            dialogRef.current?.showModal();
-        } else {
-            dialogRef.current?.close();
-        }
-    }, [isModalOpen]);
 
     // update formcontent on user-input
     function handleTitleChange(e) {
@@ -78,7 +68,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                 userid: todoFuncAndData.userIDref.current
             })
         }
-        closeAndClearModal();
+        closeModal();
     }
 
     /** 
@@ -105,38 +95,20 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
         setIsModalOpen(false);
     }
 
-    function clearModal() {
-        if (isEdit) {
-            setFormContent({
-                formTitle: currentTodo.title,
-                formDesc: currentTodo.desc
-            })
-        }
-        else {
-            setFormContent({
-                formTitle: "",
-                formDesc: ""
-            })
-        }
-    }
-
-    function closeAndClearModal() {
-        closeModal();
-        clearModal();
-    }
-
     return (
         <div className="w-full h-full">
 
             {/* Edit Button */}
             {isEdit &&
+                // <div className="flex justify-center items-center w-full ">
 
-                <div className="flex justify-center items-center w-full ">
-                    <PencilSquareIcon
-                        className="w-15 p-4 cursor-pointer hover:text-red-400 hover:scale-95 transition-all duration-200 ease-in-out"
-                        onClick={openModal}
-                    />
-                </div>
+                // </div>
+
+                <button className="w-full h-full flex justify-center items-center pl-6 pr-6 pt-4 pb-4 cursor-pointer hover:text-red-400 hover:scale-95 transition-all duration-500 ease-in-out"
+                    onClick={openModal}
+                >
+                    <PencilSquareIcon className="w-8 h-8 cursor-pointer hover:text-red-400 hover:scale-95 transition-all duration-200 ease-in-out" />
+                </button>
             }
 
             {/* Add Button */}
@@ -148,36 +120,72 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                 </button>
             }
 
-            <dialog className="modal-container" ref={dialogRef} onClose={closeAndClearModal}>
 
-                <div className="modal-title-container">
+            {isModalOpen &&
+                <div
+                    className="fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center z-50"
+                    onClick={closeModal}
+                >
+                    <div
+                        className="bg-[#f6ebdc] rounded-xl shadow-xl p-8 w-full max-w-md border-2 border-[#321d34]"
+                        onClick={(e) => e.stopPropagation()}
+                    >
 
-                    <div className="modal-title">
-                        {isEdit ? "editing todo" : "new todo"}
+                        <div className="text-red-600 text-xl text-left pb-5">
+                            {isEdit ? "editing todo" : "adding new todo"}
+                        </div>
+
+                        <form className="flex flex-col items-center w-full" onSubmit={handleSubmit} >
+
+                            <input
+                                type="text"
+                                className="w-7/10 h-15 mt-2 pl-2 pr-2 rounded-sm bg-neutral-50 resize-none focus:bg-white focus:outline-none"
+                                placeholder="title"
+                                value={formContent.formTitle}
+                                autoComplete="off"
+                                required
+                                onChange={handleTitleChange}
+                            />
+
+                            <br />
+
+                            <textarea
+                                type="text"
+                                className="w-7/10 h-20 mt-2 pl-2 pr-2 rounded-sm bg-neutral-50 resize-none focus:bg-white focus:outline-none"
+                                // form="addTodoForm-update"
+                                onChange={handleDescChange}
+                                placeholder="description"
+                                value={formContent.formDesc}
+                                autoComplete="off"
+                                autoCorrect="off"
+                                spellCheck="off"
+                            />
+
+                            <br />
+
+                            <div className="flex flex-row justify-evenly items-center mt-5 w-full h-20">
+
+                                <button onClick={closeModal} className="flex justify-center items-center cursor-pointer w-2/10 h-20 pt-5 pb-5 transition-all duration-200 hover:text-red-400">
+                                    <XMarkIcon className="p-5" />
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    className="flex justify-center items-center cursor-pointer w-2/10 h-20 pt-5 pb-5 transition-all duration-200 hover:text-red-400"
+                                >
+                                    <CheckIcon className="p-5" />
+
+                                </button>
+
+                                <input type="submit" hidden />
+
+                            </div>
+
+                        </form>
+
                     </div>
-
-
-                    <div className="modal-close-button-container">
-                        <XMarkIcon className="modal-close-button" onClick={closeAndClearModal} />
-                    </div>
-
                 </div>
-
-                <div className="todo-modal-content-container">
-
-                    <form className="modal-form" onSubmit={handleSubmit} >
-
-                        <input type="text" className="modal-form-title" placeholder="title" value={formContent.formTitle} autoComplete="off" required onChange={handleTitleChange} />
-                        <br />
-                        <textarea type="text" className="modal-form-desc" form="addTodoForm-update" onChange={handleDescChange} placeholder="description" value={formContent.formDesc} autoComplete="off" autoCorrect="off" spellCheck="off" />
-                        <br />
-                        <input type="submit" className="modal-form-submitButton" value={isEdit ? "update" : "add"} />
-
-                    </form>
-
-                </div>
-
-            </dialog >
+            }
         </div >
     )
 }
