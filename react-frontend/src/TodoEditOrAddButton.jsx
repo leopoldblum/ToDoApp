@@ -100,9 +100,6 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
             {/* Edit Button */}
             {isEdit &&
-                // <div className="flex justify-center items-center w-full ">
-
-                // </div>
 
                 <button className="w-full h-full flex justify-center items-center pl-6 pr-6 pt-4 pb-4 cursor-pointer hover:text-red-400 hover:scale-95 transition-all duration-500 ease-in-out"
                     onClick={openModal}
@@ -144,6 +141,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                                 value={formContent.formTitle}
                                 autoComplete="off"
                                 required
+                                autoFocus
                                 onChange={handleTitleChange}
                             />
 
