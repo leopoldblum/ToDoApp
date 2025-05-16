@@ -22,10 +22,17 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
     const isEdit = currentTodo === null ? false : true;
 
-    const [formContent, setFormContent] = useState({
-        formTitle: "",
-        formDesc: ""
-    })
+    const [formContent, setFormContent] = useState(isEdit ?
+        {
+            formTitle: currentTodo.title,
+            formDesc: currentTodo.desc
+        }
+        :
+        {
+            formTitle: "",
+            formDesc: ""
+        }
+    )
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -75,19 +82,6 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
     *   @description opens the modal and sets its content on open
     **/
     function openModal() {
-        if (isEdit) {
-            setFormContent({
-                formTitle: currentTodo.title,
-                formDesc: currentTodo.desc
-            });
-        }
-        else {
-            setFormContent({
-                formTitle: "",
-                formDesc: ""
-            })
-        }
-
         setIsModalOpen(true);
     }
 
@@ -120,7 +114,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
             {isModalOpen &&
                 <div
-                    className="fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center z-50"
+                    className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
                     onClick={closeModal}
                 >
                     <div
