@@ -82,6 +82,19 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
     *   @description opens the modal and sets its content on open
     **/
     function openModal() {
+        if (isEdit) {
+            setFormContent({
+                formTitle: currentTodo.title,
+                formDesc: currentTodo.desc
+            })
+        }
+        else {
+            setFormContent({
+                formTitle: "",
+                formDesc: ""
+            })
+        }
+
         setIsModalOpen(true);
     }
 
