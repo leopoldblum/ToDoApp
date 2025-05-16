@@ -165,7 +165,10 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
                             <div className="flex flex-row justify-evenly items-center mt-5 w-full h-20">
 
-                                <button onClick={closeModal} className="flex justify-center items-center cursor-pointer w-2/10 h-20 pt-5 pb-5 transition-all duration-200 hover:text-red-400">
+                                <button
+                                    type="button"
+                                    onClick={closeModal}
+                                    className="flex justify-center items-center cursor-pointer w-2/10 h-20 pt-5 pb-5 transition-all duration-200 hover:text-red-400">
                                     <XMarkIcon className="p-5" />
                                 </button>
 
@@ -176,8 +179,6 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                                     <CheckIcon className="p-5" />
 
                                 </button>
-
-                                <input type="submit" hidden />
 
                             </div>
 
