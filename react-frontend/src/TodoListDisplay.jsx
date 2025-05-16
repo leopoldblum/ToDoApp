@@ -25,17 +25,17 @@ const TodoListDisplay = ({ displayFulfilled }) => {
             {todoFuncAndData.todos != null && todoFuncAndData.todos.filter(entries => entries.fulfilled === displayFulfilled).map((entries) => (
 
                 // set height for todo entry here
-                <div className={"flex flex-col justify-center items-center h-auto mt-5 mb-5 select-none border-l-2 border-[#321d34]"} key={entries.id}>
+                <div className={"flex flex-col justify-center items-center h-auto mt-5 mb-5 select-none border-l-2 border-accent-lm"} key={entries.id}>
 
                     {/* title */}
-                    <div className="flex flex-row justify-center items-center min-h-20 w-full border-b-1 border-[#321d34]">
+                    <div className="flex flex-row justify-center items-center min-h-20 w-full border-b-1 border-accent-lm">
 
-                        <div className={`flex flex-2/3 items-center overflow-auto text-left  pl-10 pr-10 pt-5 pb-5 break-all cursor-pointer ${displayFulfilled ? "line-through text-[#b13947b9]" : ""}`}
+                        <div className={`flex flex-2/3 items-center overflow-auto text-left  pl-10 pr-10 pt-5 pb-5 break-all cursor-pointer ${displayFulfilled ? "line-through text-text-linethrough" : ""}`}
                             onClick={() => toggleDesc(entries.id)}>
                             {entries.title}
                         </div>
 
-                        <div className="flex flex-1/3 justify-center items-center text-[#321d34]">
+                        <div className="flex flex-1/3 justify-center items-center text-accent-lm">
 
                             <div className="flex flex-1/3 justify-center items-center ">
                                 <TodoEditOrAddButton currentTodo={entries} />

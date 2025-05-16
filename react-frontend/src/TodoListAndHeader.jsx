@@ -31,9 +31,9 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
     return (
         <div>
-            <div className='h-20 w-8/10 ml-auto mr-auto mt-8 flex items-center justify-center cursor-pointer border-[#321d34] border-b-2 border-l-2 rounded-bl-xs'>
+            <div className='h-20 w-8/10 ml-auto mr-auto mt-8 flex items-center justify-center cursor-pointer border-accent-lm border-b-2 border-l-2 rounded-bl-xs'>
 
-                <div className={`flex-1/15  h-3/4 flex text-3xl justify-center items-center pointer-events-auto select-none transition-all duration-200 ease-in ${isHeaderTypeActive ? "rotate-90" : ""} `}>
+                <div className={`flex-1/15  h-3/4 flex text-2xl justify-center items-center pointer-events-auto select-none transition-all duration-200 ease-in ${isHeaderTypeActive ? "rotate-90" : ""} `}>
                     &gt;
                 </div>
 
@@ -43,7 +43,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
                 </div>
 
-                <div className={` flex-3/15 h-3/4 flex justify-center items-center text-[#321d34] transition-all duration-200 ease-in ${isHeaderTypeActive ? "max-h-2000 opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>
+                <div className={` flex-3/15 h-3/4 flex justify-center items-center text-accent-lm transition-all duration-200 ease-in ${isHeaderTypeActive ? "max-h-2000 opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>
                     {isFulfilled ?
                         <TodoDeleteAllFulfilledButton />
                         :

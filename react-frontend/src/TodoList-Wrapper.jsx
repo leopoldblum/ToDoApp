@@ -106,6 +106,9 @@ const TodoListWrapper = () => {
         else {
             // console.log("userID is already set to: " + userIDref.current)
         }
+
+        document.documentElement.classList.add("test")
+
     }, [])
 
 
@@ -189,18 +192,24 @@ const TodoListWrapper = () => {
         }
     }
 
+    function toggleDarkMode() {
+        // console.log("toggling darkmode")
+        document.documentElement.classList.toggle("dark")
+    }
+
     return (
         <todoListProvider.Provider value={{ userIDref, descActiveTodos, todos, activeHeaders, setActiveHeaders, setDescActiveTodos }}>
 
             <div>
 
                 {/* top bar */}
-                <div className=' flex flex-row items-baseline '>
+                <div className=' flex flex-row items-baseline pt-10 pb-10'>
 
                     <div className="text-6xl font-extrabold p-3 select-none"> todos </div>
 
                     {/* darkmode */}
-                    <button className="flex justify-center items-center cursor-pointer text-s font-extrabold p-3 ml-2  transition-all duration-200 hover:scale-90 hover:text-red-400">
+                    <button className="flex justify-center items-center cursor-pointer text-s font-extrabold p-3 ml-2  transition-all duration-200 hover:scale-90 hover:text-text-hover-lm"
+                        onClick={toggleDarkMode}>
                         <MoonIcon className='h-6' />
                     </button>
 
@@ -211,7 +220,7 @@ const TodoListWrapper = () => {
 
 
                     {/* undo last action */}
-                    <button className={`flex items-center ${todoHistory.length > 0 ? "cursor-pointer" : "text-neutral-400 cursor-not-allowed"} justify-center p-3 ml-2  transition-all duration-200 hover:scale-90 hover:text-red-400`}
+                    <button className={`flex items-center ${todoHistory.length > 0 ? "cursor-pointer" : "text-accent-lm cursor-not-allowed"} justify-center p-3 ml-2  transition-all duration-200 hover:scale-90 hover:text-text-hover-lm`}
                         onClick={undoLastAction}
                         disabled={todoHistory.length > 0 ? "" : "disabled"}
                     >

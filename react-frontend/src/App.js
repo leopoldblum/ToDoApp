@@ -17,7 +17,7 @@ const queryClient = new QueryClient()
 class App extends Component {
   render() {
     return (
-      <div className="flex justify-center min-h-screen min-w-300 text-center bg-[#f6ebdc] text-[#d94355] font-bold font-sans">
+      <div className="flex justify-center min-h-screen min-w-300 bg-bg-lm text-text-lm text-center font-bold font-sans transition-all duration-300">
 
         <div className='w-7/10'>
 

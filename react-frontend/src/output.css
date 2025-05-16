@@ -7,16 +7,14 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-red-400: oklch(70.4% 0.191 22.216);
-    --color-red-600: oklch(57.7% 0.245 27.325);
-    --color-neutral-50: oklch(98.5% 0 0);
     --color-neutral-400: oklch(70.8% 0 0);
     --color-black: #000;
-    --color-white: #fff;
     --spacing: 0.25rem;
     --container-md: 28rem;
     --text-xl: 1.25rem;
     --text-xl--line-height: calc(1.75 / 1.25);
+    --text-2xl: 1.5rem;
+    --text-2xl--line-height: calc(2 / 1.5);
     --text-3xl: 1.875rem;
     --text-3xl--line-height: calc(2.25 / 1.875);
     --text-6xl: 3.75rem;
@@ -35,6 +33,14 @@
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
+    --color-bg-lm: #f6ebdc;
+    --color-text-lm: #d94355;
+    --color-text-linethrough: #d94355;
+    --color-accent-lm: #321d34;
+    --color-text-hover-lm: oklch(70.4% 0.191 22.216);
+    --color-modal-input-txt: gray;
+    --color-modal-input-bg: #fafafa;
+    --color-modal-input-focus-bg: white;
   }
 }
 @layer base {
@@ -403,11 +409,11 @@
     border-left-style: var(--tw-border-style);
     border-left-width: 2px;
   }
-  .border-\[\#321d34\] {
-    border-color: #321d34;
+  .border-accent-lm {
+    border-color: var(--color-accent-lm);
   }
-  .bg-\[\#f6ebdc\] {
-    background-color: #f6ebdc;
+  .bg-bg-lm {
+    background-color: var(--color-bg-lm);
   }
   .bg-black\/50 {
     background-color: color-mix(in srgb, #000 50%, transparent);
@@ -415,8 +421,8 @@
       background-color: color-mix(in oklab, var(--color-black) 50%, transparent);
     }
   }
-  .bg-neutral-50 {
-    background-color: var(--color-neutral-50);
+  .bg-modal-input-bg {
+    background-color: var(--color-modal-input-bg);
   }
   .object-cover {
     object-fit: cover;
@@ -436,6 +442,9 @@
   .pt-5 {
     padding-top: calc(var(--spacing) * 5);
   }
+  .pt-10 {
+    padding-top: calc(var(--spacing) * 10);
+  }
   .pr-2 {
     padding-right: calc(var(--spacing) * 2);
   }
@@ -450,6 +459,9 @@
   }
   .pb-5 {
     padding-bottom: calc(var(--spacing) * 5);
+  }
+  .pb-10 {
+    padding-bottom: calc(var(--spacing) * 10);
   }
   .pl-2 {
     padding-left: calc(var(--spacing) * 2);
@@ -468,6 +480,10 @@
   }
   .font-sans {
     font-family: var(--font-sans);
+  }
+  .text-2xl {
+    font-size: var(--text-2xl);
+    line-height: var(--tw-leading, var(--text-2xl--line-height));
   }
   .text-3xl {
     font-size: var(--text-3xl);
@@ -496,20 +512,20 @@
   .break-all {
     word-break: break-all;
   }
-  .text-\[\#321d34\] {
-    color: #321d34;
+  .text-accent-lm {
+    color: var(--color-accent-lm);
   }
-  .text-\[\#b13947b9\] {
-    color: #b13947b9;
-  }
-  .text-\[\#d94355\] {
-    color: #d94355;
+  .text-modal-input-txt {
+    color: var(--color-modal-input-txt);
   }
   .text-neutral-400 {
     color: var(--color-neutral-400);
   }
-  .text-red-600 {
-    color: var(--color-red-600);
+  .text-text-linethrough {
+    color: var(--color-text-linethrough);
+  }
+  .text-text-lm {
+    color: var(--color-text-lm);
   }
   .line-through {
     text-decoration-line: line-through;
@@ -618,16 +634,16 @@
       }
     }
   }
-  .hover\:text-red-400 {
+  .hover\:text-text-hover-lm {
     &:hover {
       @media (hover: hover) {
-        color: var(--color-red-400);
+        color: var(--color-text-hover-lm);
       }
     }
   }
-  .focus\:bg-white {
+  .focus\:bg-modal-input-focus-bg {
     &:focus {
-      background-color: var(--color-white);
+      background-color: var(--color-modal-input-focus-bg);
     }
   }
   .focus\:outline-none {
@@ -635,6 +651,18 @@
       --tw-outline-style: none;
       outline-style: none;
     }
+  }
+}
+@layer {
+  .dark {
+    --color-bg-lm: #202325;
+    --color-text-lm: #d94355;
+    --color-text-linethrough: #b13947b9;
+    --color-accent-lm: #c6d2d8;
+    --color-text-hover-lm: oklch(70.4% 0.191 22.216);
+    --color-modal-input-txt: rgb(65, 65, 65);
+    --color-modal-input-bg: #fafafa;
+    --color-modal-input-focus-bg: white;
   }
 }
 html, body, #root {

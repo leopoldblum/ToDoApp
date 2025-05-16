@@ -17,7 +17,7 @@ const TodoDeleteButton = ({ currentTodo }) => {
     }
 
     return (
-        <button className="w-full h-full flex justify-center items-center pl-6 pr-6 pt-4 pb-4 cursor-pointer hover:text-red-400 hover:scale-95 transition-all duration-500 ease-in-out"
+        <button className="w-full h-full flex justify-center items-center pl-6 pr-6 pt-4 pb-4 cursor-pointer hover:text-text-hover-lm hover:scale-95 transition-all duration-500 ease-in-out"
             onClick={() => mutationDeleteTodo.mutate({
                 todoID: currentTodo.id,
                 userid: todoFuncAndData.userIDref.current

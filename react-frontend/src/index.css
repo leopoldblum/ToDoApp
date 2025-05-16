@@ -1,5 +1,39 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-bg-lm: #f6ebdc;
+  --color-text-lm: #d94355;
+  --color-text-linethrough: #d94355;
+
+  --color-accent-lm: #321d34;
+
+  --color-text-hover-lm: oklch(70.4% 0.191 22.216);
+
+  --color-modal-input-txt: gray;
+  --color-modal-input-bg: #fafafa;
+  --color-modal-input-focus-bg: white;
+
+}
+
+@layer {
+  .dark {
+    --color-bg-lm: #202325;
+    --color-text-lm: #d94355;
+    --color-text-linethrough: #b13947b9;
+
+    --color-accent-lm: #c6d2d8;
+
+    --color-text-hover-lm: oklch(70.4% 0.191 22.216);
+
+    --color-modal-input-txt: rgb(65, 65, 65);
+    --color-modal-input-bg: #fafafa;
+    --color-modal-input-focus-bg: white;
+  }
+}
+
+
 html,
 body,
 #root {
