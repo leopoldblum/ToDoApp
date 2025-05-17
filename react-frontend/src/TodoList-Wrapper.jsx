@@ -82,9 +82,8 @@ const TodoListWrapper = () => {
         else if (todosFromFetch === null) {
             // edge case when there are no todos in DB when mounting, has to update initialLoadState here as well
 
-            if (!initialLoadDoneRef.current) {
-                initialLoadDoneRef.current = true;
-            }
+            initialLoadDoneRef.current = true;
+
         }
     };
 
@@ -211,7 +210,7 @@ const TodoListWrapper = () => {
                     </button>
 
                     {/* add todo */}
-                    <div className='flex justify-center items-center p-3 ml-2 text-s font-extrabold'>
+                    <div className='flex justify-center items-center'>
                         <TodoEditOrAddButton currentTodo={null} />
                     </div>
 

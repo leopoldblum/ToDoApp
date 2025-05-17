@@ -107,7 +107,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
             {/* Edit Button */}
             {isEdit &&
 
-                <button className="w-full h-full flex justify-center items-center pl-6 pr-6 pt-4 pb-4 cursor-pointer hover:scale-95 transition-all duration-500 ease-in-out hover:text-text-hover-lm"
+                <button className="w-full h-full flex justify-center items-center pl-6 pr-6 pt-4 pb-4 cursor-pointer hover:scale-95 transition-all duration-500 ease-in-out hover:text-text-hover-lm "
                     onClick={openModal}
                 >
                     <PencilSquareIcon className="w-8 h-8" />
@@ -116,7 +116,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
             {/* Add Button */}
             {!isEdit &&
-                <button className="flex items-center justify-center transition-all cursor-pointer duration-200 hover:scale-120 hover:text-text-hover-lm"
+                <button className="flex items-center justify-center transition-all cursor-pointer duration-200 hover:scale-120 hover:text-text-hover-lm p-3 ml-2 text-s font-extrabold"
                     onClick={openModal}
                 >
                     <PlusIcon className='h-6' />
@@ -130,7 +130,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                     onClick={closeModal}
                 >
                     <div
-                        className="bg-bg-lm rounded-xl shadow-xl p-8 w-full max-w-md border-2 border-accent-lm"
+                        className="bg-bg-lm rounded-xl shadow-xl p-10 pb-0 w-full max-w-md border-2 border-accent-lm"
                         onClick={(e) => e.stopPropagation()}
                     >
 
@@ -138,7 +138,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                             {isEdit ? "editing todo" : "adding new todo"}
                         </div>
 
-                        <form className="flex flex-col items-center w-full" onSubmit={handleSubmit} >
+                        <form className="flex flex-col items-center w-full h-full" onSubmit={handleSubmit} >
 
                             <input
                                 type="text"
@@ -151,12 +151,9 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                                 onChange={handleTitleChange}
                             />
 
-                            <br />
-
                             <textarea
                                 type="text"
-                                className="w-7/10 h-20 mt-2 pl-2 pr-2 rounded-sm bg-modal-input-bg resize-none focus:bg-modal-input-focus-bg focus:outline-none text-modal-input-txt"
-                                // form="addTodoForm-update"
+                                className="w-7/10 h-20 mt-3 pl-2 pr-2 rounded-sm bg-modal-input-bg resize-none focus:bg-modal-input-focus-bg focus:outline-none text-modal-input-txt"
                                 onChange={handleDescChange}
                                 placeholder="description"
                                 value={formContent.formDesc}
@@ -165,20 +162,18 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                                 spellCheck="off"
                             />
 
-                            <br />
-
-                            <div className="flex flex-row justify-evenly items-center mt-5 w-full h-20">
+                            <div className="flex flex-row justify-evenly items-center mt-5 mb-10 w-full h-10">
 
                                 <button
                                     type="button"
                                     onClick={closeModal}
-                                    className="flex justify-center items-center cursor-pointer w-2/10 h-20 pt-5 pb-5 transition-all duration-200 hover:text-text-hover-lm">
+                                    className="flex justify-center items-center cursor-pointer w-2/10 h-full pt-5 pb-5 transition-all duration-200 hover:text-text-hover-lm">
                                     <XMarkIcon className="p-5" />
                                 </button>
 
                                 <button
                                     type="submit"
-                                    className="flex justify-center items-center cursor-pointer w-2/10 h-20 pt-5 pb-5 transition-all duration-200 hover:text-text-hover-lm"
+                                    className="flex justify-center items-center cursor-pointer w-2/10 h-full pt-5 pb-5 transition-all duration-200 hover:text-text-hover-lm"
                                 >
                                     <CheckIcon className="p-5" />
 
