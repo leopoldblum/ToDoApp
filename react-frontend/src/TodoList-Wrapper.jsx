@@ -5,6 +5,7 @@ import { isEqual } from "lodash";
 import { useFetchTodos, useMutationAddTodo, useMutationDeleteTodo, useMutationEditTodo } from './api/queriesAndMutations';
 import ArrowUturnLeftIcon from "@heroicons/react/24/outline/ArrowUturnLeftIcon.js"
 import MoonIcon from "@heroicons/react/24/outline/MoonIcon.js"
+import SunIcon from "@heroicons/react/24/outline/SunIcon.js"
 
 
 /**
@@ -23,6 +24,9 @@ const TodoListWrapper = () => {
 
     // history
     const [todoHistory, setTodoHistory] = useState([]);
+
+    // dark mode
+    const [darkmodeEnabled, setDarkmodeEnabled] = useState(document.documentElement.classList.contains("dark"))
 
     // for blocking when undoing
     const isHistoryBlockedRef = useRef(false);
@@ -188,10 +192,12 @@ const TodoListWrapper = () => {
     }
 
     function toggleDarkMode() {
-        // console.log("toggling darkmode")
-        const isDarkmodeEnabled = document.documentElement.classList.toggle("dark")
-        localStorage.setItem("theme", isDarkmodeEnabled ? "dark" : "light")
+        setDarkmodeEnabled(document.documentElement.classList.toggle("dark"))
     }
+
+    useEffect(() => {
+        localStorage.setItem("theme", darkmodeEnabled ? "dark" : "light")
+    }, [darkmodeEnabled])
 
     return (
         <todoListProvider.Provider value={{ userIDref, descActiveTodos, todos, activeHeaders, setActiveHeaders, setDescActiveTodos }}>
@@ -204,10 +210,17 @@ const TodoListWrapper = () => {
                     <div className="text-6xl font-extrabold p-3 select-none"> todos </div>
 
                     {/* darkmode */}
-                    <button className="flex justify-center items-center cursor-pointer text-s font-extrabold p-3 ml-2  transition-all duration-200 hover:scale-90 hover:text-text-hover-lm"
+                    <button className="flex relative justify-center items-center cursor-pointer text-s font-extrabold p-3 ml-2  transition-all duration-500 hover:scale-90 hover:text-text-hover-lm"
                         onClick={toggleDarkMode}>
-                        <MoonIcon className='h-6' />
+
+                        {darkmodeEnabled ?
+                            <SunIcon className={`h-6`} />
+                            :
+                            <MoonIcon className={`h-6`} />
+                        }
+
                     </button>
+
 
                     {/* add todo */}
                     <div className='flex justify-center items-center'>
