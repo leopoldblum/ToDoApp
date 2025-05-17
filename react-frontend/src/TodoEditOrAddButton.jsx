@@ -116,7 +116,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
             {/* Add Button */}
             {!isEdit &&
-                <button className="flex items-center justify-center transition-all cursor-pointer duration-200 hover:scale-120 hover:text-text-hover-lm p-3 ml-2 text-s font-extrabold"
+                <button className="flex items-center justify-center transition-all cursor-pointer duration-200 hover:scale-120 hover:text-text-hover-lm p-3 text-s font-extrabold"
                     onClick={openModal}
                 >
                     <PlusIcon className='h-6' />

@@ -42,7 +42,7 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
         <div className="flex justify-center items-center min-w-15 ">
 
 
-            <div className="flex justify-center items-center w-9 h-9 relative font-medium cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out"
+            <div className="flex justify-center items-center w-9 h-9 relative font-medium cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out "
                 onClick={handleClick}
             // onTransitionEnd={handleTransitionEnd}
             >

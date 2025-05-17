@@ -210,26 +210,28 @@ const TodoListWrapper = () => {
                     <div className="text-6xl font-extrabold p-3 select-none"> todos </div>
 
                     {/* darkmode */}
-                    <button className="flex relative justify-center items-center cursor-pointer text-s font-extrabold p-3 ml-2  transition-all duration-500 hover:scale-90 hover:text-text-hover-lm"
+                    <button className="flex justify-center items-center cursor-pointer text-s font-extrabold p-3 ml-2  transition-all duration-200 hover:scale-90 hover:text-text-hover-lm "
                         onClick={toggleDarkMode}>
 
-                        {darkmodeEnabled ?
-                            <SunIcon className={`h-6`} />
-                            :
-                            <MoonIcon className={`h-6`} />
-                        }
+                        <span className='relative h-6 w-6'>
+                            <SunIcon className={`h-full absolute inset-0 transition-all duration-500 ${darkmodeEnabled ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-90"}`} />
+
+                            <MoonIcon className={`h-full absolute inset-0 transition-all duration-500 ${!darkmodeEnabled ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-180"}`} />
+
+                        </span>
+
 
                     </button>
 
 
                     {/* add todo */}
-                    <div className='flex justify-center items-center'>
+                    <div className='flex justify-center items-center ml-2'>
                         <TodoEditOrAddButton currentTodo={null} />
                     </div>
 
 
                     {/* undo last action */}
-                    <button className={`flex items-center ${todoHistory.length > 0 ? "cursor-pointer" : "text-accent-lm cursor-not-allowed"} justify-center p-3 ml-2  transition-all duration-200 hover:scale-90 hover:text-text-hover-lm`}
+                    <button className={`flex items-center ${todoHistory.length > 0 ? "cursor-pointer" : "text-accent-lm cursor-not-allowed"} justify-center p-3 ml-2 transition-all duration-200 hover:scale-90 hover:text-text-hover-lm`}
                         onClick={undoLastAction}
                         disabled={todoHistory.length > 0 ? "" : "disabled"}
                     >
