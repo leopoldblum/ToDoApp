@@ -39,25 +39,22 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
     };
 
     return (
-        <div className="flex justify-center items-center min-w-15">
+        <div className="flex justify-center items-center min-w-15 ">
 
 
-            <div className="w-10 h-10 relative font-medium cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out"
+            <div className="flex justify-center items-center w-9 h-9 relative font-medium cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out"
                 onClick={handleClick}
-                onTransitionEnd={handleTransitionEnd}
+            // onTransitionEnd={handleTransitionEnd}
             >
 
-                <img
-                    className={`absolute inset-0 object-cover transition-all duration-500 ease-in-out ${isChecked ? "opacity-0 scale-50 rotate-20" : "opacity-100 scale-100"}`}
-                    src={"/box-unchecked.svg"}
-                    alt="unchecked checkbox"
-                />
+                <div className={`absolute inset-0 object-cover transition-all duration-500 ease-in-out  ${isChecked ? "opacity-0 scale-50 rotate-20" : "opacity-100 scale-100"}`}
+                    onTransitionEnd={handleTransitionEnd}>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" /></svg>
+                </div>
 
-                <img
-                    className={`absolute inset-0 object-cover transition-all duration-500 ease-in-out ${!isChecked ? "opacity-0 scale-50 rotate-20 " : "opacity-100 scale-100"}`}
-                    src={"/box-checked.svg"}
-                    alt="checked checkbox"
-                />
+                <div className={`absolute inset-0 object-cover transition-all duration-500 ease-in-out ${!isChecked ? "opacity-0 scale-50 rotate-20 " : "opacity-100 scale-100"}`}>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="m9 12 2 2 4-4" /></svg>
+                </div>
 
             </div>
 

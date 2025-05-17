@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import "./global-colors.css"
+import { Component } from 'react';
 import TodoListWrapper from './TodoList-Wrapper.jsx';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import "./output.css"
