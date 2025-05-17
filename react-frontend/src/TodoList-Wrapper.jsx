@@ -16,7 +16,7 @@ export const todoListProvider = createContext(null);
 const TodoListWrapper = () => {
 
     // saves userID
-    const userIDref = useRef(localStorage.getItem("userID"));
+    const userIDref = useRef();
 
     // all todos - remove use todoFromFetch
     const [todos, setTodos] = useState([]);
@@ -98,17 +98,13 @@ const TodoListWrapper = () => {
 
     // handling userID on mount
     useEffect(() => {
+        userIDref.current = localStorage.getItem("userID")
+
         if (!userIDref.current) {
             const generateUserID = crypto.randomUUID()
             localStorage.setItem("userID", generateUserID)
-            // console.log("userID set to UUID: " + generateUserID)
+            userIDref.current = generateUserID;
         }
-        else {
-            // console.log("userID is already set to: " + userIDref.current)
-        }
-
-        document.documentElement.classList.add("test")
-
     }, [])
 
 
@@ -194,7 +190,8 @@ const TodoListWrapper = () => {
 
     function toggleDarkMode() {
         // console.log("toggling darkmode")
-        document.documentElement.classList.toggle("dark")
+        const isDarkmodeEnabled = document.documentElement.classList.toggle("dark")
+        localStorage.setItem("theme", isDarkmodeEnabled ? "dark" : "light")
     }
 
     return (
