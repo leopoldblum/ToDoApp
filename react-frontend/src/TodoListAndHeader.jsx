@@ -1,6 +1,6 @@
 import TodoDeleteAllFulfilledButton from './TodoDeleteAllFulfilledButton';
 import CollapseButton from './TodoCollapseAllButton';
-import TodoListDisplay from './TodoListDisplay';
+import TodoListEntry from './TodoListEntry';
 import { useContext } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
 
@@ -54,7 +54,15 @@ const TodoListAndHeader = ({ isFulfilled }) => {
             </div>
 
             <div className={`w-8/10 ml-auto mr-auto transition-all duration-400 mb-10 ease-in-out ${isHeaderTypeActive ? "max-h-500 overflow-y-auto" : "max-h-0 overflow-hidden"}`}>
-                <TodoListDisplay displayFulfilled={isFulfilled ? true : false} />
+
+                <div className="block m-auto overflow-hidden w-9/10">
+
+                    {todoFuncAndData.todos != null && todoFuncAndData.todos.filter(entry => entry.fulfilled === isFulfilled).map(entry =>
+
+                        <TodoListEntry displayFulfilled={isFulfilled ? true : false} currentTodo={entry} />
+
+                    )}
+                </div>
             </div>
         </div>
     )
