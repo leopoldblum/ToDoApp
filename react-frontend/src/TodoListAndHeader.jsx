@@ -59,7 +59,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
                     {todoFuncAndData.todos != null && todoFuncAndData.todos.filter(entry => entry.fulfilled === isFulfilled).map(entry =>
 
-                        <TodoListEntry displayFulfilled={isFulfilled ? true : false} currentTodo={entry} />
+                        <TodoListEntry displayFulfilled={isFulfilled ? true : false} currentTodo={entry} key={entry.id} />
 
                     )}
                 </div>
