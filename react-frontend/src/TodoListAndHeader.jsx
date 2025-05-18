@@ -31,13 +31,13 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
     return (
         <div>
-            <div className='h-20 w-8/10 ml-auto mr-auto mt-8 flex items-center justify-center cursor-pointer border-accent-lm border-b-2 border-l-2 rounded-bl-xs'>
+            <div className='h-20 w-8/10 ml-auto mr-auto mt-8 flex items-center justify-center border-accent-lm border-b-2 border-l-2 rounded-bl-xs'>
 
                 <div className={`flex-1/15  h-3/4 flex text-2xl justify-center items-center pointer-events-auto select-none transition-all duration-200 ease-in ${isHeaderTypeActive ? "rotate-90" : ""} `}>
                     &gt;
                 </div>
 
-                <div className='flex-11/15  h-3/4 text-left flex items-center select-none' onClick={() => toggleHeaderState(headerType)} >
+                <div className='flex-11/15  h-3/4 text-left flex items-center select-none cursor-pointer' onClick={() => toggleHeaderState(headerType)} >
 
                     <h1> {isFulfilled ? "fulfilled todos" : "active todos"}  ({specificTodoCounter}) </h1>
 

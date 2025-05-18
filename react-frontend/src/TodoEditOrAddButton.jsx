@@ -107,7 +107,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
             {/* Edit Button */}
             {isEdit &&
 
-                <button className="w-full h-full flex justify-center items-center pl-6 pr-6 pt-4 pb-4 cursor-pointer hover:scale-95 transition-all duration-500 ease-in-out hover:text-text-hover-lm "
+                <button className="w-full h-full flex justify-center items-center pl-6 pr-6 pt-4 pb-4 cursor-pointer hover:scale-95 transition-all duration-500 ease-in-out hover:text-text-hover-lm"
                     onClick={openModal}
                 >
                     <PencilSquareIcon className="w-8 h-8" />

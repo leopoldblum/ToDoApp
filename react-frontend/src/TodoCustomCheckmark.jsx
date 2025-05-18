@@ -42,7 +42,7 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
         <div className="flex justify-center items-center min-w-15 ">
 
 
-            <div className={`flex justify-center items-center w-9 h-9 relative font-medium cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out group ${hasTransitionStartedRef.current ? "pointer-events-none" : ""}`}
+            <button className={`flex justify-center items-center w-9 h-9 relative font-medium cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out group ${hasTransitionStartedRef.current ? "pointer-events-none" : ""}`}
                 onClick={handleClick}
                 onTransitionEnd={handleTransitionEnd}
             >
@@ -55,7 +55,7 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="m9 12 2 2 4-4" /></svg>
                 </div>
 
-            </div>
+            </button>
 
         </div>
     )
