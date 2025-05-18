@@ -162,20 +162,20 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                                 spellCheck="off"
                             />
 
-                            <div className="flex flex-row justify-evenly items-center w-full h-20">
+                            <div className="flex flex-row justify-evenly items-center w-full h-20 text-accent-lm">
 
                                 <button
                                     type="button"
                                     onClick={closeModal}
-                                    className="flex justify-center items-center cursor-pointer w-2/10 h-full pt-2 pb-2 transition-all duration-200 hover:text-text-hover-lm bg-orange-900">
-                                    <XMarkIcon className="p-5" />
+                                    className="flex justify-center items-center cursor-pointer w-15 h-15 pt-2 pb-2 transition-all duration-200 hover:text-text-hover-lm">
+                                    <XMarkIcon className="h-8 " />
                                 </button>
 
                                 <button
                                     type="submit"
-                                    className="flex justify-center items-center cursor-pointer w-2/10 h-full pt-5 pb-5 transition-all duration-200 hover:text-text-hover-lm bg-cyan-900"
+                                    className="flex justify-center items-center cursor-pointer w-15 h-15 pt-5 pb-5 transition-all duration-200 hover:text-text-hover-lm"
                                 >
-                                    <CheckIcon className="p-5" />
+                                    <CheckIcon className="h-8 " />
 
                                 </button>
 

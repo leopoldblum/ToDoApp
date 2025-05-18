@@ -7,10 +7,7 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-orange-500: oklch(70.5% 0.213 47.604);
-    --color-orange-600: oklch(64.6% 0.222 41.116);
     --color-orange-900: oklch(40.8% 0.123 38.172);
-    --color-yellow-800: oklch(47.6% 0.114 61.907);
     --color-cyan-900: oklch(39.8% 0.07 227.392);
     --color-black: #000;
     --spacing: 0.25rem;
@@ -208,12 +205,6 @@
   .inset-0 {
     inset: calc(var(--spacing) * 0);
   }
-  .z-3 {
-    z-index: 3;
-  }
-  .z-30 {
-    z-index: 30;
-  }
   .z-50 {
     z-index: 50;
   }
@@ -231,18 +222,6 @@
   }
   .mt-8 {
     margin-top: calc(var(--spacing) * 8);
-  }
-  .mt-20 {
-    margin-top: calc(var(--spacing) * 20);
-  }
-  .mt-30 {
-    margin-top: calc(var(--spacing) * 30);
-  }
-  .mt-40 {
-    margin-top: calc(var(--spacing) * 40);
-  }
-  .mt-50 {
-    margin-top: calc(var(--spacing) * 50);
   }
   .mt-60 {
     margin-top: calc(var(--spacing) * 60);
@@ -271,6 +250,9 @@
   .flex {
     display: flex;
   }
+  .h-2\/10 {
+    height: calc(2/10 * 100%);
+  }
   .h-3\/4 {
     height: calc(3/4 * 100%);
   }
@@ -280,11 +262,14 @@
   .h-8 {
     height: calc(var(--spacing) * 8);
   }
+  .h-8\/10 {
+    height: calc(8/10 * 100%);
+  }
   .h-9 {
     height: calc(var(--spacing) * 9);
   }
-  .h-10 {
-    height: calc(var(--spacing) * 10);
+  .h-10\/10 {
+    height: calc(10/10 * 100%);
   }
   .h-15 {
     height: calc(var(--spacing) * 15);
@@ -292,35 +277,8 @@
   .h-20 {
     height: calc(var(--spacing) * 20);
   }
-  .h-22 {
-    height: calc(var(--spacing) * 22);
-  }
-  .h-25 {
-    height: calc(var(--spacing) * 25);
-  }
-  .h-30 {
-    height: calc(var(--spacing) * 30);
-  }
-  .h-50 {
-    height: calc(var(--spacing) * 50);
-  }
-  .h-75 {
-    height: calc(var(--spacing) * 75);
-  }
   .h-80 {
     height: calc(var(--spacing) * 80);
-  }
-  .h-90 {
-    height: calc(var(--spacing) * 90);
-  }
-  .h-100 {
-    height: calc(var(--spacing) * 100);
-  }
-  .h-200 {
-    height: calc(var(--spacing) * 200);
-  }
-  .h-\[100\%\] {
-    height: 100%;
   }
   .h-auto {
     height: auto;
@@ -366,6 +324,12 @@
   }
   .w-9\/10 {
     width: calc(9/10 * 100%);
+  }
+  .w-15 {
+    width: calc(var(--spacing) * 15);
+  }
+  .w-20 {
+    width: calc(var(--spacing) * 20);
   }
   .w-full {
     width: 100%;
@@ -509,23 +473,8 @@
   .bg-modal-input-bg {
     background-color: var(--color-modal-input-bg);
   }
-  .bg-orange-500 {
-    background-color: var(--color-orange-500);
-  }
-  .bg-orange-600 {
-    background-color: var(--color-orange-600);
-  }
-  .bg-orange-600\/30 {
-    background-color: color-mix(in srgb, oklch(64.6% 0.222 41.116) 30%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-orange-600) 30%, transparent);
-    }
-  }
   .bg-orange-900 {
     background-color: var(--color-orange-900);
-  }
-  .bg-yellow-800 {
-    background-color: var(--color-yellow-800);
   }
   .object-cover {
     object-fit: cover;
@@ -536,20 +485,8 @@
   .p-5 {
     padding: calc(var(--spacing) * 5);
   }
-  .p-10 {
-    padding: calc(var(--spacing) * 10);
-  }
-  .p-15 {
-    padding: calc(var(--spacing) * 15);
-  }
-  .p-20 {
-    padding: calc(var(--spacing) * 20);
-  }
   .pt-2 {
     padding-top: calc(var(--spacing) * 2);
-  }
-  .pt-3 {
-    padding-top: calc(var(--spacing) * 3);
   }
   .pt-4 {
     padding-top: calc(var(--spacing) * 4);
@@ -572,17 +509,8 @@
   .pr-15 {
     padding-right: calc(var(--spacing) * 15);
   }
-  .pr-20 {
-    padding-right: calc(var(--spacing) * 20);
-  }
-  .pb-0 {
-    padding-bottom: calc(var(--spacing) * 0);
-  }
   .pb-2 {
     padding-bottom: calc(var(--spacing) * 2);
-  }
-  .pb-3 {
-    padding-bottom: calc(var(--spacing) * 3);
   }
   .pb-4 {
     padding-bottom: calc(var(--spacing) * 4);
@@ -604,9 +532,6 @@
   }
   .pl-15 {
     padding-left: calc(var(--spacing) * 15);
-  }
-  .pl-20 {
-    padding-left: calc(var(--spacing) * 20);
   }
   .text-center {
     text-align: center;
