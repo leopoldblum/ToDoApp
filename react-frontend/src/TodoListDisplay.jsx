@@ -30,7 +30,7 @@ const TodoListDisplay = ({ displayFulfilled }) => {
                     {/* title */}
                     <div className="flex flex-row justify-center items-center min-h-20 w-full border-b-1 border-accent-lm">
 
-                        <div className={`flex flex-2/3 items-center overflow-auto text-left  pl-10 pr-10 pt-5 pb-5 break-all cursor-pointer ${displayFulfilled ? "line-through text-text-linethrough" : ""}`}
+                        <div className={`flex flex-2/3 items-center overflow-auto text-left pl-10 pr-10 pt-5 pb-5 break-all cursor-pointer ${displayFulfilled ? "line-through text-text-linethrough" : ""}`}
                             onClick={() => toggleDesc(entries.id)}>
                             {entries.title}
                         </div>

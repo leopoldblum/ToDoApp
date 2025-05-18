@@ -1,4 +1,3 @@
-// import "./TodoCollapseAllButton.css"
 import { useContext } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
 import BarsArrowDownIcon from "@heroicons/react/24/outline/BarsArrowDownIcon.js"
@@ -8,20 +7,26 @@ const CollapseButton = () => {
 
     const todoFuncAndData = useContext(todoListProvider);
 
-    const areAllDescCollapsed = (todoFuncAndData.descActiveTodos.length === 0)
+    // this is stupid
+    const allActiveTodosWithActiveDesc = todoFuncAndData.descActiveTodos.filter(id =>
+        todoFuncAndData.todos.some(todo => todo.id === id && todo.fulfilled === false
+        ));
+
+    const areAllDescCollapsed = (allActiveTodosWithActiveDesc.length === 0)
 
     const toggleCollapseAllDesc = () => {
-        if (todoFuncAndData.descActiveTodos.length !== 0) {
+
+        if (!areAllDescCollapsed) {
             // some desc are shown -> show no desc
-            todoFuncAndData.setDescActiveTodos([]);
+            const allActiveTodosIDs = todoFuncAndData.todos.filter(entry => entry.fulfilled === false).map(todo => todo.id)
+            todoFuncAndData.setDescActiveTodos(prev => prev.filter(id => !allActiveTodosIDs.includes(id)));
         }
         else {
             // no desc are shown -> show all descs
             const allTodoIDs = todoFuncAndData.todos.filter(entries => entries.fulfilled === false).map(todo => todo.id)
-            todoFuncAndData.setDescActiveTodos(allTodoIDs);
+            todoFuncAndData.setDescActiveTodos(prev => [...prev, ...allTodoIDs]);
         }
     }
-
 
     return (
         <div className="w-full h-full flex justify-center items-center ">
