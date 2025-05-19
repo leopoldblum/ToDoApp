@@ -39,21 +39,42 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
     };
 
     return (
-        <div className="flex justify-center items-center min-w-15 ">
+        <div className="flex justify-center items-center w-full ">
 
 
-            <button className={`flex justify-center items-center w-9 h-9 relative font-medium cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out group ${hasTransitionStartedRef.current ? "pointer-events-none" : ""}`}
+            <button className={`flex justify-center items-center p-4 relative font-medium cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out group ${hasTransitionStartedRef.current ? "pointer-events-none" : ""}`}
                 onClick={handleClick}
                 onTransitionEnd={handleTransitionEnd}
             >
+                <div className="relative w-8 h-8">
 
-                <div className={`absolute inset-0 object-cover transition-all duration-300 ease-in-out group-hover:text-text-hover-lm  ${!isChecked ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-45"} `}>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" /></svg>
+                    <svg
+                        className={`absolute inset-0 object-cover transition-all duration-300 ease-in-out group-hover:text-text-hover-lm  ${!isChecked ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-45"} `}
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round">
+                        <rect width="18" height="18" x="3" y="3" rx="2" />
+                    </svg>
+
+
+                    <svg
+                        className={`absolute inset-0 object-cover transition-all duration-300 ease-in-out group-hover:text-text-hover-lm ${isChecked ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-45"}`}
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round">
+                        <rect width="18" height="18" x="3" y="3" rx="2" />
+                        <path d="m9 12 2 2 4-4" />
+                    </svg>
                 </div>
 
-                <div className={`absolute inset-0 object-cover transition-all duration-300 ease-in-out group-hover:text-text-hover-lm ${isChecked ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-45"}`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="m9 12 2 2 4-4" /></svg>
-                </div>
 
             </button>
 

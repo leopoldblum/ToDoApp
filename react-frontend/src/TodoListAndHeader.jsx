@@ -33,7 +33,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
         <div>
             <div className='h-20 w-8/10 ml-auto mr-auto mt-8 flex items-center justify-center border-accent-lm border-b-2 border-l-2 rounded-bl-xs'>
 
-                <div className={`flex-1/15  h-3/4 flex text-2xl justify-center items-center pointer-events-auto select-none transition-all duration-300 ease-in ${isHeaderTypeActive ? "rotate-90" : ""} `}>
+                <div className={`flex-1/15  h-3/4 flex text-2xl justify-center items-center pointer-events-auto select-none transition-all duration-200 ease-in ${isHeaderTypeActive ? "rotate-90" : ""} `}>
                     &gt;
                 </div>
 
