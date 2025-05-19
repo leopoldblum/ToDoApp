@@ -1,12 +1,14 @@
 import TodoDeleteButton from "./TodoDeleteButton";
 import TodoCustomCheckmark from "./TodoCustomCheckmark";
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
-import { useContext } from "react";
+import { useContext, useRef, useEffect, useState } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
 
 const TodoListEntry = ({ displayFulfilled, currentTodo }) => {
 
     const todoFuncAndData = useContext(todoListProvider);
+
+    // const descHeightRef = useRef(null)
 
     const toggleDesc = (id) => {
         todoFuncAndData.setDescActiveTodos((currentDescActiveTodos) => {
@@ -18,6 +20,31 @@ const TodoListEntry = ({ displayFulfilled, currentTodo }) => {
             }
         });
     }
+
+
+    const todoListHeightRef = useRef(null)
+    const [todoListHeight, setTodoListHeight] = useState("0px")
+
+
+
+    useEffect(() => {
+        const observedElement = todoListHeightRef.current;
+        if (!observedElement) return;
+
+        const resizeObserver = new ResizeObserver((entries) => {
+            for (let entry of entries) {
+                // Always measure the height regardless of active state
+                const newHeight = entry.contentRect.height + 20;
+                setTodoListHeight(newHeight + "px");
+            }
+        });
+
+        resizeObserver.observe(observedElement);
+        return () => {
+            resizeObserver.disconnect();
+        };
+    }, [todoFuncAndData.descActiveTodos]);
+
 
     return (
 
@@ -51,12 +78,12 @@ const TodoListEntry = ({ displayFulfilled, currentTodo }) => {
             </div>
 
             <div
-                className={` overflow-hidden transition-[max-height] duration-300 ease-in-out w-full ${todoFuncAndData.descActiveTodos.includes(currentTodo.id)
-                    ? "max-h-200"
-                    : "max-h-0"}`}
+                className={` overflow-hidden transition-all duration-300 ease-in-out w-full`}
+                style={{ height: todoFuncAndData.descActiveTodos.includes(currentTodo.id) ? todoListHeight : "0px" }}
             >
 
-                <div className="flex items-center pt-5 pb-5 pl-10 pr-10 w-full h-full min-h-20">
+                <div className="flex items-center pt-5 pb-5 pl-10 pr-10 w-full h-full min-h-20"
+                    ref={todoListHeightRef}>
 
                     <div className="text-left break-all w-full font-medium">
                         {currentTodo.desc}
