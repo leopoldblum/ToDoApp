@@ -31,13 +31,13 @@ const CollapseButton = () => {
     return (
         <div className="w-full h-full flex justify-center items-center ">
 
-            <button className="pl-6 pr-6 pt-4 pb-4 rounded-md cursor-pointer hover:text-text-hover-lm transition-all duration-400 hover:scale-95"
+            <button className="pl-6 pr-6 pt-4 pb-4 rounded-md cursor-pointer hover:text-text-hover-lm transition-all duration-300 hover:scale-95"
                 onClick={toggleCollapseAllDesc}>
 
                 <div className="w-8 h-8 relative font-medium">
 
-                    <BarsArrowDownIcon className={` absolute inset-0 object-cover transition-all duration-600 ease-in-out ${areAllDescCollapsed ? "opacity-100" : "opacity-0 scale-85"}`} />
-                    <BarsArrowUpIcon className={`absolute inset-0 object-cover transition-all duration-600 ease-in-out ${areAllDescCollapsed ? "opacity-0 scale-85" : "opacity-100"}`} />
+                    <BarsArrowDownIcon className={`absolute inset-0 object-cover transition-all duration-300 ease-in-out ${areAllDescCollapsed ? "opacity-100" : "opacity-0 scale-85"}`} />
+                    <BarsArrowUpIcon className={`absolute inset-0 object-cover transition-all duration-300 ease-in-out ${areAllDescCollapsed ? "opacity-0 scale-85" : "opacity-100"}`} />
 
                 </div>
 

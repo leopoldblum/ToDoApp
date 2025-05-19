@@ -47,11 +47,11 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
                 onTransitionEnd={handleTransitionEnd}
             >
 
-                <div className={`absolute inset-0 object-cover transition-all duration-500 ease-in-out group-hover:text-text-hover-lm  ${!isChecked ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-45"} `}>
+                <div className={`absolute inset-0 object-cover transition-all duration-300 ease-in-out group-hover:text-text-hover-lm  ${!isChecked ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-45"} `}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" /></svg>
                 </div>
 
-                <div className={`absolute inset-0 object-cover transition-all duration-500 ease-in-out group-hover:text-text-hover-lm ${isChecked ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-45"}`}>
+                <div className={`absolute inset-0 object-cover transition-all duration-300 ease-in-out group-hover:text-text-hover-lm ${isChecked ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-45"}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="m9 12 2 2 4-4" /></svg>
                 </div>
 

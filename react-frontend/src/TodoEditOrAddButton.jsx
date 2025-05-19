@@ -107,7 +107,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
             {/* Edit Button */}
             {isEdit &&
 
-                <button className="w-full h-full flex justify-center items-center pl-6 pr-6 pt-4 pb-4 cursor-pointer hover:scale-95 transition-all duration-500 ease-in-out hover:text-text-hover-lm"
+                <button className="w-full h-full flex justify-center items-center pl-6 pr-6 pt-4 pb-4 cursor-pointer hover:scale-95 transition-all duration-300 ease-in-out hover:text-text-hover-lm"
                     onClick={openModal}
                 >
                     <PencilSquareIcon className="w-8 h-8" />
@@ -116,7 +116,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
 
             {/* Add Button */}
             {!isEdit &&
-                <button className="flex items-center justify-center transition-all cursor-pointer duration-200 hover:scale-120 hover:text-text-hover-lm p-3 text-s font-extrabold"
+                <button className="flex items-center justify-center transition-all cursor-pointer duration-300 hover:scale-120 hover:text-text-hover-lm p-3 text-s font-extrabold"
                     onClick={openModal}
                 >
                     <PlusIcon className='h-6' />
@@ -167,13 +167,13 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                                 <button
                                     type="button"
                                     onClick={closeModal}
-                                    className="flex justify-center items-center cursor-pointer w-15 h-15 pt-2 pb-2 transition-all duration-200 hover:text-text-hover-lm">
+                                    className="flex justify-center items-center cursor-pointer w-15 h-15 pt-2 pb-2 transition-all duration-300 hover:text-text-hover-lm">
                                     <XMarkIcon className="h-8 " />
                                 </button>
 
                                 <button
                                     type="submit"
-                                    className="flex justify-center items-center cursor-pointer w-15 h-15 pt-5 pb-5 transition-all duration-200 hover:text-text-hover-lm"
+                                    className="flex justify-center items-center cursor-pointer w-15 h-15 pt-5 pb-5 transition-all duration-300 hover:text-text-hover-lm"
                                 >
                                     <CheckIcon className="h-8 " />
 

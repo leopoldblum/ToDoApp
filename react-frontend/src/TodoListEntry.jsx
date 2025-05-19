@@ -51,7 +51,7 @@ const TodoListEntry = ({ displayFulfilled, currentTodo }) => {
             </div>
 
             <div
-                className={` overflow-hidden transition-[max-height] duration-400 ease-in-out w-full ${todoFuncAndData.descActiveTodos.includes(currentTodo.id)
+                className={` overflow-hidden transition-[max-height] duration-300 ease-in-out w-full ${todoFuncAndData.descActiveTodos.includes(currentTodo.id)
                     ? "max-h-200"
                     : "max-h-0"}`}
             >

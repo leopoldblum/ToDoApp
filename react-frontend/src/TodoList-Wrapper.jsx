@@ -210,7 +210,7 @@ const TodoListWrapper = () => {
                     <div className="text-6xl font-extrabold p-3 select-none"> todos </div>
 
                     {/* darkmode */}
-                    <button className="flex justify-center items-center cursor-pointer text-s font-extrabold p-3 ml-2  transition-all duration-200 hover:scale-90 hover:text-text-hover-lm "
+                    <button className="flex justify-center items-center cursor-pointer text-s font-extrabold p-3 ml-2  transition-all duration-300 hover:scale-90 hover:text-text-hover-lm "
                         onClick={toggleDarkMode}>
 
                         <span className='relative h-6 w-6'>
@@ -231,7 +231,7 @@ const TodoListWrapper = () => {
 
 
                     {/* undo last action */}
-                    <button className={`flex items-center ${todoHistory.length > 0 ? "cursor-pointer" : "text-accent-lm cursor-not-allowed"} justify-center p-3 ml-2 transition-all duration-200 hover:scale-90 hover:text-text-hover-lm`}
+                    <button className={`flex items-center ${todoHistory.length > 0 ? "cursor-pointer" : "text-accent-lm cursor-not-allowed"} justify-center p-3 ml-2 transition-all duration-300 hover:scale-90 hover:text-text-hover-lm`}
                         onClick={undoLastAction}
                         disabled={todoHistory.length > 0 ? "" : "disabled"}
                     >
