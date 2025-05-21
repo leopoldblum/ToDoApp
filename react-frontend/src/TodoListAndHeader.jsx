@@ -3,6 +3,7 @@ import CollapseButton from './TodoCollapseAllButton';
 import TodoListEntry from './TodoListEntry';
 import { useContext } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
+import { AnimatePresence, motion } from "motion/react"
 
 const TodoListAndHeader = ({ isFulfilled }) => {
 
@@ -53,17 +54,29 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
             </div>
 
-            <div className={`w-8/10 ml-auto mr-auto transition-all duration-300 mb-10 ease-in ${isHeaderTypeActive ? "max-h-500 overflow-y-auto" : "max-h-0 overflow-hidden"}`}>
+            <AnimatePresence>
 
-                <div className="block m-auto overflow-hidden w-9/10">
+                {isHeaderTypeActive &&
+                    <motion.div
+                        initial={{ opacity: 0, height: 0, scaleY: 0, originY: 0 }}
+                        animate={{ opacity: 1, height: "auto", scaleY: 1, originY: 0 }}
+                        exit={{ opacity: 0, height: 0, scaleY: 0, originY: 0 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <div className={`w-18/25 m-auto block `}>
 
-                    {todoFuncAndData.todos != null && todoFuncAndData.todos.filter(entry => entry.fulfilled === isFulfilled).map(entry =>
+                            {todoFuncAndData.todos != null && todoFuncAndData.todos.filter(entry => entry.fulfilled === isFulfilled).map(entry =>
 
-                        <TodoListEntry displayFulfilled={isFulfilled ? true : false} currentTodo={entry} key={entry.id} />
+                                <TodoListEntry displayFulfilled={isFulfilled ? true : false} currentTodo={entry} key={entry.id} />
 
-                    )}
-                </div>
-            </div>
+                            )}
+                        </div>
+
+                    </motion.div>
+                }
+
+            </AnimatePresence>
+
         </div>
     )
 }

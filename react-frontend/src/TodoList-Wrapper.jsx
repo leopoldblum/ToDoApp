@@ -242,9 +242,10 @@ const TodoListWrapper = () => {
 
                 </div>
 
-                {/* todo lists - not cursed anymore :) */}
                 <TodoListAndHeader isFulfilled={false} />
                 <TodoListAndHeader isFulfilled={true} />
+                {/* todo lists - not cursed anymore :) */}
+
 
             </div>
 

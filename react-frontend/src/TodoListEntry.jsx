@@ -3,6 +3,7 @@ import TodoCustomCheckmark from "./TodoCustomCheckmark";
 import TodoEditOrAddButton from "./TodoEditOrAddButton";
 import { useContext } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
+import { AnimatePresence, motion } from "motion/react"
 
 const TodoListEntry = ({ displayFulfilled, currentTodo }) => {
 
@@ -50,9 +51,9 @@ const TodoListEntry = ({ displayFulfilled, currentTodo }) => {
 
             </div>
 
-            <div
-                className={` overflow-hidden transition-[max-height] duration-300 ease-in-out w-full ${todoFuncAndData.descActiveTodos.includes(currentTodo.id)
-                    ? "max-h-200"
+            {/* <div
+                className={`transition-[max-height] overflow-auto duration-300 ease-in-out w-full ${todoFuncAndData.descActiveTodos.includes(currentTodo.id)
+                    ? "max-h-100"
                     : "max-h-0"}`}
             >
 
@@ -64,7 +65,28 @@ const TodoListEntry = ({ displayFulfilled, currentTodo }) => {
 
                 </div>
 
-            </div>
+            </div> */}
+
+            <AnimatePresence>
+                {todoFuncAndData.descActiveTodos.includes(currentTodo.id) &&
+                    <motion.div
+                        initial={{ opacity: 0, height: 0, scaleY: 0, originY: 0 }}
+                        animate={{ opacity: 1, height: "auto", scaleY: 1, originY: 0 }}
+                        exit={{ opacity: 0, height: 0, scaleY: 0, originY: 0 }}
+                        transition={{ duration: 0.3 }}
+                        style={{ width: "100%" }}
+                    >
+
+                        <div className="flex items-center justify-start pt-5 pb-5 pl-10 pr-10 min-h-20 overflow-y-hidden text-left break-all font-medium">
+
+                            {currentTodo.desc}
+
+                        </div>
+
+                    </motion.div>
+                }
+            </AnimatePresence>
+
         </div >
     )
 
