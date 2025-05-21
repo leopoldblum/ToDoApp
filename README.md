@@ -1,17 +1,21 @@
-## basic todo app
+## Basic Todo App
 
-A simple todo application with full-stack functionality.
-
-A persistent unique ID is assigned to each browser using localStorage, and all todos are linked to that ID.
+A simple yet complete full-stack Todo application with user-specific persistent data and smooth transitions.
 
 ###  Tech Stack
 
 **Frontend**  
-- React, HTML, Tailwind CSS v4 
-- CRUD and optimistic updates via [TanStack Query](https://tanstack.com/query)
-- fluid animations with [Motion](https://motion.dev/)
+- React, HTML
+- Tailwind CSS v4 
+- [TanStack Query](https://tanstack.com/query) for data fetching, optimistic updates and caching
+- [Motion](https://motion.dev/) for smooth animations and transitions 
 
 **Backend**  
-- REST API built with Go (Golang)  
-- PostgreSQL for database
+- Go (Golang) used for REST API 
+- PostgreSQL as database
 
+### Features
+- Create, read, update, and delete todos
+- Optimistic UI updates for a snappy experience
+- Smooth animations when toggling or deleting todos
+- Persistent client-specific todo storage using localStorage + backend ID mapping
