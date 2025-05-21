@@ -23,7 +23,7 @@ const TodoListEntry = ({ displayFulfilled, currentTodo }) => {
     return (
 
         // set height for todo entry here
-        <div className={"flex flex-col justify-center items-center h-auto mt-5 mb-5 select-none border-l-2 border-accent-lm"} key={currentTodo.id}>
+        <div className={"flex flex-col justify-center items-center h-auto mt-5 mb-5 select-none border-l-2 border-accent-lm"} >
 
             {/* title */}
             <div className="flex flex-row justify-center items-center min-h-20 w-full border-b-1 border-accent-lm">
@@ -50,22 +50,6 @@ const TodoListEntry = ({ displayFulfilled, currentTodo }) => {
                 </div>
 
             </div>
-
-            {/* <div
-                className={`transition-[max-height] overflow-auto duration-300 ease-in-out w-full ${todoFuncAndData.descActiveTodos.includes(currentTodo.id)
-                    ? "max-h-100"
-                    : "max-h-0"}`}
-            >
-
-                <div className="flex items-center pt-5 pb-5 pl-10 pr-10 w-full h-full min-h-20">
-
-                    <div className="text-left break-all w-full font-medium">
-                        {currentTodo.desc}
-                    </div>
-
-                </div>
-
-            </div> */}
 
             <AnimatePresence>
                 {todoFuncAndData.descActiveTodos.includes(currentTodo.id) &&
