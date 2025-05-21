@@ -39,3 +39,8 @@ body,
 #root {
   height: 100%;
 }
+
+#root {
+  overflow-y: scroll;
+  scrollbar-color: var(--color-accent-lm) var(--color-bg-lm);
+}

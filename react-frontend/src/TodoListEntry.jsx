@@ -74,7 +74,7 @@ const TodoListEntry = ({ displayFulfilled, currentTodo }) => {
                         animate={{ opacity: 1, height: "auto", scaleY: 1, originY: 0 }}
                         exit={{ opacity: 0, height: 0, scaleY: 0, originY: 0 }}
                         transition={{ duration: 0.3 }}
-                        style={{ width: "100%" }}
+                        style={{ width: "100%", overflow: "hidden" }}
                     >
 
                         <div className="flex items-center justify-start pt-5 pb-5 pl-10 pr-10 min-h-20 overflow-y-hidden text-left break-all font-medium">

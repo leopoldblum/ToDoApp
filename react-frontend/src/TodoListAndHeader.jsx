@@ -32,7 +32,10 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
     return (
         <div>
-            <div className='h-20 w-8/10 ml-auto mr-auto mt-8 flex items-center justify-center border-accent-lm border-b-2 border-l-2 rounded-bl-xs'>
+            <motion.div className='h-20 w-8/10 ml-auto mr-auto mt-8 flex items-center justify-center border-accent-lm border-b-2 border-l-2 rounded-bl-xs'
+                layout
+                transition={{ duration: 0.3 }}
+            >
 
                 <div className={`flex-1/15  h-3/4 flex text-2xl justify-center items-center pointer-events-auto select-none transition-all duration-200 ease-in ${isHeaderTypeActive ? "rotate-90" : ""} `}>
                     &gt;
@@ -52,7 +55,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
                     }
                 </div>
 
-            </div>
+            </motion.div>
 
             <AnimatePresence>
 
@@ -66,18 +69,28 @@ const TodoListAndHeader = ({ isFulfilled }) => {
                         <div className={`w-18/25 m-auto block `}>
 
                             {todoFuncAndData.todos != null && todoFuncAndData.todos.filter(entry => entry.fulfilled === isFulfilled).map(entry =>
+                                //for transition when moving todos between headers
+                                < motion.div
+                                    layout
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    key={entry.id}
+                                >
 
-                                <TodoListEntry displayFulfilled={isFulfilled ? true : false} currentTodo={entry} key={entry.id} />
+                                    <TodoListEntry displayFulfilled={isFulfilled ? true : false} currentTodo={entry} key={entry.id} />
 
+                                </motion.div>
                             )}
                         </div>
 
-                    </motion.div>
+                    </motion.div >
                 }
 
-            </AnimatePresence>
+            </AnimatePresence >
 
-        </div>
+        </div >
     )
 }
 

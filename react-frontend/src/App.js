@@ -26,7 +26,7 @@ else if (localStorage.getItem('theme') === 'dark') {
 class App extends Component {
   render() {
     return (
-      <div className="flex justify-center min-h-screen min-w-300 bg-bg-lm text-text-lm text-center font-bold font-sans transition-all duration-300">
+      <div className="flex justify-center min-h-screen min-w-300 bg-bg-lm text-text-lm text-center font-bold font-sans transition-all duration-200">
 
         <div className='w-7/10 pb-50'>
 
