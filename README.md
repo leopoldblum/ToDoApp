@@ -7,8 +7,9 @@ A persistent unique ID is assigned to each browser using localStorage, and all t
 ###  Tech Stack
 
 **Frontend**  
-- React, HTML, CSS  
+- React, HTML, Tailwind CSS v4 
 - CRUD and optimistic updates via [TanStack Query](https://tanstack.com/query)
+- fluid animations with [Motion](https://motion.dev/)
 
 **Backend**  
 - REST API built with Go (Golang)  
