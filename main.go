@@ -284,5 +284,5 @@ func main() {
 		ctx.IndentedJSON(http.StatusOK, "deleted all fulfilled todos for this user sucessfully")
 	})
 
-	router.Run("localhost:8080")
+	router.Run(os.Getenv("BACKEND_TARGET_URL"))
 }
