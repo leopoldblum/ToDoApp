@@ -13,7 +13,6 @@ import (
 	"os"
 
 	"github.com/gin-contrib/cors"
-	"github.com/joho/godotenv"
 )
 
 type Body struct {
@@ -64,10 +63,10 @@ func updateMaxValueOfIDinDB(getDB *sql.DB) bool {
 
 func main() {
 	//setup connection to database
-	err := godotenv.Load()
-	if err != nil {
-		fmt.Println("Error loading .env file")
-	}
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	fmt.Println("Error loading .env file")
+	// }
 
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
@@ -287,6 +286,6 @@ func main() {
 	router.GET("/", func(c *gin.Context) {
 		c.String(200, "API is running :D")
 	})
-
+	fmt.Println("CORS: " + os.Getenv("CORS_ORIGIN"))
 	router.Run(os.Getenv("BACKEND_TARGET_URL"))
 }
