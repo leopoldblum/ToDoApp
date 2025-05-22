@@ -10,6 +10,8 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 
+	"os"
+
 	"github.com/gin-contrib/cors"
 )
 
@@ -29,14 +31,6 @@ type Todo struct {
 	Fulfilled   bool   `json:"fulfilled"`
 	UserID      string `json:"userid"`
 }
-
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "username"
-	password = "password"
-	dbname   = "postgres"
-)
 
 func insertTodoInDB(title string, desc string, fulfilled bool, userid string, getDB *sql.DB) bool {
 	sqlStatement := "INSERT INTO todos (title, description, fulfilled, userid) VALUES ($1, $2, $3, $4)"
@@ -69,7 +63,13 @@ func updateMaxValueOfIDinDB(getDB *sql.DB) bool {
 
 func main() {
 	//setup connection to database
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+"password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	host := os.Getenv("DB_HOST")
+	port := os.Getenv("DB_PORT")
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	dbname := os.Getenv("DB_NAME")
+
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+"password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
