@@ -8,9 +8,12 @@ const backendURL = process.env.REACT_APP_BACKENDURL
 
 export const fetchAllTodos = async (userid) => {
     try {
-
+        console.log("userid: " + userid)
+        console.log(`fetch all from: ${backendURL}/getalltodos/` + userid)
         const response = await fetch(`${backendURL}/getalltodos/` + userid)
         const allEntries = await response.json();
+
+        console.log("all entries: " + allEntries)
 
         return allEntries;
     }
@@ -39,6 +42,8 @@ export async function addTodo(id, title, desc, fulfilled, userid) {
 
     if (id === null) todoBody = { title: title, desc: desc, fulfilled: fulfilled, userid: userid };
     else todoBody = { id: id, title: title, desc: desc, fulfilled: fulfilled, userid: userid };
+
+    console.log("adding todoBody: " + JSON.stringify(todoBody))
 
     try {
         // no id was specified

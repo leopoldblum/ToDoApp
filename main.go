@@ -10,9 +10,11 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 
+	"log"
 	"os"
 
 	"github.com/gin-contrib/cors"
+	"github.com/joho/godotenv"
 )
 
 type Body struct {
@@ -63,6 +65,11 @@ func updateMaxValueOfIDinDB(getDB *sql.DB) bool {
 
 func main() {
 	//setup connection to database
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
 	user := os.Getenv("DB_USER")
@@ -89,7 +96,7 @@ func main() {
 	router.Use(cors.Default())
 
 	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = []string{"http://localhost:3000"}
+	corsConfig.AllowOrigins = []string{os.Getenv("CORS_ORIGIN")}
 	router.Use(cors.New(corsConfig))
 
 	// get entry with id

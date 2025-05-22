@@ -44,6 +44,7 @@ const TodoListWrapper = () => {
 
     if (isError) {
         console.error("error while fetching: " + error.message);
+        console.debug("data: " + todosFromFetch)
     }
 
     const mutateAdd = useMutationAddTodo();
