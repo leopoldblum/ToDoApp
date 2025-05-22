@@ -1,3 +1,5 @@
+const backendURL = process.env.REACT_APP_BACKENDURL
+
 /**
  * =============================
  * Section: fetching
@@ -7,7 +9,7 @@
 export const fetchAllTodos = async (userid) => {
     try {
 
-        const response = await fetch("http://localhost:8080/getalltodos/" + userid)
+        const response = await fetch(`${backendURL}/getalltodos/` + userid)
         const allEntries = await response.json();
 
         return allEntries;
@@ -41,7 +43,7 @@ export async function addTodo(id, title, desc, fulfilled, userid) {
     try {
         // no id was specified
         const postNewTodoResponse = await fetch(
-            id === null ? "http://localhost:8080/todo" : "http://localhost:8080/todoWithID",
+            id === null ? `${backendURL}/todo` : `${backendURL}/todoWithID`,
             {
                 method: "POST",
                 body: JSON.stringify(todoBody),
@@ -70,7 +72,7 @@ export async function editTodo(id, title, desc, fulfilled, userid) {
 
     try {
         const updateResponse = await fetch(
-            "http://localhost:8080/updateTodo/" + id,
+            `${backendURL}/updateTodo/` + id,
             {
                 method: "POST",
                 body: JSON.stringify(todoBody),
@@ -98,7 +100,7 @@ export
 
     try {
         const response = await fetch(
-            "http://localhost:8080/todo/" + todoID,
+            `${backendURL}/todo/` + todoID,
             {
                 method: "DELETE",
             },
@@ -127,7 +129,7 @@ export
 export async function deleteAllFulfilledTodos(userid) {
     try {
         const response = await fetch(
-            "http://localhost:8080/deleteAllFulfilledTodos/" + userid,
+            `${backendURL}/deleteAllFulfilledTodos/` + userid,
             {
                 method: "DELETE",
             },
