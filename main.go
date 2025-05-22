@@ -10,7 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 
-	"log"
 	"os"
 
 	"github.com/gin-contrib/cors"
@@ -67,7 +66,7 @@ func main() {
 	//setup connection to database
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		fmt.Println("Error loading .env file")
 	}
 
 	host := os.Getenv("DB_HOST")
