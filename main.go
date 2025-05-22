@@ -285,5 +285,5 @@ func main() {
 		ctx.IndentedJSON(http.StatusOK, "deleted all fulfilled todos for this user sucessfully")
 	})
 
-	router.Run("0000:8080")
+	router.Run("localhost:8080")
 }
