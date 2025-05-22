@@ -284,5 +284,9 @@ func main() {
 		ctx.IndentedJSON(http.StatusOK, "deleted all fulfilled todos for this user sucessfully")
 	})
 
+	router.GET("/", func(c *gin.Context) {
+		c.String(200, "API is running :D")
+	})
+
 	router.Run(os.Getenv("BACKEND_TARGET_URL"))
 }
