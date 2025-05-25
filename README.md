@@ -1,12 +1,14 @@
 ## Basic Todo App
 
+https://todos.leopold-blum.de/
+
 A simple yet complete full-stack Todo application with user-specific persistent data and smooth transitions.
 
 ###  Tech Stack
 
 **Frontend**  
 - React, HTML
-- Tailwind CSS v4 
+- Tailwind CSS
 - [TanStack Query](https://tanstack.com/query) for data fetching, optimistic updates and caching
 - [Motion](https://motion.dev/) for smooth animations and transitions 
 
