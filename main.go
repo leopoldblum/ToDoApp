@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 
 	"os"
@@ -63,7 +64,7 @@ func updateMaxValueOfIDinDB(getDB *sql.DB) bool {
 
 func main() {
 	//setup connection to database
-	// err := godotenv.Load()
+	err := godotenv.Load()
 	// if err != nil {
 	// 	fmt.Println("Error loading .env file")
 	// }

@@ -31,7 +31,7 @@
     --default-mono-font-family: var(--font-mono);
     --color-bg-lm: #f6ebdc;
     --color-text-lm: #d94355;
-    --color-text-linethrough: #d94355;
+    --color-text-linethrough: #561A22;
     --color-accent-lm: #321d34;
     --color-text-hover-lm: oklch(70.4% 0.191 22.216);
     --color-modal-input-txt: gray;

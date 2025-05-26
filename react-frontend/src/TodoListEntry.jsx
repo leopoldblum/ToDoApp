@@ -61,7 +61,7 @@ const TodoListEntry = ({ displayFulfilled, currentTodo }) => {
                         style={{ width: "100%", overflow: "hidden" }}
                     >
 
-                        <div className="flex items-center justify-start pt-5 pb-5 pl-10 pr-10 min-h-20 overflow-y-hidden text-left break-all font-medium">
+                        <div className="flex items-center justify-start pt-5 pb-5 pl-10 pr-10 min-h-20 overflow-y-hidden text-left break-all font-medium text-accent-lm">
 
                             {currentTodo.desc}
 
