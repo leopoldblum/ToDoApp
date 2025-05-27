@@ -66,7 +66,7 @@ export const useMutationAddTodo = () => {
         },
 
         onError: (err, newTodo, context) => {
-            queryClient.setQueryData([context.queryKey], context.previousTodos || [])
+            queryClient.setQueryData(context.queryKey, context.previousTodos || [])
             console.error("error when adding todo: " + err)
             throw err;
         },
@@ -99,7 +99,7 @@ export const useMutationEditTodo = () => {
         },
 
         onError: (err, newTodo, context) => {
-            queryClient.setQueryData([context.queryKey], context.previousTodos)
+            queryClient.setQueryData(context.queryKey, context.previousTodos)
             console.error("error when editing todo: " + err)
             throw err;
 
@@ -137,11 +137,11 @@ export const useMutationDeleteTodo = () => {
         },
 
         onError: (err, newTodo, context) => {
-            queryClient.setQueryData([context.queryKey], context.previousTodos)
+            queryClient.setQueryData(context.queryKey, context.previousTodos)
             console.log("error occured: " + err)
         },
 
-        onSettled: (error, data, variables) => queryClient.invalidateQueries({ queryKey: ['todos', variables.userid] }),
+        onSettled: (data, error, variables, context) => queryClient.invalidateQueries({ queryKey: ['todos', variables.userid] }),
     })
 }
 
