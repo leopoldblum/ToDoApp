@@ -61,7 +61,7 @@ export async function addTodo(id, title, desc, fulfilled, userid) {
 
     } catch (error) {
         console.error(error);
-        // throw error;
+        throw error;
     }
 }
 
@@ -88,7 +88,7 @@ export async function editTodo(id, title, desc, fulfilled, userid) {
 
     } catch (error) {
         console.error(error);
-        // throw error
+        throw error
     }
 }
 
@@ -112,10 +112,9 @@ export
             throw new Error("Error - Response Status:" + response.status);
         }
 
-        // todoFuncAndData.updateList();
     } catch (error) {
         console.error(error);
-        // throw error
+        throw error
     }
 }
 
@@ -142,6 +141,6 @@ export async function deleteAllFulfilledTodos(userid) {
         }
     } catch (error) {
         console.error(error);
-        // throw error
+        throw error
     }
 }

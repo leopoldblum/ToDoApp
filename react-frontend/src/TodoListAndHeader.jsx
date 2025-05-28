@@ -61,30 +61,30 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
                 {isHeaderTypeActive &&
                     <motion.div
-                        // layout
                         initial={{ opacity: 0, height: 0, scaleY: 0, originY: 0 }}
                         animate={{ opacity: 1, height: "auto", scaleY: 1, originY: 0 }}
                         exit={{ opacity: 0, height: 0, scaleY: 0, originY: 0 }}
                         transition={{ duration: 0.3 }}
                     >
                         <div className={`w-18/25 m-auto block `}>
-                            {/* <AnimatePresence> */}
+
+
                             {todoFuncAndData.todos != null && todoFuncAndData.todos.filter(entry => entry.fulfilled === isFulfilled).map(entry =>
                                 // for transition when moving todos between headers
-                                < motion.div
+
+                                <motion.div
                                     layout
-                                    initial={{ scaleY: 0, originY: 0 }}
-                                    animate={{ scaleY: 1, originY: 0 }}
-                                    exit={{ scaleY: 0, originY: 0 }}
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: "auto" }}
+                                    exit={{ opacity: 0, height: 0 }}
                                     transition={{ duration: 0.3 }}
                                     key={entry.id}
                                 >
-
                                     <TodoListEntry displayFulfilled={isFulfilled} currentTodo={entry} />
 
                                 </motion.div>
+
                             )}
-                            {/* </AnimatePresence> */}
 
                         </div>
 
