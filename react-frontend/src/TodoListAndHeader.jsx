@@ -61,6 +61,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
                 {isHeaderTypeActive &&
                     <motion.div
+                        layout
                         initial={{ opacity: 0, height: 0, scaleY: 0, originY: 0 }}
                         animate={{ opacity: 1, height: "auto", scaleY: 1, originY: 0 }}
                         exit={{ opacity: 0, height: 0, scaleY: 0, originY: 0 }}
@@ -74,7 +75,6 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
                                 <motion.div
                                     layout
-                                    initial={{ opacity: 0, height: 0 }}
                                     animate={{ opacity: 1, height: "auto" }}
                                     exit={{ opacity: 0, height: 0 }}
                                     transition={{ duration: 0.3 }}
