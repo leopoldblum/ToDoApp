@@ -26,14 +26,14 @@ const TodoListEntry = ({ displayFulfilled, currentTodo }) => {
         <div className={"flex flex-col justify-center items-center h-auto mt-5 mb-5 select-none border-l-2 border-accent-lm"} >
 
             {/* title */}
-            <div className="flex flex-row justify-center items-center min-h-20 w-full border-b-1 border-accent-lm">
+            <div className="flex flex-row justify-center items-center min-h-15 md:min-h-20 w-full border-b-1 border-accent-lm">
 
-                <div className={`flex flex-2/3 items-center overflow-auto text-left pl-10 pr-10 pt-5 pb-5 break-all cursor-pointer ${displayFulfilled ? "line-through text-text-linethrough" : ""}`}
+                <div className={`flex flex-2/3 items-center overflow-auto text-left pl-3 pr-3 md:pl-10 md:pr-10 pt-5 pb-5 break-all cursor-pointer ${displayFulfilled ? "line-through text-text-linethrough" : ""}`}
                     onClick={() => toggleDesc(currentTodo.id)}>
                     {currentTodo.title}
                 </div>
 
-                <div className="flex flex-1/3 justify-center items-center text-accent-lm">
+                <div className="flex flex-1/3 gap-2 justify-center items-center text-accent-lm">
 
                     <div className="flex flex-1/3 justify-center items-center ">
                         <TodoEditOrAddButton currentTodo={currentTodo} />
@@ -61,7 +61,7 @@ const TodoListEntry = ({ displayFulfilled, currentTodo }) => {
                         style={{ width: "100%", overflow: "hidden" }}
                     >
 
-                        <div className="flex items-center justify-start pt-5 pb-5 pl-10 pr-10 min-h-20 overflow-y-hidden text-left break-all font-medium text-accent-lm">
+                        <div className="flex items-center justify-start pt-3 pb-3 pl-3 pr-3 md:pl-10 md:pr-10 min-h-15 md:min-h-20 overflow-y-hidden text-left break-all font-medium text-accent-lm">
 
                             {currentTodo.desc}
 

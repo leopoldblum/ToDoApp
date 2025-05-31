@@ -42,11 +42,11 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
         <div className="flex justify-center items-center w-full ">
 
 
-            <button className={`flex justify-center items-center p-4 relative font-medium cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out group ${hasTransitionStartedRef.current ? "pointer-events-none" : ""}`}
+            <button className={`flex justify-center items-center md:p-4 p-2 relative font-medium cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out group ${hasTransitionStartedRef.current ? "pointer-events-none" : ""}`}
                 onClick={handleClick}
                 onTransitionEnd={handleTransitionEnd}
             >
-                <div className="relative w-8 h-8">
+                <div className="relative w-6 h-6 md:w-8 md:h-8">
 
                     <svg
                         className={`absolute inset-0 object-cover transition-all duration-300 ease-in-out group-hover:text-text-hover-lm  ${!isChecked ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-45"} `}

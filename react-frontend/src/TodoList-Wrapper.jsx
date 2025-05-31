@@ -206,40 +206,44 @@ const TodoListWrapper = () => {
             <div>
 
                 {/* top bar */}
-                <div className=' flex flex-row items-baseline pt-10 pb-10'>
+                <div className=' flex flex-col md:flex-row md:items-baseline items-center pt-5 pb-3 md:pt-10 md:pb-10'>
 
                     <div className="text-6xl font-extrabold p-3 select-none"> todos </div>
 
-                    {/* darkmode */}
-                    <button className="flex justify-center items-center cursor-pointer text-s font-extrabold p-3 ml-2  transition-all duration-300 hover:scale-90 hover:text-text-hover-lm "
-                        onClick={toggleDarkMode}>
+                    <div className='flex flex-row justify-around items-center gap-2'>
 
-                        <span className='relative h-6 w-6'>
-                            <SunIcon className={`h-full absolute inset-0 transition-all duration-500 ${darkmodeEnabled ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-90"}`} />
+                        {/* darkmode */}
+                        <button className="flex justify-center items-center cursor-pointer p-3 transition-all duration-300 hover:scale-90 hover:text-text-hover-lm "
+                            onClick={toggleDarkMode}>
 
-                            <MoonIcon className={`h-full absolute inset-0 transition-all duration-500 ${!darkmodeEnabled ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-180"}`} />
+                            <span className='relative h-6 w-6'>
+                                <SunIcon className={`h-full absolute inset-0 transition-all duration-500 ${darkmodeEnabled ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-90"}`} />
 
-                        </span>
+                                <MoonIcon className={`h-full absolute inset-0 transition-all duration-500 ${!darkmodeEnabled ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75 rotate-180"}`} />
+
+                            </span>
 
 
-                    </button>
+                        </button>
 
 
-                    {/* add todo */}
-                    <div className='flex justify-center items-center ml-2'>
-                        <TodoEditOrAddButton currentTodo={null} />
+                        {/* add todo */}
+                        <div className='flex justify-center items-center'>
+                            <TodoEditOrAddButton currentTodo={null} />
+                        </div>
+
+
+                        {/* undo last action */}
+                        <button className={`flex items-center ${todoHistory.length > 0 ? "cursor-pointer" : "text-accent-lm cursor-not-allowed"} justify-center p-3 transition-all duration-300 hover:scale-90 hover:text-text-hover-lm`}
+                            onClick={undoLastAction}
+                            disabled={todoHistory.length > 0 ? "" : "disabled"}
+                        >
+
+                            <ArrowUturnLeftIcon className='h-6' />
+
+                        </button>
                     </div>
 
-
-                    {/* undo last action */}
-                    <button className={`flex items-center ${todoHistory.length > 0 ? "cursor-pointer" : "text-accent-lm cursor-not-allowed"} justify-center p-3 ml-2 transition-all duration-300 hover:scale-90 hover:text-text-hover-lm`}
-                        onClick={undoLastAction}
-                        disabled={todoHistory.length > 0 ? "" : "disabled"}
-                    >
-
-                        <ArrowUturnLeftIcon className='h-6' />
-
-                    </button>
 
                 </div>
 

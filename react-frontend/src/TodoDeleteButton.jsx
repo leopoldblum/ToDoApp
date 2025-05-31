@@ -17,14 +17,14 @@ const TodoDeleteButton = ({ currentTodo }) => {
     }
 
     return (
-        <button className="w-full h-full flex justify-center items-center pl-6 pr-6 pt-4 pb-4 cursor-pointer hover:text-text-hover-lm hover:scale-95 transition-all duration-300 ease-in-out"
+        <button className="w-full h-full flex justify-center items-center p-2 md:p-4 cursor-pointer hover:text-text-hover-lm hover:scale-95 transition-all duration-300 ease-in-out"
             onClick={() => mutationDeleteTodo.mutate({
                 todoID: currentTodo.id,
                 userid: todoFuncAndData.userIDref.current
             })}
         >
 
-            <TrashIcon className="h-8 w-8" />
+            <TrashIcon className="h-6 w-6 md:h-8 md:w-8" />
 
         </button >
     );
