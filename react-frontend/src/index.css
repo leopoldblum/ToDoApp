@@ -40,6 +40,10 @@ body,
   height: 100%;
 }
 
+:root {
+  --spacing: 0.25rem;
+}
+
 #root {
   overflow-y: scroll;
   scrollbar-color: var(--color-accent-lm) var(--color-bg-lm);
