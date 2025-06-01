@@ -107,16 +107,16 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
             {/* Edit Button */}
             {isEdit &&
 
-                <button className="w-full h-full flex justify-center items-center p-2 md:p-4 cursor-pointer hover:scale-95 transition-all duration-300 ease-in-out hover:text-text-hover-lm"
+                <button className="w-full h-full flex justify-center items-center p-2 lg:p-4 cursor-pointer hover:scale-95 transition-all duration-300 ease-in-out hover:text-text-hover-lm"
                     onClick={openModal}
                 >
-                    <PencilSquareIcon className="w-6 h-6 md:w-8 md:h-8" />
+                    <PencilSquareIcon className="w-6 h-6 lg:w-8 lg:h-8" />
                 </button>
             }
 
             {/* Add Button */}
             {!isEdit &&
-                <button className="flex items-center justify-center transition-all cursor-pointer duration-300 hover:scale-120 hover:text-text-hover-lm p-3 text-s font-extrabold"
+                <button className="flex items-center justify-center transition-all cursor-pointer duration-300 hover:scale-120 hover:text-text-hover-lm p-3"
                     onClick={openModal}
                 >
                     <PlusIcon className='h-6' />
@@ -130,7 +130,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                     onClick={closeModal}
                 >
                     <div
-                        className="bg-bg-lm rounded-xl shadow-xl pt-5 pl-15 pr-15 pb-5 h-80 mt-30 md:mt-60 mb-auto w-full max-w-xs md:max-w-md border-2 border-accent-lm"
+                        className="bg-bg-lm rounded-xl shadow-xl pt-5 pl-15 pr-15 pb-5 h-80 mt-30 lg:mt-60 mb-auto w-full max-w-xs lg:max-w-md border-2 border-accent-lm"
                         onClick={(e) => e.stopPropagation()}
                     >
 

@@ -26,7 +26,7 @@ class App extends Component {
     return (
       <div className="flex justify-center min-h-screen min-w-0 bg-bg-lm text-text-lm text-center font-bold font-sans transition-all duration-200">
 
-        <div className='w-9/10 md:w-7/10 pb-20 md:pb-50'>
+        <div className='w-9/10 lg:w-7/10 pb-20 lg:pb-50'>
 
           <QueryClientProvider client={queryClient}>
 

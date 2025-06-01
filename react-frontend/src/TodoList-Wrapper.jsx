@@ -206,7 +206,7 @@ const TodoListWrapper = () => {
             <div>
 
                 {/* top bar */}
-                <div className=' flex flex-col md:flex-row md:items-baseline items-center pt-5 pb-3 md:pt-10 md:pb-10'>
+                <div className=' flex flex-col lg:flex-row lg:items-baseline items-center pt-5 pb-3 lg:pt-10 lg:pb-10'>
 
                     <div className="text-6xl font-extrabold p-3 select-none"> todos </div>
 
