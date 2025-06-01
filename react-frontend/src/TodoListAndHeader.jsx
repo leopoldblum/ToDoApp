@@ -37,7 +37,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
                 transition={{ duration: 0.3 }}
             >
 
-                <div className={`grow-0 p-2 flex text-xl justify-center items-center pointer-events-auto select-none transition-all duration-200 ease-in ${isHeaderTypeActive ? "rotate-90" : ""} `}>
+                <div className={` p-4 lg:p-5 flex text-xl justify-center items-center pointer-events-auto select-none transition-all duration-200 ease-in ${isHeaderTypeActive ? "rotate-90" : ""} `}>
                     &gt;
                 </div>
 

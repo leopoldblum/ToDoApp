@@ -1,6 +1,5 @@
 // const backendURL = process.env.REACT_APP_BACKENDURL
 const backendURL = import.meta.env.VITE_BACKENDURL;
-console.log("backendURL from .env: " + backendURL)
 
 /**
  * =============================
