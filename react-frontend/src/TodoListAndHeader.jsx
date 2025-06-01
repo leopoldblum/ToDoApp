@@ -37,17 +37,17 @@ const TodoListAndHeader = ({ isFulfilled }) => {
                 transition={{ duration: 0.3 }}
             >
 
-                <div className={`bg-green-400 grow-0 p-2 flex text-xl justify-center items-center pointer-events-auto select-none transition-all duration-200 ease-in ${isHeaderTypeActive ? "rotate-90" : ""} `}>
+                <div className={`grow-0 p-2 flex text-xl justify-center items-center pointer-events-auto select-none transition-all duration-200 ease-in ${isHeaderTypeActive ? "rotate-90" : ""} `}>
                     &gt;
                 </div>
 
-                <div className='bg-red-400 h-full w-8/10 grow text-left flex items-center select-none cursor-pointer' onClick={() => toggleHeaderState(headerType)} >
+                <div className='h-full w-8/10 grow text-left flex items-center select-none cursor-pointer' onClick={() => toggleHeaderState(headerType)} >
 
                     <h1> {isFulfilled ? "fulfilled todos" : "active todos"}  ({specificTodoCounter}) </h1>
 
                 </div>
 
-                <div className={`bg-amber-400 flex justify-center grow-0 items-center text-accent-lm transition-all duration-300 ease-in ${isHeaderTypeActive ? "max-h-2000 opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>
+                <div className={`flex justify-center grow-0 items-center text-accent-lm transition-all duration-300 ease-in ${isHeaderTypeActive ? "max-h-2000 opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>
                     {isFulfilled ?
                         <TodoDeleteAllFulfilledButton />
                         :
