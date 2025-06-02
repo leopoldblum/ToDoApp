@@ -31,7 +31,8 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
             title: currentTodo.title,
             desc: currentTodo.desc,
             fulfilled: !currentTodo.fulfilled,
-            userid: todoFuncAndData.userIDref.current
+            userid: todoFuncAndData.userIDref.current,
+            optimisticid: currentTodo.optimisticid
         });
 
         hasTransitionStartedRef.current = false

@@ -64,7 +64,7 @@ const TodoListWrapper = () => {
             if (initialLoadDoneRef.current) {
 
                 // check that it doesnt contain optmistic update data
-                if (!(todos.some((el) => el.id.toString().startsWith("placeholder_")))) {
+                if (!(todos.some((el) => el.id.toString().startsWith("opt_")))) {
 
                     // only write in history when it's supposed to, not when undoing things
                     if (isHistoryBlockedRef.current === false) {
@@ -147,6 +147,7 @@ const TodoListWrapper = () => {
                         desc: todoA.desc,
                         fulfilled: todoA.fulfilled,
                         userid: todoA.userid,
+                        optimisticid: todoA.optimisticid
                     })
                 }
 
@@ -176,6 +177,7 @@ const TodoListWrapper = () => {
                         desc: todoM.desc,
                         fulfilled: todoM.fulfilled,
                         userid: todoM.userid,
+                        optimisticid: todoM.optimisticid
                     })
                 }
 

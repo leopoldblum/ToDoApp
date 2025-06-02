@@ -27,18 +27,20 @@ export const fetchAllTodos = async (userid) => {
  */
 /**
  * 
- * @param {(int | null)} id when null => autoId in database || when specified => add Todo with that ID in database 
+ * @param {(int | null)} id when null => autoId in backend || when specified => add Todo with that ID in database 
  * @param {string} title title of todo
  * @param {string} desc description of todo
  * @param {boolean} fulfilled fulfillment-status of todo 
  */
 
-export async function addTodo(id, title, desc, fulfilled, userid) {
+export async function addTodo(id, title, desc, fulfilled, userid, optimisticid) {
 
     var todoBody;
 
-    if (id === null) todoBody = { title: title, desc: desc, fulfilled: fulfilled, userid: userid };
-    else todoBody = { id: id, title: title, desc: desc, fulfilled: fulfilled, userid: userid };
+    if (id === null) todoBody = { title: title, desc: desc, fulfilled: fulfilled, userid: userid, optimisticid: optimisticid };
+    else todoBody = { id: id, title: title, desc: desc, fulfilled: fulfilled, userid: userid, optimisticid: optimisticid };
+
+    // console.log("adding auto - body: " + JSON.stringify(todoBody))
 
     try {
         // no id was specified
@@ -66,9 +68,9 @@ export async function addTodo(id, title, desc, fulfilled, userid) {
     }
 }
 
-export async function editTodo(id, title, desc, fulfilled, userid) {
+export async function editTodo(id, title, desc, fulfilled, userid, optimisticid) {
 
-    const todoBody = { title: title, desc: desc, fulfilled: fulfilled, userid: userid };
+    const todoBody = { title: title, desc: desc, fulfilled: fulfilled, userid: userid, optimisticid: optimisticid };
 
     try {
         const updateResponse = await fetch(

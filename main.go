@@ -5,11 +5,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"strconv"
-
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	"github.com/oklog/ulid/v2"
 
 	"os"
 
@@ -18,56 +17,52 @@ import (
 
 type Body struct {
 	// json tag to de-serialize json body
-	Title       string `json:"title"`
-	Description string `json:"desc"`
-	Fulfilled   bool   `json:"fulfilled"`
-	UserID      string `json:"userid"`
+	Title        string `json:"title"`
+	Description  string `json:"desc"`
+	Fulfilled    bool   `json:"fulfilled"`
+	UserID       string `json:"userid"`
+	OptimisticID string `json:"optimisticid"`
 }
 
 type Todo struct {
 	// json tag to de-serialize json body+
-	Id          int    `json:"id"`
-	Title       string `json:"title"`
-	Description string `json:"desc"`
-	Fulfilled   bool   `json:"fulfilled"`
-	UserID      string `json:"userid"`
+	Id           string `json:"id"`
+	Title        string `json:"title"`
+	Description  string `json:"desc"`
+	Fulfilled    bool   `json:"fulfilled"`
+	UserID       string `json:"userid"`
+	OptimisticID string `json:"optimisticid"`
 }
 
-func insertTodoInDB(title string, desc string, fulfilled bool, userid string, getDB *sql.DB) bool {
-	sqlStatement := "INSERT INTO todos (title, description, fulfilled, userid) VALUES ($1, $2, $3, $4)"
-	//sqlStatement := `INSERT INTO todos (title, description, fulfilled) VALUES ('test_inVSCode23423423', 'test_desc23423432', false)`
+func autoInsertTodoInDB(title string, desc string, fulfilled bool, userid string, optimisticid string, getDB *sql.DB) bool {
+	ulidID := ulid.Make().String() // creating ULID poggers
+	// fmt.Printf("inserting with ULID: %s \n", ulidID)
 
-	_, err := getDB.Exec(sqlStatement, title, desc, fulfilled, userid)
-	return err == nil
-	/* if err != nil {
-		return false
-		//panic(err)
+	sqlStatement := "INSERT INTO todos (id, title, description, fulfilled, userid, optimisticid) VALUES ($1, $2, $3, $4, $5, $6)"
+	// fmt.Println(sqlStatement)
+
+	_, err := getDB.Exec(sqlStatement, ulidID, title, desc, fulfilled, userid, optimisticid)
+	if err != nil {
+		panic(err)
 	}
-	return true */
+	return true
 }
 
-func insertTodoWithSetIDInDB(id int, title string, desc string, fulfilled bool, userid string, getDB *sql.DB) bool {
-	sqlStatement := "INSERT INTO todos (id, title, description, fulfilled, userid) VALUES ($1, $2, $3, $4, $5)"
+func insertTodoWithSetIDInDB(id string, title string, desc string, fulfilled bool, userid string, optimisticid string, getDB *sql.DB) bool {
+	sqlStatement := "INSERT INTO todos (id, title, description, fulfilled, userid, optimisticid) VALUES ($1, $2, $3, $4, $5, $6)"
 
-	_, err := getDB.Exec(sqlStatement, id, title, desc, fulfilled, userid)
-	return err == nil
-}
-
-func updateMaxValueOfIDinDB(getDB *sql.DB) bool {
-	sqlStatement := "SELECT setval('todos_id_seq', COALESCE((SELECT MAX(id) FROM todos), 1))"
-	var newID int64
-
-	err := getDB.QueryRow(sqlStatement).Scan(&newID)
-
-	return err == nil
+	_, err := getDB.Exec(sqlStatement, id, title, desc, fulfilled, userid, optimisticid)
+	if err != nil {
+		panic(err)
+	}
+	return true
 }
 
 func main() {
-	//setup connection to database
+	// load .env variables
 	err := godotenv.Load()
-	// if err != nil {
-	// 	fmt.Println("Error loading .env file")
-	// }
+
+	//setup connection to database
 
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
@@ -107,21 +102,17 @@ func main() {
 		var description string
 		var fulfilled bool
 		var userid string
+		var optimisticid string
 
 		row := db.QueryRow(sqlStatement, getId)
 
-		switch err := row.Scan(&getId, &title, &description, &fulfilled, &userid); err {
+		switch err := row.Scan(&getId, &title, &description, &fulfilled, &userid, &optimisticid); err {
 		case sql.ErrNoRows:
 			ctx.IndentedJSON(http.StatusNotFound, "No entry with this ID found")
 		case nil:
-			fmt.Println(getId, title, description, fulfilled)
+			// fmt.Println(getId, title, description, fulfilled)
 
-			idToInt, err := strconv.Atoi(getId)
-			if err != nil {
-				ctx.IndentedJSON(http.StatusBadRequest, "wrong id")
-			}
-
-			ctx.IndentedJSON(http.StatusOK, Todo{idToInt, title, description, fulfilled, userid})
+			ctx.IndentedJSON(http.StatusOK, Todo{getId, title, description, fulfilled, userid, optimisticid})
 		default:
 			//panic(err)
 			ctx.IndentedJSON(http.StatusInternalServerError, fmt.Sprintf("Received this Error: %d", err))
@@ -129,7 +120,7 @@ func main() {
 
 	})
 
-	// add entry
+	// add entry with auto ID
 	router.POST("todo", func(ctx *gin.Context) {
 		body := Body{}
 
@@ -137,9 +128,9 @@ func main() {
 			ctx.IndentedJSON(401, "couldnt bind body")
 			return
 		}
-		//fmt.Println(body)
+		// fmt.Println(body)
 
-		if insertTodoInDB(body.Title, body.Description, body.Fulfilled, body.UserID, db) {
+		if autoInsertTodoInDB(body.Title, body.Description, body.Fulfilled, body.UserID, body.OptimisticID, db) {
 			ctx.IndentedJSON(http.StatusCreated, "succesfully added Entry")
 		} else {
 			ctx.IndentedJSON(http.StatusNotModified, "oops, something went wrong")
@@ -156,9 +147,8 @@ func main() {
 			return
 		}
 
-		if insertTodoWithSetIDInDB(todo.Id, todo.Title, todo.Description, todo.Fulfilled, todo.UserID, db) {
+		if insertTodoWithSetIDInDB(todo.Id, todo.Title, todo.Description, todo.Fulfilled, todo.UserID, todo.OptimisticID, db) {
 			ctx.IndentedJSON(http.StatusCreated, "succesfully added Entry")
-			updateMaxValueOfIDinDB(db)
 		} else {
 			ctx.IndentedJSON(http.StatusNotModified, "oops, something went wrong")
 		}
@@ -175,16 +165,15 @@ func main() {
 			return
 		}
 
-		//TODO: add error when ID to edit doesnt exist
-
 		var newTitle = body.Title
 		var newDesc = body.Description
 		var newFulfilled = body.Fulfilled
 		var newUserid = body.UserID
+		var newOptimisticid = body.OptimisticID
 
-		sqlStatement := `UPDATE todos SET title = $2, description = $3, fulfilled = $4, userid = $5 WHERE id=$1`
+		sqlStatement := `UPDATE todos SET title = $2, description = $3, fulfilled = $4, userid = $5, optimisticid = $6 WHERE id=$1`
 
-		_, err := db.Exec(sqlStatement, id_select, newTitle, newDesc, newFulfilled, newUserid)
+		_, err := db.Exec(sqlStatement, id_select, newTitle, newDesc, newFulfilled, newUserid, newOptimisticid)
 		if err != nil {
 			ctx.IndentedJSON(http.StatusInternalServerError, fmt.Sprintf("Received this Error: %d", err))
 		}
@@ -209,7 +198,7 @@ func main() {
 		for rows.Next() {
 			var item Todo
 
-			err = rows.Scan(&item.Id, &item.Title, &item.Description, &item.Fulfilled, &item.UserID)
+			err = rows.Scan(&item.Id, &item.Title, &item.Description, &item.Fulfilled, &item.UserID, &item.OptimisticID)
 
 			if err != nil {
 				// panic("sdaf")
@@ -240,7 +229,7 @@ func main() {
 		for rows.Next() {
 			var item Todo
 
-			err = rows.Scan(&item.Id, &item.Title, &item.Description, &item.Fulfilled, &item.UserID)
+			err = rows.Scan(&item.Id, &item.Title, &item.Description, &item.Fulfilled, &item.UserID, &item.OptimisticID)
 
 			if err != nil {
 				// panic("sdaf")

@@ -37,7 +37,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
                 transition={{ duration: 0.3 }}
             >
 
-                <div className={` p-4 lg:p-5 flex text-xl justify-center items-center pointer-events-auto select-none transition-all duration-200 ease-in ${isHeaderTypeActive ? "rotate-90" : ""} `}>
+                <div className={`p-4 lg:p-5 flex text-xl justify-center items-center pointer-events-auto select-none transition-all duration-200 ease-in ${isHeaderTypeActive ? "rotate-90" : ""} `}>
                     &gt;
                 </div>
 
@@ -61,10 +61,10 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
                 {isHeaderTypeActive &&
                     <motion.div
-                        layout
-                        initial={{ opacity: 0, height: 0, scaleY: 0, originY: 0 }}
-                        animate={{ opacity: 1, height: "auto", scaleY: 1, originY: 0 }}
-                        exit={{ opacity: 0, height: 0, scaleY: 0, originY: 0 }}
+                        // layout
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3 }}
                     >
                         <div className={`w-22/25 lg:w-18/25 m-auto block`}>
@@ -79,7 +79,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 0.3 }}
-                                    key={entry.id}
+                                    key={entry.optimisticid}
                                 >
                                     <TodoListEntry displayFulfilled={isFulfilled} currentTodo={entry} />
 

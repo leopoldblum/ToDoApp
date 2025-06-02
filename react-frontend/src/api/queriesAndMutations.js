@@ -38,21 +38,22 @@ export const useFetchTodos = (userid) => {
  * @param {string} desc description of todo
  * @param {boolean} fulfilled fulfillment-status of todo
  * @param {string} userid userid of this browser instance 
+ * @param {string} optimisticid optimisticid of todo
  */
 
 export const useMutationAddTodo = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ id, title, desc, fulfilled, userid }) => addTodo(id, title, desc, fulfilled, userid),
+        mutationFn: ({ id, title, desc, fulfilled, userid, optimisticid }) => addTodo(id, title, desc, fulfilled, userid, optimisticid),
 
-        onMutate: async ({ id, title, desc, fulfilled, userid }) => {
+        onMutate: async ({ id, title, desc, fulfilled, userid, optimisticid }) => {
             // optimistically adding todo
             const queryKey = ['todos', userid];
 
-            const placeholderID = "placeholder_" + crypto.randomUUID()
+            const placeholderID = "opt_" + optimisticid
 
-            const newTodo = { id: placeholderID, title: title, desc: desc, fulfilled: fulfilled, userid: userid };
+            const newTodo = { id: placeholderID, title: title, desc: desc, fulfilled: fulfilled, userid: userid, optimisticid: optimisticid };
 
             // console.log("placeholder todo: " + JSON.stringify(newTodo))
 
@@ -81,13 +82,13 @@ export const useMutationEditTodo = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ id, title, desc, fulfilled, userid }) => editTodo(id, title, desc, fulfilled, userid),
+        mutationFn: ({ id, title, desc, fulfilled, userid, optimisticid }) => editTodo(id, title, desc, fulfilled, userid, optimisticid),
 
-        onMutate: async ({ id, title, desc, fulfilled, userid }) => {
+        onMutate: async ({ id, title, desc, fulfilled, userid, optimisticid }) => {
             // optimistically updating todo
             const queryKey = ['todos', userid];
 
-            const todoBody = { id: id, title: title, desc: desc, fulfilled: fulfilled, userid: userid };
+            const todoBody = { id: id, title: title, desc: desc, fulfilled: fulfilled, userid: userid, optimisticid: optimisticid };
 
             await queryClient.cancelQueries({ queryKey })
 

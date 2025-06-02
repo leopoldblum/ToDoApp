@@ -62,16 +62,19 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                 title: formContent.formTitle,
                 desc: formContent.formDesc,
                 fulfilled: currentTodo.fulfilled,
-                userid: todoFuncAndData.userIDref.current
+                userid: todoFuncAndData.userIDref.current,
+                optimisticid: currentTodo.optimisticid
             })
         }
         else {
+            const optimisticid = crypto.randomUUID()
             mutationAddTodo.mutate({
                 id: null,
                 title: formContent.formTitle,
                 desc: formContent.formDesc,
                 fulfilled: false,
-                userid: todoFuncAndData.userIDref.current
+                userid: todoFuncAndData.userIDref.current,
+                optimisticid: optimisticid
             })
         }
         closeModal();
