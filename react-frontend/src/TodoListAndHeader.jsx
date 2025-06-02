@@ -61,11 +61,13 @@ const TodoListAndHeader = ({ isFulfilled }) => {
 
                 {isHeaderTypeActive &&
                     <motion.div
-                        // layout
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
+                        layout
+                        // key={headerType}
+                        initial={{ opacity: 0, height: 0, scaleY: 0, originY: 0 }}
+                        animate={{ opacity: 1, height: "auto", scaleY: 1, originY: 0 }}
+                        exit={{ opacity: 0, height: 0, scaleY: 0, originY: 0 }}
                         transition={{ duration: 0.3 }}
+                        style={{ overflow: 'hidden' }}
                     >
                         <div className={`w-22/25 lg:w-18/25 m-auto block`}>
 
@@ -81,6 +83,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
                                     transition={{ duration: 0.3 }}
                                     key={entry.optimisticid}
                                 >
+
                                     <TodoListEntry displayFulfilled={isFulfilled} currentTodo={entry} />
 
                                 </motion.div>
