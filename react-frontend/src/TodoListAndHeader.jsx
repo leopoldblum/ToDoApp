@@ -74,7 +74,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
                         </button>
                     </div> */}
 
-                    <HeroIconsButtonLayout onClickFunction={toggleSortingTime}>
+                    <HeroIconsButtonLayout onClick={toggleSortingTime}>
                         <ArrowsUpDownIcon />
                     </HeroIconsButtonLayout>
                 </div>
