@@ -1,9 +1,10 @@
 import TodoDeleteAllFulfilledButton from './TodoDeleteAllFulfilledButton';
 import CollapseButton from './TodoCollapseAllButton';
 import TodoListEntry from './TodoListEntry';
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
 import { AnimatePresence, motion } from "motion/react"
+import ArrowsUpDownIcon from "@heroicons/react/24/outline/ArrowsUpDownIcon.js"
 
 const TodoListAndHeader = ({ isFulfilled }) => {
 
@@ -12,6 +13,16 @@ const TodoListAndHeader = ({ isFulfilled }) => {
     const headerType = isFulfilled ? "header-fulfilled" : "header-actives"
     const isHeaderTypeActive = todoFuncAndData.activeHeaders.includes(headerType)
     const specificTodoCounter = todoFuncAndData.todos.filter(entries => entries.fulfilled === isFulfilled).length
+
+
+    const [isSortedTimeAscending, setIsSortedTimeAscending] = useState(true)
+
+    const todosToDisplay = todoFuncAndData.todos.filter(entry => entry.fulfilled === isFulfilled)
+    const sortedTodos = isSortedTimeAscending ? todosToDisplay.sort((a, b) => a.id.localeCompare(b.id)) : todosToDisplay.sort((a, b) => b.id.localeCompare(a.id));
+
+    const toggleSortingTime = () => {
+        setIsSortedTimeAscending(prev => !prev)
+    }
 
     /**
     * @param {string} header_type options: "header-active" "header-fulfilled" 
@@ -41,10 +52,26 @@ const TodoListAndHeader = ({ isFulfilled }) => {
                     &gt;
                 </div>
 
-                <div className='h-full w-8/10 grow text-left flex items-center select-none cursor-pointer' onClick={() => toggleHeaderState(headerType)} >
+                <div className='h-full grow text-left flex items-center select-none cursor-pointer' onClick={() => toggleHeaderState(headerType)} >
 
                     <h1> {isFulfilled ? "fulfilled todos" : "active todos"}  ({specificTodoCounter}) </h1>
 
+                </div>
+
+                <div className={`flex justify-center grow-0 items-center text-accent-lm transition-all duration-300 ease-in ${isHeaderTypeActive ? "max-h-2000 opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>
+
+                    <div className="w-full h-full flex justify-center items-center ">
+
+                        <button className="p-4 rounded-md hover:text-text-hover-lm hover:cursor-pointer transition-all duration-300 hover:scale-95"
+                            onClick={() => toggleSortingTime()}>
+
+                            <div className="w-6 h-6 lg:w-8 lg:h-8 relative font-medium ">
+                                <ArrowsUpDownIcon className={` absolute inset-0 object-cover transition-all duration-300 ease-in-out`} />
+                            </div>
+
+
+                        </button>
+                    </div>
                 </div>
 
                 <div className={`flex justify-center grow-0 items-center text-accent-lm transition-all duration-300 ease-in ${isHeaderTypeActive ? "max-h-2000 opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>
@@ -72,7 +99,7 @@ const TodoListAndHeader = ({ isFulfilled }) => {
                         <div className={`w-22/25 lg:w-18/25 m-auto block`}>
 
 
-                            {todoFuncAndData.todos != null && todoFuncAndData.todos.filter(entry => entry.fulfilled === isFulfilled).map(entry =>
+                            {todoFuncAndData.todos != null && sortedTodos.map(entry =>
                                 // for transition when moving todos between headers
 
                                 <motion.div

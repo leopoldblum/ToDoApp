@@ -51,10 +51,6 @@ const TodoListWrapper = () => {
     const mutateDelete = useMutationDeleteTodo();
     const mutationEditTodo = useMutationEditTodo();
 
-    // const debugShowHistory = () => {
-    //     todoHistory.forEach((el, index) => console.log("history[" + index + "]: " + JSON.stringify(el)));
-    // };
-
     const updateTodosAndManageHistory = () => {
 
         // check if it is a valid fetch, that contains data
@@ -64,7 +60,7 @@ const TodoListWrapper = () => {
             if (initialLoadDoneRef.current) {
 
                 // check that it doesnt contain optmistic update data
-                if (!(todos.some((el) => el.id.toString().startsWith("opt_")))) {
+                if (!(todos.some((el) => el.id.startsWith("opt_")))) {
 
                     // only write in history when it's supposed to, not when undoing things
                     if (isHistoryBlockedRef.current === false) {
