@@ -1,8 +1,8 @@
 ## Basic Todo App
 
-https://todos.leopold-blum.de/
-
 A simple yet complete full-stack Todo application with user-specific persistent data and smooth transitions.
+
+**Try it here:** [https://todos.leopold-blum.de](https://todos.leopold-blum.de)
 
 ###  Tech Stack
 
@@ -19,5 +19,8 @@ A simple yet complete full-stack Todo application with user-specific persistent 
 ### Features
 - Create, read, update, and delete todos
 - Optimistic UI updates for a snappy experience
-- Smooth animations when toggling or deleting todos
-- Persistent client-specific todo storage using localStorage + backend ID mapping
+- Smooth animations when interacting with todos
+- Responsive design with mobile support
+- Darkmode toggle
+- Persistent todo storage using ```localStorage``` to save a per-browser userID, with backend ID mapping
+- ULID-based todo IDs for easy chronological sorting
