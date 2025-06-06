@@ -3,6 +3,8 @@ import { useMutateDAFT } from "./api/queriesAndMutations";
 import { todoListProvider } from "./TodoList-Wrapper";
 import { useContext } from "react";
 import ArchiveBoxXMarkIcon from "@heroicons/react/24/outline/ArchiveBoxXMarkIcon.js"
+import HeaderButtonLayout from "./HeaderButtonLayout.jsx"
+
 
 
 const TodoDeleteAllFulfilledButton = () => {
@@ -12,19 +14,9 @@ const TodoDeleteAllFulfilledButton = () => {
     const mutateDAFT = useMutateDAFT();
 
     return (
-
-        <div className="w-full h-full flex justify-center items-center ">
-
-            <button className="p-4 rounded-md hover:text-text-hover-lm hover:cursor-pointer transition-all duration-300 hover:scale-95"
-                onClick={() => mutateDAFT.mutate({ userid: todoFuncAndData.userIDref.current })}>
-
-                <div className="w-6 h-6 lg:w-8 lg:h-8 relative font-medium ">
-                    <ArchiveBoxXMarkIcon className={` absolute inset-0 object-cover transition-all duration-300 ease-in-out`} />
-                </div>
-
-
-            </button>
-        </div>
+        <HeaderButtonLayout onClick={() => mutateDAFT.mutate({ userid: todoFuncAndData.userIDref.current })}>
+            <ArchiveBoxXMarkIcon className={` absolute inset-0 object-cover transition-all duration-300 ease-in-out`} />
+        </HeaderButtonLayout>
     )
 }
 

@@ -44,7 +44,7 @@ const TodoListEntry = ({ displayFulfilled, currentTodo }) => {
                     </div>
 
                     <div className="flex flex-1/3 justify-center items-center">
-                        <TodoCustomCheckmark currentTodo={currentTodo} checked={displayFulfilled} />
+                        <TodoCustomCheckmark currentTodo={currentTodo} />
                     </div>
 
                 </div>

@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { todoListProvider } from "./TodoList-Wrapper";
 import { AnimatePresence, motion } from "motion/react"
 import ArrowsUpDownIcon from "@heroicons/react/24/outline/ArrowsUpDownIcon.js"
-import HeroIconsButtonLayout from "./HeroIconsButtonLayout.jsx"
+import HeaderButtonLayout from "./HeaderButtonLayout.jsx"
 
 const TodoListAndHeader = ({ isFulfilled }) => {
 
@@ -60,23 +60,11 @@ const TodoListAndHeader = ({ isFulfilled }) => {
                 </div>
 
                 <div className={`flex justify-center grow-0 items-center text-accent-lm transition-all duration-300 ease-in ${isHeaderTypeActive ? "max-h-2000 opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>
-                    {/* 
-                    <div className="w-full h-full flex justify-center items-center ">
 
-                        <button className="p-4 rounded-md hover:text-text-hover-lm hover:cursor-pointer transition-all duration-300 hover:scale-95"
-                            onClick={() => toggleSortingTime()}>
-
-                            <div className="w-6 h-6 lg:w-8 lg:h-8 relative font-medium ">
-                                <ArrowsUpDownIcon className={` absolute inset-0 object-cover transition-all duration-300 ease-in-out`} />
-                            </div>
-
-
-                        </button>
-                    </div> */}
-
-                    <HeroIconsButtonLayout onClick={toggleSortingTime}>
+                    <HeaderButtonLayout onClick={toggleSortingTime}>
                         <ArrowsUpDownIcon />
-                    </HeroIconsButtonLayout>
+                    </HeaderButtonLayout>
+
                 </div>
 
                 <div className={`flex justify-center grow-0 items-center text-accent-lm transition-all duration-300 ease-in ${isHeaderTypeActive ? "max-h-2000 opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>

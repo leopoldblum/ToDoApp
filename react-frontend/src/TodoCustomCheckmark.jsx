@@ -3,7 +3,7 @@ import { useMutationEditTodo } from "./api/queriesAndMutations";
 import { todoListProvider } from "./TodoList-Wrapper";
 
 
-const TodoCustomCheckmark = ({ currentTodo, checked }) => {
+const TodoCustomCheckmark = ({ currentTodo }) => {
 
     const todoFuncAndData = useContext(todoListProvider);
 
@@ -14,8 +14,8 @@ const TodoCustomCheckmark = ({ currentTodo, checked }) => {
     const hasTransitionStartedRef = useRef(false)
 
     useEffect(() => {
-        setIsChecked(checked);
-    }, [checked])
+        setIsChecked(currentTodo.fulfilled);
+    }, [currentTodo.fulfilled])
 
     const handleClick = () => {
         hasTransitionStartedRef.current = true

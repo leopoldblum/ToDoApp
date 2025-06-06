@@ -133,7 +133,7 @@ const TodoEditOrAddButton = ({ currentTodo }) => {
                     onClick={closeModal}
                 >
                     <div
-                        className="bg-bg-lm rounded-xl shadow-xl pt-5 pl-15 pr-15 pb-5 h-80 mt-30 lg:mt-60 mb-auto w-full max-w-xs lg:max-w-md border-2 border-accent-lm"
+                        className="bg-bg-lm rounded-xl shadow-xl pt-5 pl-15 pr-15 pb-5 h-80 mt-20 lg:mt-60 mb-auto w-full max-w-xs lg:max-w-md border-2 border-accent-lm"
                         onClick={(e) => e.stopPropagation()}
                     >
 
