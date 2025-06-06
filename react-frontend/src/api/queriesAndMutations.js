@@ -17,8 +17,8 @@ export const useFetchTodos = (userid) => {
         queryFn: () => fetchAllTodos(userid),
 
         // sort data by ID, else it would render twice, first unsorted, then sorted   
-        select: (todosFromFetch) =>
-            todosFromFetch ? [...todosFromFetch].sort((a, b) => a.id - b.id) : [],
+        // select: (todosFromFetch) =>
+        //     todosFromFetch ? [...todosFromFetch].sort((a, b) => a.id - b.id) : [],
 
         staleTime: 50000,
     })
